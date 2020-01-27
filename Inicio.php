@@ -11,5 +11,7 @@
 	<h1>Servidor de catas</h1><br>
 	<button type="button" class="btn btn-dark">Nueva cata</button> <br><br>
 	<button type="button" class="btn btn-dark">Ver catas</button> <br>
+
+	<p>allkamd</p>
 </body>
 </html>
