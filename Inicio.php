@@ -9,8 +9,8 @@
 </head>
 <body>
 	<h1>Servidor de catas</h1><br>
-	<button type="button" class="btn btn-dark">Nueva cata</button> <br><br>
+	<button type="button" class="btn btn-dark" onclick="location.href = 'nueva_cata.php'">Nueva cata</button> <br><br>
 	<button type="button" class="btn btn-dark">Ver catas</button> <br>
 
 </body>
-</html>
+</html> 
