@@ -8,8 +8,16 @@
 	<link rel="stylesheet" href="css/init.css">
 </head>
 <body>
-	<h1>Nueva cata</h1>
+	<h1>Nueva cata</h1><br>
 	<table>
+		<tr>
+			<td><p>Nombre:&nbsp;&nbsp;</p></td>
+			<td><input type="text" id="nombre"></td>
+		</tr>
+		<tr>
+			<td><p>Fecha:&nbsp;&nbsp;</p></td>
+			<td><input type="date" id="fecha"></td>
+		</tr>
 		<tr>
 			<td><p>Personas:&nbsp;&nbsp;</p></td>
 			<td><input type="text" id="cervezas"></td>
