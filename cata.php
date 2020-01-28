@@ -11,6 +11,7 @@
  	<title>Catas</title>
  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/init.css">
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
  </head>
  <body>
  	<h1>Catas guardadas</h1><br>

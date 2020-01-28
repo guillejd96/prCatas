@@ -16,5 +16,9 @@ p {
 
 td,th {
 	text-align: center;
-	padding-right: 5pc;
+  	padding: 0 2rem 0 2rem;
+}
+
+input[type='number'] {
+	width: 35px;
 }
