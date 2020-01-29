@@ -31,7 +31,8 @@
 <body>
 	
 	<h1>Nueva cata</h1><br>
-	<table>
+	<!-- 
+		<table>
 		<tr>
 			<td><p>Nombre:&nbsp;&nbsp;</p></td>
 			<td><input type="text" id="nombre"></td>
@@ -56,5 +57,43 @@
 	</table>
 	<br><br>
 
+	-->
+	
+	<form id="nueva_cata">
+
+	<div class="form-group">
+    <label for="exampleFormControlTextarea1">Nombre de la cata</label>
+    <textarea class="form-control"rows="1" title="Un nombre para registrar la nueva cata" class="entrada" style="width: 45%; margin-left: 27.5%;"></textarea>
+ </div>
+ <div class="form-group">
+    <label for="exampleFormControlSelect1">Número de borrachos</label>
+    <select class="form-control"  class="entrada" style="width: 45%; margin-left: 27.5%;">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      <option>9</option>
+      <option>10</option>
+      <option>11</option>
+      <option>12</option>
+      <option>13</option>
+      <option>14</option>
+      <option>15</option>
+      <option>16</option>
+    </select>
+</div>
+ 	<div class="form-group">
+    <label for="exampleFormControlTextarea1">Nombre de las cervezas</label>
+    <textarea class="form-control" rows="10" title="Separar cada cerveza mediante una coma (una, otra, otra)" class="entrada" style="width: 45%; margin-left: 27.5%;"></textarea>
+</div>
+<div>
+	<label for="exampleFormControlTextarea1">Elige la fecha de la cata</label> <br>
+	<input type="date" id="cervezas" style="width: 25%;">
+</div>
+</form>
 </body>
 </html>
