@@ -13,32 +13,70 @@
 		});
 
 		function getPersonasCervezas(){
+			$(".opiniones").next().remove();
+			$(".opiniones").next().remove();
+			$(".opiniones").remove();
+			$("#guardar").next().remove();
+			$("#guardar").next().remove();
+			$("#guardar").remove();
 			var cadPersonas = $("#personas").val();
 			var cadCervezas = $("#cervezas").val();
 			var personas = cadPersonas.split(",");
 			var cervezas = cadCervezas.split(",");
-			for(var i=0;i<personas.length;i++){
-				$("body").append("<table border='1' style='background-color: #FFA900;'><tr><th><p>"+personas[i]+"</p></th><th><p>Aroma</p></th><th align='center'><p>Apariencia</p></th><th><p>Sabor</p></th><th><p>Cuerpo</p></th><th><p>Botellín</p></th></tr>");
-				for (var j = 0; j<cervezas.length; j++) {
-					$("table").last().append("<tr><td><p>"+cervezas[j]+"</p></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td></tr>");	
+			if(cadPersonas.length>0 && cadCervezas.length>0){
+				for(var i=0;i<personas.length;i++){
+					$("body").append("<table border='1' style='background-color: #FFA900;' class='opiniones'><tr><th><p>"+personas[i]+"</p></th><th><p>Aroma</p></th><th align='center'><p>Apariencia</p></th><th><p>Sabor</p></th><th><p>Cuerpo</p></th><th><p>Botellín</p></th></tr>");
+					for (var j = 0; j<cervezas.length; j++) {
+						$("table").last().append("<tr><td><p>"+cervezas[j]+"</p></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td></tr>");	
+					}
+					$("body").append('</table><br><br>');
 				}
-				$("body").append('</table><br><br><button>Guardar</button><br><br>');
-
+				$("body").append("<button class='btn btn-secondary' id='guardar' onclick='save()'>Guardar</button><p id='estado'></p><br><br>");
 			}
+		}
+
+		function save(){
+			var nombreCata = $("#nombre").val();
+			var fechaCata = $("#fecha").val();
+			alert(fechaCata);
+			$.get('ajax/nuevaCata.php?cata='+nombreCata+'&fecha='+fechaCata, function(data) {
+				if(data==1){
+					$("#estado").text('Tabla de la cata creada');
+					// Falta guardar personas y cervezas antes de las opiniones
+					$(".opiniones").each(function(index, table) {
+						var nombrePersona = $(table).children().children().find('th:first').children().html();
+						var tbody = $(table).children();
+						$(tbody).find('tr').each(function(index, tr) {
+							var nombreCerveza = $(tr).find('td:first').children().html();
+							if(typeof nombreCerveza === "undefined"){}
+							else {
+								var aroma = $(tr).find('td:first').next().children().val();
+								var apariencia = $(tr).find('td:first').next().next().children().val();
+								var sabor = $(tr).find('td:first').next().next().next().children().val();
+								var cuerpo = $(tr).find('td:first').next().next().next().next().children().val();
+								var botellin = $(tr).find('td:first').next().next().next().next().next().children().val();
+							}
+						});
+					});
+				} else {
+
+				}
+
+			});
+			
 		}
 	</script>
 </head>
 <body>
 	
 	<h1>Nueva cata</h1><br>
-	<!-- 
 		<table>
 		<tr>
-			<td><p>Nombre:&nbsp;&nbsp;</p></td>
+			<td><p>Nombre de la cata:&nbsp;&nbsp;</p></td>
 			<td><input type="text" id="nombre"></td>
 		</tr>
 		<tr>
-			<td><p>Fecha:&nbsp;&nbsp;</p></td>
+			<td><p>Fecha de la cata:&nbsp;&nbsp;</p></td>
 			<td><input type="date" id="fecha"></td>
 		</tr>
 		<tr>
@@ -57,7 +95,7 @@
 	</table>
 	<br><br>
 
-	-->
+	<!--
 	
 	<form id="nueva_cata">
 
@@ -95,5 +133,7 @@
 	<input type="date" id="cervezas" style="width: 25%;">
 </div>
 </form>
+
+-->
 </body>
 </html>
