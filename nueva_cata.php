@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="css/init.css">
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
+		var personas,cervezas;
+
+
 		$(document).ready(function() {
 			$("#continuar").click(getPersonasCervezas);
 		});
@@ -21,8 +24,8 @@
 			$("#guardar").remove();
 			var cadPersonas = $("#personas").val();
 			var cadCervezas = $("#cervezas").val();
-			var personas = cadPersonas.split(",");
-			var cervezas = cadCervezas.split(",");
+			personas = cadPersonas.split(",");
+			cervezas = cadCervezas.split(",");
 			if(cadPersonas.length>0 && cadCervezas.length>0){
 				for(var i=0;i<personas.length;i++){
 					$("body").append("<table border='1' style='background-color: #FFA900;' class='opiniones'><tr><th><p>"+personas[i]+"</p></th><th><p>Aroma</p></th><th align='center'><p>Apariencia</p></th><th><p>Sabor</p></th><th><p>Cuerpo</p></th><th><p>Botellín</p></th></tr>");
@@ -31,35 +34,54 @@
 					}
 					$("body").append('</table><br><br>');
 				}
-				$("body").append("<button class='btn btn-secondary' id='guardar' onclick='save()'>Guardar</button><p id='estado'></p><br><br>");
+				$("body").append("<button class='btn btn-secondary' id='guardar' onclick='save()'>Guardar</button>");
 			}
 		}
 
 		function save(){
 			var nombreCata = $("#nombre").val();
 			var fechaCata = $("#fecha").val();
-			alert(fechaCata);
 			$.get('ajax/nuevaCata.php?cata='+nombreCata+'&fecha='+fechaCata, function(data) {
-				if(data==1){
-					$("#estado").text('Tabla de la cata creada');
-					// Falta guardar personas y cervezas antes de las opiniones
+				if(data!='0'){ // Funciona nuevaCata.php
+					var id = data;
+					$('body').append("<br><p>"+nombreCata+" ha sido creada</p><br>");
 					$(".opiniones").each(function(index, table) {
 						var nombrePersona = $(table).children().children().find('th:first').children().html();
-						var tbody = $(table).children();
-						$(tbody).find('tr').each(function(index, tr) {
-							var nombreCerveza = $(tr).find('td:first').children().html();
-							if(typeof nombreCerveza === "undefined"){}
-							else {
-								var aroma = $(tr).find('td:first').next().children().val();
-								var apariencia = $(tr).find('td:first').next().next().children().val();
-								var sabor = $(tr).find('td:first').next().next().next().children().val();
-								var cuerpo = $(tr).find('td:first').next().next().next().next().children().val();
-								var botellin = $(tr).find('td:first').next().next().next().next().next().children().val();
+						alert(nombrePersona);
+						$.get('ajax/nuevaPersona.php?cata='+id+'&nombre='+nombre, function(data) {
+							if(data!='0'){ // Funciona nuevaPersona.php
+								$('body').append("<br><p>"+nombrePersona+" ha sido añadido</p><br>");
+								var idPersona = data;
+								var tbody = $(table).children();
+								$(tbody).find('tr').each(function(index, tr) {
+									var nombreCerveza = $(tr).find('td:first').children().html();
+									if(typeof nombreCerveza === "undefined"){}
+									else {
+										$.get('ajax/nuevaCerveza.php?cata='+id+'&nombre='+nombreCerveza, function(data) {
+											if(data!='0'){
+												$('body').append("<br><p>Añadiendo opinión de "+nombrePersona+" sobre "+nombreCerveza+"</p><br>");
+												var idCerveza = data;
+												var aroma = $(tr).find('td:first').next().children().val();
+												var apariencia = $(tr).find('td:first').next().next().children().val();
+												var sabor = $(tr).find('td:first').next().next().next().children().val();
+												var cuerpo = $(tr).find('td:first').next().next().next().next().children().val();
+												var botellin = $(tr).find('td:first').next().next().next().next().next().children().val();
+												$.get('ajax/nuevaOpinion.php?p='+idPersona+'&c='+idCerveza+'&ar='+aroma+'&ap='+apariencia+'&s='+sabor+'&cu='+cuerpo+'&b='+botellin+'', function(data) {});	
+											} else { // Falla nuevaCerveza.php
+												$('body').append("<br><p>"+nombreCerveza+" no se ha podido añadir</p><br>");
+											}
+										});
+										
+									}
+								});
+							} else { // Falla nuevaPersona.php
+								$('body').append("<br><p>"+nombrePersona+" no se ha podido añadir</p><br>");
 							}
+							
 						});
 					});
-				} else {
-
+				} else { // Falla nuevaCata.php
+						$('body').append("<br><p>"+nombreCata+" no se ha podido añadir</p><br>");
 				}
 
 			});
