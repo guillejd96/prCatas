@@ -25,7 +25,7 @@
 	<h1><?php echo $nombreCata ?></h1><br><br>
 	<table>
 		<tr>
-			<td style="width: 3rem;">
+			<td>
 				<table style='background-color: #FFA900;' border="1">
 					<tr>
 						<th>
@@ -34,13 +34,13 @@
 					</tr>
 					<?php 
 						while($row = mysqli_fetch_array($resPersonas)){
-							echo "<tr><td scope='row' height='30px;'><a href='persona.php?id=".$row[0]."'><p>".$row[1]."</p></td></tr>";
+							echo "<tr><td scope='row' width='7rem'><a href='persona.php?id=".$row[0]."'><p>".$row[1]."</p></td></tr>";
 						}
 				 	?>
 				</table>
 			</td>
 			<td></td>
-			<td style="width: 3rem;">
+			<td>
 				<table style='background-color: #FFA900;' border="1">
 					<tr>
 						<th>
