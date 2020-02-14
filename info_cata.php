@@ -4,6 +4,12 @@
 
 	$sql = "SELECT nombre FROM cata WHERE id=".$idCata;
 	$nombreCata = mysqli_query($conexion,$sql)->fetch_row()[0];
+
+	$sql = "SELECT id,nombre FROM persona WHERE idCata =".$idCata;
+	$resPersonas = mysqli_query($conexion,$sql);
+
+	$sql = "SELECT id,nombre FROM cerveza WHERE idCata =".$idCata;
+	$resCerveza = mysqli_query($conexion,$sql);
  ?>
 
 <!DOCTYPE html>
@@ -16,6 +22,39 @@
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-	<h1><?php echo $nombreCata ?></h1>
+	<h1><?php echo $nombreCata ?></h1><br><br>
+	<table>
+		<tr>
+			<td style="width: 3rem;">
+				<table style='background-color: #FFA900;' border="1">
+					<tr>
+						<th>
+							<p>Personas</p>
+						</th>
+					</tr>
+					<?php 
+						while($row = mysqli_fetch_array($resPersonas)){
+							echo "<tr><td scope='row' height='30px;'><a href='persona.php?id=".$row[0]."'><p>".$row[1]."</p></td></tr>";
+						}
+				 	?>
+				</table>
+			</td>
+			<td></td>
+			<td style="width: 3rem;">
+				<table style='background-color: #FFA900;' border="1">
+					<tr>
+						<th>
+							<p>Cervezas</p>
+						</th>
+					</tr>
+					<?php 
+						while($row = mysqli_fetch_array($resCerveza)){
+							echo "<tr><td scope='row' height='30px;'><a href='cerveza.php?id=".$row[0]."'><p>".$row[1]."</p></td></tr>";
+						}
+				 	?>
+				</table>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>
