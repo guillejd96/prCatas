@@ -75,6 +75,6 @@
  		 ?>
  	</table>
  	<br>
- 	<button class="btn btn-dark" onclick="location.href='info_cata.php?id=<?php echo $persona[1]; ?>'">Volver</button></td>
+ 	<button class="btn btn-dark" onclick="location.href='info_cata.php?id=<?php echo $persona[1]; ?>'">Volver</button>
  </body>
  </html>
