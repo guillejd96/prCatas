@@ -42,6 +42,7 @@
  	} else { ?>
 		<p>No hay catas en la base de datos</p>
  	<?php } ?>
- 	<button class="btn btn-link" onclick="location.href='index.php'">Volver</button>
+ 	<br>
+ 	<button class="btn btn-dark" onclick="location.href='index.php'">Volver</button>
  </body>
  </html>

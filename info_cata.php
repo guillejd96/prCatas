@@ -56,5 +56,9 @@
 			</td>
 		</tr>
 	</table>
+	<br>
+	<button class="btn btn-dark" onclick="location.href='resultados.php'">Ver resultados</button>
+	<br><br>
+	<button class="btn btn-dark" onclick="location.href='cata.php'">Volver</button></td>
 </body>
 </html>
