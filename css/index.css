@@ -1,0 +1,32 @@
+body {
+  text-align: center;
+  background: url("../images/slider-home.jpg") no-repeat center top;
+  background-size:cover;
+}
+
+table {
+	background: #fdfd96;
+ 	background-position: left top;
+ 	background-repeat: repeat;
+	margin-left:auto; 
+    margin-right:auto;
+    border-collapse: separate;
+    margin-top: 15%; 
+    border: 2px solid gray; 
+    border-radius: 15px;
+    padding: 2% 2% 2% 2%;
+}
+
+td,th {
+	text-align: center;
+  	padding: 0 2rem 0 2rem;
+}
+
+p {
+	font-size: 25px;
+}
+
+#error {
+	font-size: 14px;
+	color: red;
+}
