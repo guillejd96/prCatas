@@ -3,7 +3,7 @@
 	$host = "localhost";
 	$usuario = "root";
 	$contrasena = "";
-	$basedatos = "servidor_cata";
+	$basedatos = "prcata";
 
 	$conexion = mysqli_connect ($host, $usuario, $contrasena, $basedatos)
 	or die ("No se puede conectar con la base de datos");
