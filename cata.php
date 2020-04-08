@@ -10,7 +10,7 @@
  	<meta charset="UTF-8">
  	<title>Catas</title>
  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/init.css">
+	<link rel="stylesheet" href="css/style.css">
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
  </head>
  <body>
@@ -43,6 +43,6 @@
 		<p>No hay catas en la base de datos</p>
  	<?php } ?>
  	<br>
- 	<button class="btn btn-dark" onclick="location.href='index.php'">Volver</button>
+ 	<button class="btn btn-dark" onclick="location.href='user.php'">Volver</button>
  </body>
  </html>
