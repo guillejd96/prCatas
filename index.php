@@ -14,6 +14,8 @@ include "config.php"
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 	<title>Inicio</title>
 	<script>
+		
+
 		function entrar(){
 			var user = $("#user").val();
 			var pass = $("#pass").val();
@@ -29,6 +31,13 @@ include "config.php"
 
 		$(document).ready(function() {
 			$("#entrar").click(entrar);
+			var input = document.getElementById("pass");
+			input.addEventListener("keyup", function(event) {
+  				if (event.keyCode === 13) {
+   					event.preventDefault();
+   					document.getElementById("entrar").click();
+  				}
+			});
 		});
 	</script>
 </head>
@@ -47,7 +56,7 @@ include "config.php"
 		</tr>
 		<tr>
 			<td colspan="2">
-				<button class="btn btn-info" id="entrar">Entrar</button>
+				<button class="btn btn-info" id="entrar" onclick="javascript:entrar()">Entrar</button>
 			</td>
 		</tr>
 		<tr>
