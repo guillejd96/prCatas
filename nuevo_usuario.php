@@ -11,27 +11,45 @@
  	<title>Nuevo usuario</title>
  	<script>
 		function checkUsuario(u){
-			$.get('ajax/existeUsuario.php?u='+u, function(data) {
-				if(data=="0"){
-					return true;
-				}else {
-					$("#error").val("El usuario ya existe");
-					return false;
-				}	
-			});
+			// Minimo 4 caracteres
+			if(u.length<4) {
+				$(".error").text("El usuario debe tener 4 o más caracteres");
+				return false;
+			}
+			else {
+				$.get('ajax/existeUsuario.php?u='+u, function(data) {
+					if(data=="0"){
+						return true;
+					}else {
+						$(".error").text("El usuario ya existe");
+						return false;
+					}	
+				});				
+			}
+		}
+
+		function checkEqualPasswords(p1,p2){
+			if(p1!=p2) {
+				$(".error").text("Las contraseñas no son iguales");
+				return false;
+			}
+			else return true;
 		}
 
 		function checkPassword(p){
-
+			//  Password between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter
+			var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+			if(p.match(decimal)) return true;
+			else {
+				$(".error").text("Las contraseña no cumple los requisitos");
+				return false
+			}
 		}
 
 		function check(u,n,p1,p2){
 			if(checkUsuario(u) == false) return false;
-			if(p1!=p2) {
-				$("#error").val("Las contraseñas no son iguales");
-				return false;
-			}
-			//if(checkPassword(p1) == false) return false;
+			if(checkEqualPasswords(p1,p2) == false ) return false;
+			if(checkPassword(p1) == false) return false;
 			return true;
 		}
 
@@ -42,7 +60,21 @@
 			var newPass2 = $("#pass2").val();
 
 			var bool = check(newUsuario,newNombre,newPass1,newPass2);
-			alert(bool);
+			if(bool==true){
+				$.get('ajax/nuevoUsuario.php?u='+newUsuario+'&n='+newNombre+'&p='+newPass1, function(data) {
+					if(data=="1"){
+						$(".error").css('color', 'green');
+						$(".error").text("Usuario insertado con éxito. Redireccionando...");
+						setTimeout(function () {
+       						window.location.replace("index.php");	
+    					},2000);
+					} else {
+						$(".error").text("Error al insertar");
+					}
+				});
+			} else {
+
+			}
 		}
 
  		function volver(){
