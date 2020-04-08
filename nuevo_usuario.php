@@ -41,7 +41,7 @@
 			var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
 			if(p.match(decimal)) return true;
 			else {
-				$(".error").text("Las contraseña no cumple los requisitos");
+				$(".error").text("La contraseña no cumple los requisitos");
 				return false
 			}
 		}
@@ -89,25 +89,54 @@
  </head>
  <body>
  	<h1>Nuevo usuario</h1>
- 	<table id="form">
+ 	<table>
  		<tr>
-			<td><p class="form">Usuario:</p></td>
-			<td><input type="text" id="usuario"></td>
-		</tr>
-		<tr>
-			<td><p class="form">Nombre:</p></td>
-			<td><input type="text" id="nombre"></td>
-		</tr>
-		<tr>
-			<td><p class="form">Contraseña:</p></td>
-			<td><input type="password" id="pass1"></td>
-		</tr>
-		<tr>
-			<td><p class="form">Repita su contraseña:</p></td>
-			<td><input type="password" id="pass2"></td>
-		</tr>
-		<tr><td colspan="2"><p class="error"></p></td></tr>
-		<tr>
+ 			<td>
+ 				<table id="form" width="500px" heigth="500px">
+ 					<tbody>
+ 						<tr>
+				 			<td><p align="left">- No tardes más en crear tu cuenta parapoder disfrutar de todo lo que ofrecemos.</p></td>
+						</tr>
+						<tr>
+							<td><p align="left">- Con este servidor de catas podrás visualizar tus datos y resultados de las catas de cervezas que hagas con tus amigos desde la aplicación móvil.</p></td>
+						</tr>
+						<tr>
+							<td>
+								<p align="left">- Acceso a las valoraciones de todas las cervezas que has registrado.</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p align="left">- Acceso a los resultados estadísticos de las catas que has registrado.</p>
+							</td>
+						</tr>
+ 					</tbody>
+			 	</table>
+ 			</td>
+ 			<td>
+			 	<table id="form" width="500px" heigth="500px">
+			 		<tr>
+						<td><p class="form">Usuario:</p></td>
+						<td><input type="text" id="usuario"></td>
+					</tr>
+					<tr>
+						<td><p class="form">Nombre:</p></td>
+						<td><input type="text" id="nombre"></td>
+					</tr>
+					<tr>
+						<td><p class="form">Contraseña:</p></td>
+						<td><input type="password" id="pass1"></td>
+					</tr>
+					<tr>
+						<td><p class="form">Repita su contraseña:</p></td>
+						<td><input type="password" id="pass2"></td>
+					</tr>
+					<tr><td colspan="2"><p class="error"></p></td></tr>
+			 	</table>
+ 			</td>
+ 		</tr>
+ 		<tr><td><br></td><td><br></td></tr>
+ 		<tr>
 			<td><button class="btn btn-info" id="guardar">Guardar</button></td>
 			<td><button class="btn btn-link" id="volver">Cancelar</button></td>
 		</tr>
