@@ -1,0 +1,5 @@
+nuevo_usuario.php
+	- No tardes más en crear tu cuenta para poder disfrutar de todo lo que ofrecemos.
+	- Con este servidor de catas podrás visualizar tus datos y resultados de las catas de cervezas que hagas con tus amigos desde la aplicación móvil.
+	- Acceso a las valoraciones de todas las cervezas que has registrado.
+	- Acceso a los resultados estadísticos de las catas que has registrado.
