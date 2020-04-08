@@ -14,15 +14,16 @@ include "config.php"
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 	<title>Inicio</title>
 	<script>
-		
-
 		function entrar(){
 			var user = $("#user").val();
 			var pass = $("#pass").val();
 
 			$.get('ajax/buscarUsuario.php?u='+user+'&p='+pass, function(data) {
 				if(data!="error"){
-					window.location.replace("user.php?id="+data);
+					$.get('ajax/login.php?u='+data, function(data2) {
+						if(data2=="1") window.location.replace("user.php?")
+					});
+					
 				}else {
 					$("#error").text("El usuario o la contraseña están equivocados")
 				}
