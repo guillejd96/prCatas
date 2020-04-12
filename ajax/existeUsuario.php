@@ -4,7 +4,7 @@ include '../config.php';
 
 $u = $_GET['u'];
 
-$sql = "SELECT id FROM persona WHERE usuario='".$u."';";
+$sql = "SELECT id FROM usuario WHERE usuario='".$u."';";
 
 $res = mysqli_query($conexion,$sql);
 
