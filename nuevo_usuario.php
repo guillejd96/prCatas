@@ -68,8 +68,10 @@
 						setTimeout(function () {
        						window.location.replace("index.php");	
     					},2000);
+					} else if(data=="-1"){
+						$(".error").text("Error al insertar el usuario");
 					} else {
-						$(".error").text("Error al insertar");
+						$(".error").text("Error al insertar la persona");
 					}
 				});
 			} else {
@@ -92,7 +94,7 @@
  	<table>
  		<tr>
  			<td>
- 				<table id="form" width="500px" heigth="500px">
+ 				<table class="no_border" width="500px" heigth="500px">
  					<tbody>
  						<tr>
 				 			<td><p align="left">- No tardes más en crear tu cuenta parapoder disfrutar de todo lo que ofrecemos.</p></td>
