@@ -17,6 +17,10 @@ table {
   padding: 2% 2% 2% 2%;
 }
 
+table.no_border {
+  border: none;
+}
+
 p {
 	font-size: 25px;
 }
