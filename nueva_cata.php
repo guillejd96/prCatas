@@ -1,4 +1,19 @@
-<?php include "config.php" ?>
+<?php 
+	include "config.php"; 
+
+	session_start();
+	if(!isset($_SESSION["idUsuario"])){
+		header('Location: index.php');
+	}
+
+	$idUsuario = $_SESSION["idUsuario"];
+
+	$sqlPersona = "SELECT * FROM persona WHERE idUsuario=".$idUsuario;
+	$resPersona = mysqli_query($conexion,$sqlPersona)->fetch_row();
+
+	$idPersona = $resPersona[0];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +43,7 @@
 			cervezas = cadCervezas.split(",");
 			if(cadPersonas.length>0 && cadCervezas.length>0){
 				for(var i=0;i<personas.length;i++){
-					$("body").append("<table border='1' style='background-color: #FFA900;' class='opiniones'><tr><th><p>"+personas[i]+"</p></th><th><p>Aroma</p></th><th align='center'><p>Apariencia</p></th><th><p>Sabor</p></th><th><p>Cuerpo</p></th><th><p>Botellín</p></th></tr>");
+					$("body").append("<table style='background-color: #FFA900;' class='opiniones'><tr><th><p>"+personas[i]+"</p></th><th><p>Aroma</p></th><th align='center'><p>Apariencia</p></th><th><p>Sabor</p></th><th><p>Cuerpo</p></th><th><p>Botellín</p></th></tr>");
 					for (var j = 0; j<cervezas.length; j++) {
 						$("table").last().append("<tr><td><p>"+cervezas[j]+"</p></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td></tr>");	
 					}
@@ -41,7 +56,7 @@
 		function save(){
 			var nombreCata = $("#nombre").val();
 			var fechaCata = $("#fecha").val();
-			$.get('ajax/nuevaCata.php?cata='+nombreCata+'&fecha='+fechaCata, function(data) {
+			$.get('ajax/nuevaCata.php?c='+nombreCata+'&p='+<?php echo $idPersona ?>+'&fecha='+fechaCata, function(data) {
 				if(data!='0'){ // Funciona nuevaCata.php
 					var id = data;
 					$('body').append("<br><p>"+nombreCata+" ha sido creada</p><br>");
