@@ -8,13 +8,20 @@
 
 	$idUsuario = $_SESSION["idUsuario"];
 
-	$sqlUsuario = "SELECT * FROM persona WHERE id=".$idUsuario;
-	$resUsuario = mysqli_query($conexion,$sqlUsuario)->fetch_row();
-	$usuario = $resUsuario[1];
-	$nombre = $resUsuario[2];
+	$sqlPersona = "SELECT * FROM persona WHERE idUsuario=".$idUsuario;
+	$resPersona = mysqli_query($conexion,$sqlPersona)->fetch_row();
 
-	$sqlNCatas = "SELECT COUNT(*) FROM persona_cata WHERE idPersona =".$idUsuario;
+	$idPersona = $resPersona[0];
+	$nombre = $resPersona[1];
+
+	$sqlUsuario = "SELECT usuario FROM usuario WHERE id=".$idUsuario;
+	$usuario = mysqli_query($conexion,$sqlUsuario)->fetch_row()[0];	
+
+	$sqlNCatas = "SELECT COUNT(*) FROM persona_cata WHERE idPersona =".$idPersona;
 	$nCatas = mysqli_query($conexion,$sqlNCatas)->fetch_row()[0];
+
+	$sqlNCervezas = "SELECT COUNT(*) FROM opinion WHERE idPersona =".$idPersona;
+	$nCervezas = mysqli_query($conexion,$sqlNCervezas)->fetch_row()[0];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,11 +41,44 @@
 </head>
 <body>
 	<h1>Servidor de catas</h1><br>
-	<h2>Bienvenido <?php echo $usuario ?></h2><br>
-	<h2>Nombre: <?php echo $nombre ?></h2><br>
-	<h2>Catas: <?php echo $nCatas ?></h2><br>
-	<button type="button" class="btn btn-dark" onclick="location.href = 'nueva_cata.php'">Nueva cata</button> <br><br>
-	<button type="button" class="btn btn-dark" onclick="location.href = 'cata.php'">Ver catas</button><br><br>
-	<button type="button" class="btn btn-dark" onclick="javascript:salir()">Salir</button><br>
+	<table width="50%">
+		<tr>
+			<td colspan="2"><h2>Bienvenido <?php echo $usuario ?></h2></td>
+		</tr>
+		<tr>
+			<td>
+				<table class="no_border">
+					<tr>
+						<td><h2 align="left">Nombre: </h2></td>
+						<td><h2><?php echo $nombre ?></h2></td>
+					</tr>
+					<tr>
+						<td><h2 align="left">Catas: </h2></td>
+						<td><h2><?php echo $nCatas ?></h2></td>
+					</tr>
+					<tr>
+						<td><h2 align="left">Cervezas: </h2></td>
+						<td><h2><?php echo $nCervezas ?></h2></td>
+					</tr>
+				</table><br><br>
+			</td>
+			<td>
+				<table class="no_border">
+					<tr>
+						<td><button type="button" class="btn btn-dark" onclick="location.href = 'nueva_cata.php'">Nueva cata</button><br><br></td>
+					</tr>
+					<tr>
+						<td><button type="button" class="btn btn-dark" onclick="location.href = 'cata.php'">Ver catas</button><br><br></td>
+					</tr>
+					<tr>
+						<td><button type="button" class="btn btn-dark" onclick="location.href = 'mis_cervezas.php'">Ver cervezas</button><br></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><button type="button" class="btn btn-dark" onclick="javascript:salir()">Salir</button><br></td>
+		</tr>
+	</table>
 </body>
 </html> 
