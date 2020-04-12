@@ -5,7 +5,7 @@ include '../config.php';
 $u = $_GET['u'];
 $p = $_GET['p'];
 
-$sql = "SELECT id FROM persona WHERE usuario='".$u."' AND password='".$p."';";
+$sql = "SELECT id FROM usuario WHERE usuario='".$u."' AND password='".$p."';";
 
 $res = mysqli_query($conexion,$sql);
 
