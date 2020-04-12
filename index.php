@@ -21,7 +21,7 @@ include "config.php"
 			$.get('ajax/buscarUsuario.php?u='+user+'&p='+pass, function(data) {
 				if(data!="error"){
 					$.get('ajax/login.php?u='+data, function(data2) {
-						if(data2=="1") window.location.replace("user.php?")
+						if(data2=="1") window.location.replace("user.php")
 					});
 					
 				}else {
