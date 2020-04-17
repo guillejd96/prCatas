@@ -23,111 +23,188 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
-		var personas,cervezas;
+		var personas,cervezas,nP,nC,nombreCata,fechaCata;
 
 
 		$(document).ready(function() {
-			$("#continuar").click(getPersonasCervezas);
+			$("#continuar1").click(continuar1);
+			$("#2").hide();
+			$("#3").hide();
+			$("#4").hide();
 		});
 
-		function getPersonasCervezas(){
-			$(".opiniones").next().remove();
-			$(".opiniones").next().remove();
-			$(".opiniones").remove();
-			$("#guardar").next().remove();
-			$("#guardar").next().remove();
-			$("#guardar").remove();
-			var cadPersonas = $("#personas").val();
-			var cadCervezas = $("#cervezas").val();
-			personas = cadPersonas.split(",");
-			cervezas = cadCervezas.split(",");
-			if(cadPersonas.length>0 && cadCervezas.length>0){
-				for(var i=0;i<personas.length;i++){
-					$("body").append("<table style='background-color: #FFA900;' class='opiniones'><tr><th><p>"+personas[i]+"</p></th><th><p>Aroma</p></th><th align='center'><p>Apariencia</p></th><th><p>Sabor</p></th><th><p>Cuerpo</p></th><th><p>Botellín</p></th></tr>");
-					for (var j = 0; j<cervezas.length; j++) {
-						$("table").last().append("<tr><td><p>"+cervezas[j]+"</p></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td><td><input type='number' min='0' max='10'></td></tr>");	
-					}
-					$("body").append('</table><br><br>');
+		function continuar1(){
+			nombreCata = $("#nombre").val();
+			fechaCata = $("#fecha").val();
+			nP = $("#personas").val();
+			nC = $("#cervezas").val();
+
+			if(nP<1 || nC<1){
+				$("#error").text('Introduce un número positivo de personas y cervezas');
+				$("#error").css('color', 'red');
+				$("#error").css('font-size', '14px');
+			}else{
+				$("#1").hide();
+
+				$("#2").append('<tr><td colspan="2"><p>Personas</p></td></tr>')
+
+				for (var i = 0; i < nP; i++) {
+					$("#2").append('<tr><td colspan="2"><input type="text" id="nombre_personas"><br><br></td></tr>')
 				}
-				$("body").append("<button class='btn btn-secondary' id='guardar' onclick='save()'>Guardar</button>");
+
+				$("#2").append('<tr><tr><td><button class="btn btn-secondary" id="continuar2" onclick="javascript:continuar2()">Continuar</button></td><td><button class="btn btn-link" onclick="volver1()">Volver</button></td></tr></tr>');
+
+				$(".progress-bar").css('width', '33%');
+				$(".progress-bar").children('p').text('1/3');
+
+				$("#2").show();
 			}
 		}
 
-		function save(){
-			var nombreCata = $("#nombre").val();
-			var fechaCata = $("#fecha").val();
-			$.get('ajax/nuevaCata.php?c='+nombreCata+'&p='+<?php echo $idPersona ?>+'&fecha='+fechaCata, function(data) {
-				if(data!='0'){ // Funciona nuevaCata.php
-					var id = data;
-					$('body').append("<br><p>"+nombreCata+" ha sido creada</p><br>");
-					$(".opiniones").each(function(index, table) {
-						var nombrePersona = $(table).children().children().find('th:first').children().html();
-						$.get('ajax/nuevaPersona.php?cata='+id+'&nombre='+nombrePersona, function(data) {
-							if(data!='0'){ // Funciona nuevaPersona.php
-								$('body').append("<p>"+nombrePersona+" ha sido añadido</p><br>");
-								var idPersona = data;
-								var tbody = $(table).children();
-								$(tbody).find('tr').each(function(index, tr) {
-									var nombreCerveza = $(tr).find('td:first').children().html();
-									if(typeof nombreCerveza === "undefined"){}
-									else {
-										$.get('ajax/nuevaCerveza.php?cata='+id+'&nombre='+nombreCerveza, function(data) {
-											if(data!='0'){ // Funciona nuevaCerveza.php
-												$('body').append("<p>Añadiendo opinión de "+nombrePersona+" sobre "+nombreCerveza+"</p><br>");
-												var idCerveza = data;
-												var aroma = $(tr).find('td:first').next().children().val();
-												var apariencia = $(tr).find('td:first').next().next().children().val();
-												var sabor = $(tr).find('td:first').next().next().next().children().val();
-												var cuerpo = $(tr).find('td:first').next().next().next().next().children().val();
-												var botellin = $(tr).find('td:first').next().next().next().next().next().children().val();
-												$.get('ajax/nuevaOpinion.php?p='+idPersona+'&c='+idCerveza+'&ar='+aroma+'&ap='+apariencia+'&s='+sabor+'&cu='+cuerpo+'&b='+botellin+'', function(data) {});	
-											} else { // Falla nuevaCerveza.php
-												$('body').append("<p>"+nombreCerveza+" no se ha podido añadir</p><br>");
-											}
-										});
-										
-									}
-								});
-							} else { // Falla nuevaPersona.php
-								$('body').append("<p>"+nombrePersona+" no se ha podido añadir</p><br>");
-							}
-							
-						});
-					});
-				} else { // Falla nuevaCata.php
-						$('body').append("<p>"+nombreCata+" no se ha podido añadir</p><br>");
-				}
+		function volver1(){
 
-			});
-			
+			$(".progress-bar").css('width', '0%');
+			$(".progress-bar").children('p').text('0/3');
+
+			$("#1").show();
+			$("#2").empty();
+		}
+
+		function volver2(){
+
+			$(".progress-bar").css('width', '33%');
+			$(".progress-bar").children('p').text('1/3');
+
+			$("#2").show();
+			$("#3").hide();
+		}
+
+		function continuar2(){
+			personas = $("input[id='nombre_personas']")
+              .map(function(){return $(this).val();}).get();
+
+            $("#2").hide();
+
+            $("#3").append('<tr><td colspan="2"><p>Cervezas</p></td></tr>')
+
+            for (var i = 0; i < nC; i++) {
+				$("#3").append('<tr><td colspan="2"><input type="text" id="nombre_cervezas"><br><br></td></tr>')
+			}
+
+			$("#3").append('<tr><td><p></p></td></tr>');
+
+            $("#3").append('<tr><tr><td><button class="btn btn-secondary" id="continuar3" onclick="javascript:continuar3()">Continuar</button></td><td><button class="btn btn-link" onclick="volver2()">Volver</button></td></tr></tr>');
+
+            $(".progress-bar").css('width', '66%');
+			$(".progress-bar").children('p').text('2/3');
+
+			$("#3").show();
+		}
+
+		function continuar3(){
+			cervezas = $("input[id='nombre_cervezas']")
+              .map(function(){return $(this).val();}).get();
+
+            $("#3").hide();
+
+            $("#4").find('p').text('Redireccionando...')
+            $("#4").find('p').css('color', 'green');
+
+            $(".progress-bar").css('width', '100%');
+			$(".progress-bar").children('p').text('3/3');
+
+			$("#4").show();
+
+            $.get('ajax/nuevaCata.php?c='+nombreCata+'&p=<?php echo $idPersona ?>&f='+fechaCata, function(data) {
+            	if(data=="0" || data=="-1"){
+            		$("#4").find('p').text('Error al insertar la cata en base de datos');
+            		$("#4").find('p').css('color', 'red');
+            	}else {
+            		var idCata = data,error1=false,error2=false;
+
+            		personas.forEach(function(item){
+            			if(!error1){
+            				$.get('ajax/nuevaPersona.php?n='+item+'&c='+idCata, function(data) {
+	            				if(data=="0"){
+	            					$("#4").find('p').text('Error al insertar las personas en base de datos');
+	            					$("#4").find('p').css('color', 'red');
+	            					error1=true;
+	            				}
+	            			});
+            			}
+            		});
+
+            		cervezas.forEach(function(item){
+            			if(!error2){
+            				$.get('ajax/nuevaCerveza.php?n='+item+'&c='+idCata, function(data) {
+	            				if(data=="0"){
+	            					$("#4").find('p').text('Error al insertar las cervezas en base de datos');
+	            					$("#4").find('p').css('color', 'red');
+	            					error2=true;
+	            				}
+	            			});
+            			}
+            		});
+
+            		if(!error1 && !error2){
+            			setTimeout(function () {
+	       						window.location.replace("opiniones.php?id="+idCata);	
+	    				},1000);
+            		}
+            	}
+            });
+
+
 		}
 	</script>
 </head>
 <body>
 	
 	<h1>Nueva cata</h1><br>
-		<table>
-		<tr>
-			<td><p>Nombre de la cata:&nbsp;&nbsp;</p></td>
-			<td><input type="text" id="nombre"></td>
-		</tr>
-		<tr>
-			<td><p>Fecha de la cata:&nbsp;&nbsp;</p></td>
-			<td><input type="date" id="fecha"></td>
-		</tr>
-		<tr>
-			<td><p>Personas:&nbsp;&nbsp;</p></td>
-			<td><input type="text" id="personas"></td>
-		</tr>
-		<tr>
-			<td><p>Cervezas:&nbsp;&nbsp;</p></td>
-			<td><input type="text" id="cervezas"></td>
-		</tr>
-		<tr><td colspan="2"><br></td></tr>
-		<tr>
-			<td><button class="btn btn-secondary" id="continuar">Continuar</button></td>
-			<td><button class="btn btn-link" onclick="location.href='user.php'">Volver</button></td>
-		</tr>
+		<table width="600px">
+			<thead>
+				<tr>
+					<th colspan="2">
+						<div class="progress">
+		  					<div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"><p>0/3</p></div>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody id="1">
+				<tr>
+					<td><p>Nombre de la cata:&nbsp;&nbsp;</p></td>
+					<td><input type="text" id="nombre"></td>
+				</tr>
+				<tr>
+					<td><p>Fecha de la cata:&nbsp;&nbsp;</p></td>
+					<td><input type="date" id="fecha"></td>
+				</tr>
+				<tr>
+					<td><p>Número de Personas:&nbsp;&nbsp;</p></td>
+					<td><input type="number" id="personas" min="0"></td>
+				</tr>
+				<tr>
+					<td><p>Número de Cervezas:&nbsp;&nbsp;</p></td>
+					<td><input type="number" id="cervezas" min="0"></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<p id="error"></p>
+					</td>
+				</tr>
+				<tr>
+					<td><button class="btn btn-secondary" id="continuar1">Continuar</button></td>
+					<td><button class="btn btn-link" onclick="location.href='user.php'">Volver</button></td>
+				</tr>
+			</tbody>
+			<tbody id="2">
+			</tbody>
+			<tbody id="3">
+			</tbody>
+			<tbody id="4">
+				<tr><td><p></p></td></tr>
+			</tbody>
 	</table>
 	<br><br>
 </body>
