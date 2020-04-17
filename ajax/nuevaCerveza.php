@@ -2,8 +2,8 @@
 
 include '../config.php';
 
-$nombre = $_GET['nombre'];
-$id = $_GET['cata'];
+$nombre = $_GET['n'];
+$id = $_GET['c'];
 
 $select = "SELECT id FROM cerveza WHERE nombre='".$nombre."' AND idCata=".$id.";";
 $res = mysqli_query($conexion,$select);
