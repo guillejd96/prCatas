@@ -97,19 +97,19 @@
  				<table class="no_border" width="500px" heigth="500px">
  					<tbody>
  						<tr>
-				 			<td><p align="left">- No tardes más en crear tu cuenta parapoder disfrutar de todo lo que ofrecemos.</p></td>
+				 			<td><p align="justify">- No tardes más en crear tu cuenta parapoder disfrutar de todo lo que ofrecemos.</p></td>
 						</tr>
 						<tr>
-							<td><p align="left">- Con este servidor de catas podrás visualizar tus datos y resultados de las catas de cervezas que hagas con tus amigos desde la aplicación móvil.</p></td>
+							<td><p align="justify">- Con este servidor de catas podrás visualizar tus datos y resultados de las catas de cervezas que hagas con tus amigos desde la aplicación móvil.</p></td>
 						</tr>
 						<tr>
 							<td>
-								<p align="left">- Acceso a las valoraciones de todas las cervezas que has registrado.</p>
+								<p align="justify">- Acceso a las valoraciones de todas las cervezas que has registrado.</p>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<p align="left">- Acceso a los resultados estadísticos de las catas que has registrado.</p>
+								<p align="justify">- Acceso a los resultados estadísticos de las catas que has registrado.</p>
 							</td>
 						</tr>
  					</tbody>
