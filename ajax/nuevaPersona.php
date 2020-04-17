@@ -2,8 +2,8 @@
 
 include '../config.php';
 
-$nombre = $_GET['nombre'];
-$id = $_GET['cata'];
+$nombre = $_GET['n'];
+$id = $_GET['c'];
 
 $sql = "INSERT INTO persona (nombre) VALUES ('".$nombre."');";
 if(mysqli_query($conexion,$sql)){
