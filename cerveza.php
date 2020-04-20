@@ -1,5 +1,11 @@
 <?php 
 	include "config.php";
+
+	session_start();
+	if(!isset($_SESSION["idUsuario"])){
+		header('Location: index.php');
+	}
+
 	$id = $_GET["id"];
 
 	$sql = "SELECT nombre,idCata FROM cerveza WHERE id=".$id;
@@ -17,12 +23,12 @@
  	<meta charset="UTF-8">
  	<title><?php echo $cerveza ?></title>
  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/init.css">
+	<link rel="stylesheet" href="css/style.css">
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
  </head>
  <body>
  	<h1>Información de <?php echo $cerveza; ?></h1><br>	
- 	<table style='background-color: #FFA900;' border="1">
+ 	<table>
  		<tr>
  			<th>
  				<p>Persona</p>
@@ -104,6 +110,6 @@
  		 ?>
  	</table>
  	<br>	
- 	<button class="btn btn-dark" onclick="location.href='info_cata.php?id=<?php echo $idCata; ?>'">Volver</button>
+ 	<button class="btn btn-link" onclick="location.href='info_cata.php?id=<?php echo $idCata; ?>'">Volver</button>
  </body>
  </html>
