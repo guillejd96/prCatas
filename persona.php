@@ -88,7 +88,7 @@
  					}
  				}
  			} else {
- 				echo "<tr><td colspan='6'><p>No hay resultados disponibles</p></td></tr>";
+ 				echo "<tr><td colspan='7'><p>No hay resultados disponibles</p></td></tr>";
  			}
  		 ?>
  	</table>
