@@ -53,7 +53,10 @@
  			</th>
  		</tr>
  		<?php
- 			$nOpinion = $resOpinion->num_rows;
+ 		$nOpinion = $resOpinion->num_rows;
+ 		if($nOpinion==0){
+ 			echo "<tr><td colspan='7'><p>No hay resultados disponibles</p></td></tr>";
+ 		}else {
  			$sumAroma=0;
  			$sumApariencia=0;
  			$sumSabor=0;
@@ -107,6 +110,7 @@
  			}
  			echo "<td><p>".round($mediaMedia,2)."</p></td>";
  			echo "</tr>";
+ 		}
  		 ?>
  	</table>
  	<br>	
