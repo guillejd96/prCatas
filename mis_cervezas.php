@@ -5,12 +5,7 @@
 		header('Location: index.php');
 	}
 
-	$idUsuario = $_SESSION["idUsuario"];
-
-	$sqlPersona = "SELECT * FROM persona WHERE idUsuario=".$idUsuario;
-	$resPersona = mysqli_query($conexion,$sqlPersona)->fetch_row();
-
-	$idPersona = $resPersona[0];
+	$idPersona = $_SESSION["idUsuario"];
 
 	$sql = "SELECT * FROM opinion WHERE idPersona=".$idPersona;
 	$resOpiniones = mysqli_query($conexion,$sql);
