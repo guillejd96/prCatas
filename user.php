@@ -1,18 +1,19 @@
 
 <?php 
 	include "config.php";
+
 	session_start();
 	if(!isset($_SESSION["idUsuario"])){
 		header('Location: index.php');
 	}
 
-	$idUsuario = $_SESSION["idUsuario"];
+	$idPersona = $_SESSION["idUsuario"];
 
-	$sqlPersona = "SELECT * FROM persona WHERE idUsuario=".$idUsuario;
+	$sqlPersona = "SELECT * FROM persona WHERE id=".$idPersona;
 	$resPersona = mysqli_query($conexion,$sqlPersona)->fetch_row();
 
-	$idPersona = $resPersona[0];
 	$nombre = $resPersona[1];
+	$idUsuario = $resPersona[2];
 
 	$sqlUsuario = "SELECT usuario FROM usuario WHERE id=".$idUsuario;
 	$usuario = mysqli_query($conexion,$sqlUsuario)->fetch_row()[0];	
