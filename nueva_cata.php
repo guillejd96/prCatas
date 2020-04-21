@@ -6,13 +6,12 @@
 		header('Location: index.php');
 	}
 
-	$idUsuario = $_SESSION["idUsuario"];
+	$idPersona = $_SESSION["idUsuario"];
 
-	$sqlPersona = "SELECT * FROM persona WHERE idUsuario=".$idUsuario;
+	$sqlPersona = "SELECT * FROM persona WHERE id=".$idPersona;
 	$resPersona = mysqli_query($conexion,$sqlPersona)->fetch_row();
 
-	$idPersona = $resPersona[0];
-
+	$nombrePersona = $resPersona[1];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,20 +38,32 @@
 			nP = $("#personas").val();
 			nC = $("#cervezas").val();
 
-			if(nP<1 || nC<1){
-				$("#error").text('Introduce un número positivo de personas y cervezas');
-				$("#error").css('color', 'red');
-				$("#error").css('font-size', '14px');
+			nP=nP-1;
+
+			if(nombreCata==""){
+				$(".error").text('Introduce un nombre para la cata');
+				$(".error").css('color', 'red');
+				$(".error").css('font-size', '14px');
+			}else if(fechaCata==""){
+				$(".error").text('Introduce la fecha de la cata');
+				$(".error").css('color', 'red');
+				$(".error").css('font-size', '14px');
+			}else if(nP<1 || nC<1){
+				$(".error").text('Introduce un número positivo de personas y cervezas');
+				$(".error").css('color', 'red');
+				$(".error").css('font-size', '14px');
 			}else{
 				$("#1").hide();
 
 				$("#2").append('<tr><td colspan="2"><p>Personas</p></td></tr>')
 
+				$("#2").append('<tr><td colspan="2"><p><?php echo $nombrePersona; ?></p></td></tr>')
+
 				for (var i = 0; i < nP; i++) {
-					$("#2").append('<tr><td colspan="2"><input type="text" id="nombre_personas"><br><br></td></tr>')
+					$("#2").append('<tr><td colspan="2"><input type="text" class="nombre_personas"><br><br></td></tr>')
 				}
 
-				$("#2").append('<tr><tr><td><button class="btn btn-secondary" id="continuar2" onclick="javascript:continuar2()">Continuar</button></td><td><button class="btn btn-link" onclick="volver1()">Volver</button></td></tr></tr>');
+				$("#2").append('<tr><td colspan="2"><p class="error"></p></td></tr><tr><td><button class="btn btn-secondary" id="continuar2" onclick="javascript:continuar2()">Continuar</button></td><td><button class="btn btn-link" onclick="volver1()">Volver</button></td></tr></tr>');
 
 				$(".progress-bar").css('width', '33%');
 				$(".progress-bar").children('p').text('1/3');
@@ -80,81 +91,92 @@
 		}
 
 		function continuar2(){
-			personas = $("input[id='nombre_personas']")
-              .map(function(){return $(this).val();}).get();
+			personas = $("input[class='nombre_personas']").map(function(index, elem) {
+            	if($(elem).val()!="") return $(elem).val();
+            }).get();
 
-            $("#2").hide();
+            if(personas.length!=nP){
+            	$(".error").text("Introduce todos los nombres de las personas");
+            	$(".error").css('color', 'red');
+            } else {
+            	$("#2").hide();
 
-            $("#3").append('<tr><td colspan="2"><p>Cervezas</p></td></tr>')
+	        	$("#3").append('<tr><td colspan="2"><p>Cervezas</p></td></tr>');
 
-            for (var i = 0; i < nC; i++) {
-				$("#3").append('<tr><td colspan="2"><input type="text" id="nombre_cervezas"><br><br></td></tr>')
-			}
+	            for (var i = 0; i < nC; i++) {
+					$("#3").append('<tr><td colspan="2"><input type="text" class="nombre_cervezas"><br><br></td></tr>')
+				}
 
-			$("#3").append('<tr><td><p></p></td></tr>');
+				$("#3").append('<tr><td><p></p></td></tr>');
 
-            $("#3").append('<tr><tr><td><button class="btn btn-secondary" id="continuar3" onclick="javascript:continuar3()">Continuar</button></td><td><button class="btn btn-link" onclick="volver2()">Volver</button></td></tr></tr>');
+	            $("#3").append('<tr><td colspan="2"><p class="error"></p></td></tr><tr><td><button class="btn btn-secondary" id="continuar3" onclick="javascript:continuar3()">Continuar</button></td><td><button class="btn btn-link" onclick="volver2()">Volver</button></td></tr></tr>');
 
-            $(".progress-bar").css('width', '66%');
-			$(".progress-bar").children('p').text('2/3');
+	            $(".progress-bar").css('width', '66%');
+				$(".progress-bar").children('p').text('2/3');
 
-			$("#3").show();
-		}
+				$("#3").show();
+            }
+        }
+		
 
 		function continuar3(){
-			cervezas = $("input[id='nombre_cervezas']")
-              .map(function(){return $(this).val();}).get();
+			cervezas = $("input[class='nombre_cervezas']").map(function(index, elem) {
+            	if($(elem).val()!="") return $(elem).val();
+            }).get();
 
-            $("#3").hide();
+            if(cervezas.length!=nC){
+            	$(".error").text("Introduce todos los nombres de las cervezas");
+            	$(".error").css('color', 'red');
+            }else {
+            	$("#3").hide();
 
-            $("#4").find('p').text('Redireccionando...')
-            $("#4").find('p').css('color', 'green');
+	            $("#4").find('p').text('Redireccionando...')
+	            $("#4").find('p').css('color', 'green');
 
-            $(".progress-bar").css('width', '100%');
-			$(".progress-bar").children('p').text('3/3');
+	            $(".progress-bar").css('width', '100%');
+				$(".progress-bar").children('p').text('3/3');
 
-			$("#4").show();
+				$("#4").show();
 
-            $.get('ajax/nuevaCata.php?c='+nombreCata+'&p=<?php echo $idPersona ?>&f='+fechaCata, function(data) {
-            	if(data=="0" || data=="-1"){
-            		$("#4").find('p').text('Error al insertar la cata en base de datos');
-            		$("#4").find('p').css('color', 'red');
-            	}else {
-            		var idCata = data,error1=false,error2=false;
+	            $.get('ajax/nuevaCata.php?c='+nombreCata+'&p=<?php echo $idPersona ?>&f='+fechaCata, function(data) {
+	            	if(data=="0" || data=="-1"){
+	            		$("#4").find('p').text('Error al insertar la cata en base de datos');
+	            		$("#4").find('p').css('color', 'red');
+	            	}else {
+	            		var idCata = data,error1=false,error2=false;
 
-            		personas.forEach(function(item){
-            			if(!error1){
-            				$.get('ajax/nuevaPersona.php?n='+item+'&c='+idCata, function(data) {
-	            				if(data=="0"){
-	            					$("#4").find('p').text('Error al insertar las personas en base de datos');
-	            					$("#4").find('p').css('color', 'red');
-	            					error1=true;
-	            				}
-	            			});
-            			}
-            		});
+	            		personas.forEach(function(item){
+	            			if(!error1){
+	            				$.get('ajax/nuevaPersona.php?n='+item+'&c='+idCata, function(data) {
+		            				if(data=="0"){
+		            					$("#4").find('p').text('Error al insertar las personas en base de datos');
+		            					$("#4").find('p').css('color', 'red');
+		            					error1=true;
+		            				}
+		            			});
+	            			}
+	            		});
 
-            		cervezas.forEach(function(item){
-            			if(!error2){
-            				$.get('ajax/nuevaCerveza.php?n='+item+'&c='+idCata, function(data) {
-	            				if(data=="0"){
-	            					$("#4").find('p').text('Error al insertar las cervezas en base de datos');
-	            					$("#4").find('p').css('color', 'red');
-	            					error2=true;
-	            				}
-	            			});
-            			}
-            		});
+	            		cervezas.forEach(function(item){
+	            			if(!error2){
+	            				$.get('ajax/nuevaCerveza.php?n='+item+'&c='+idCata, function(data) {
+		            				if(data=="0"){
+		            					$("#4").find('p').text('Error al insertar las cervezas en base de datos');
+		            					$("#4").find('p').css('color', 'red');
+		            					error2=true;
+		            				}
+		            			});
+	            			}
+	            		});
 
-            		if(!error1 && !error2){
-            			setTimeout(function () {
-	       						window.location.replace("opiniones.php?id="+idCata);	
-	    				},1000);
-            		}
-            	}
-            });
-
-
+	            		if(!error1 && !error2){
+	            			setTimeout(function () {
+		       						window.location.replace("opiniones.php?id="+idCata);	
+		    				},1000);
+	            		}
+	            	}
+	            });
+            }
 		}
 	</script>
 </head>
@@ -190,7 +212,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<p id="error"></p>
+						<p class="error"></p>
 					</td>
 				</tr>
 				<tr>
