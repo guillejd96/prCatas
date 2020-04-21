@@ -7,12 +7,7 @@
 		header('Location: index.php');
 	}
 
-	$idUsuario = $_SESSION["idUsuario"];
-
-	$sqlPersona = "SELECT * FROM persona WHERE idUsuario=".$idUsuario;
-	$resPersona = mysqli_query($conexion,$sqlPersona)->fetch_row();
-
-	$idPersona = $resPersona[0];
+	$idPersona = $_SESSION["idUsuario"];
 
 	$idCata = $_GET['id'];
 
@@ -37,70 +32,101 @@
  			$("#guardar").click(guardar);
  		});
 
+        function volver(){
+            window.location.replace("cata.php");
+        }
+
  		function guardar(){
- 			var apariencias = $("input[id='apariencia']")
-              .map(function(){return $(this).val();}).get();
-            var sabores = $("input[id='sabor']")
-              .map(function(){return $(this).val();}).get();
-            var aromas = $("input[id='aroma']")
-              .map(function(){return $(this).val();}).get();
-            var botellines = $("input[id='botellin']")
-              .map(function(){return $(this).val();}).get();
-            var cuerpos = $("input[id='cuerpo']")
-              .map(function(){return $(this).val();}).get();
+            var aux = $("input[class='apariencia']").map(function(index, elem) {
+                return 1;
+            })
 
-            var idPersonas = $(".idPersonas").map(function(index, elem) {
-            	return $(elem).attr('data-id');
+            nOpiniones = aux.length;
+
+ 			var apariencias = $("input[class='apariencia']")
+              .map(function(index,elem){
+                if($(elem).val()!="") return $(elem).val();
             }).get();
 
-            var idCervezas = $(".idCervezas").map(function(index, elem) {
-            	return $(elem).attr('data-id');
+            var aromas = $("input[class='aroma']")
+              .map(function(index,elem){
+                if($(elem).val()!="") return $(elem).val();
             }).get();
 
-            var uniqueIDCervezas = [];
-			$.each(idCervezas, function(i, el){
-    			if($.inArray(el, uniqueIDCervezas) === -1) uniqueIDCervezas.push(el);
-			});
+            var cuerpos = $("input[class='cuerpo']")
+              .map(function(index,elem){
+                if($(elem).val()!="") return $(elem).val();
+            }).get();
 
-			idCervezas = uniqueIDCervezas;
+            var botellines = $("input[class='botellin']")
+              .map(function(index,elem){
+                if($(elem).val()!="") return $(elem).val();
+            }).get();
 
-			var nCervezas = idCervezas.length;
+            var sabores = $("input[class='sabor']")
+              .map(function(index,elem){
+                if($(elem).val()!="") return $(elem).val();
+            }).get();
 
-			var error=false;
-
-            for (var i = 0; i < idPersonas.length; i++) {
-            	var idPersona = idPersonas[i];
-            	
-            	for (var j = 0; j < nCervezas; j++) {
-            		var k = (i*2)+j;
-
-            		var idCerveza = idCervezas[j];
-
-            		var apariencia = apariencias[k];
-            		var aroma = aromas[k];
-            		var sabor = sabores[k];
-            		var cuerpo = cuerpos[k];
-            		var botellin = botellines[k];
-
-            		var link = 'ajax/nuevaOpinion.php?p='+idPersona+'&c='+idCerveza+'&ar='+aroma+'&ap='+apariencia+'&s='+sabor+'&cu='+cuerpo+'&b='+botellin;
-
-            		$.get(link, function(data) {
-            			if(data!="1"){
-            				error = true;
-            			}
-            		});
-            	}
-            }
-
-            if(error){
-            	$("#res").text("Error al insertar los datos");
+            if(apariencias.length!=nOpiniones || sabores.length!=nOpiniones || aromas.length!=nOpiniones || botellines.length!=nOpiniones || cuerpos.length!=nOpiniones){
+                $("#res").text("Introduce todas las opiniones");
                 $("#res").css('color', 'red');
-            } else {
-            	$("#res").text("Se han introducido los datos correctamente. Redireccionando...");
-                $("#res").css('color', 'green');
-            	setTimeout(function () {
-	       			window.location.replace("user.php");	
-	    		},1000);
+                $("#res").css('font-size', '15px');
+            }else {
+                var idPersonas = $(".idPersonas").map(function(index, elem) {
+                return $(elem).attr('data-id');
+                }).get();
+
+                var idCervezas = $(".idCervezas").map(function(index, elem) {
+                    return $(elem).attr('data-id');
+                }).get();
+
+                var uniqueIDCervezas = [];
+                $.each(idCervezas, function(i, el){
+                    if($.inArray(el, uniqueIDCervezas) === -1) uniqueIDCervezas.push(el);
+                });
+
+                idCervezas = uniqueIDCervezas;
+
+                var nCervezas = idCervezas.length;
+
+                var error=false;
+
+                for (var i = 0; i < idPersonas.length; i++) {
+                    var idPersona = idPersonas[i];
+                    
+                    for (var j = 0; j < nCervezas; j++) {
+                        var k = (i*2)+j;
+
+                        var idCerveza = idCervezas[j];
+
+                        var apariencia = apariencias[k];
+                        var aroma = aromas[k];
+                        var sabor = sabores[k];
+                        var cuerpo = cuerpos[k];
+                        var botellin = botellines[k];
+
+                        var link = 'ajax/nuevaOpinion.php?p='+idPersona+'&c='+idCerveza+'&ar='+aroma+'&ap='+apariencia+'&s='+sabor+'&cu='+cuerpo+'&b='+botellin;
+
+                        $.get(link, function(data) {
+                            if(data!="1"){
+                                error = true;
+                            }
+                        });
+                    }
+                }
+
+                if(error){
+                    $("#res").text("Error al insertar los datos");
+                    $("#res").css('color', 'red');
+                    $("#res").css('font-size', '15px');
+                } else {
+                    $("#res").text("Se han introducido los datos correctamente. Redireccionando...");
+                    $("#res").css('color', 'green');
+                    setTimeout(function () {
+                        window.location.replace("user.php");    
+                    },1000);
+                }
             }
  		}
  	</script>
@@ -129,11 +155,11 @@
  			while($cerveza = mysqli_fetch_array($resCervezas)){
  				echo "<tr>";
  				echo "<td class='idCervezas' data-id='".$cerveza[0]."'><p>".$cerveza[1]."</p></td>";
- 				echo "<td><input type='number' id='apariencia' size='1' min='0' max='10'></td>";
- 				echo "<td><input type='number' id='aroma' size='1' min='0' max='10'></td>";
- 				echo "<td><input type='number' id='sabor' size='1' min='0' max='10'></td>";
- 				echo "<td><input type='number' id='cuerpo' size='1' min='0' max='10'></td>";
- 				echo "<td><input type='number' id='botellin' size='1' min='0' max='10'></td>";
+ 				echo "<td><input type='number' class='apariencia' size='1' min='0' max='10'></td>";
+ 				echo "<td><input type='number' class='aroma' size='1' min='0' max='10'></td>";
+ 				echo "<td><input type='number' class='sabor' size='1' min='0' max='10'></td>";
+ 				echo "<td><input type='number' class='cuerpo' size='1' min='0' max='10'></td>";
+ 				echo "<td><input type='number' class='botellin' size='1' min='0' max='10'></td>";
  				echo "</tr>";
  			}
  			echo "</table>";
@@ -145,7 +171,7 @@
         <tr><td colspan="2"><p id="res"></p></td></tr>
 		<tr>
 			<td><button id="guardar" class="btn btn-dark">Guardar</button></td>
-			<td><button class="btn btn-link">Volver</button></td>
+			<td><button class="btn btn-link" onclick="javascript:volver()">Volver</button></td>
 		</tr>
 	</table>
  	<br>
