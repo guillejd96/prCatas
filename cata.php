@@ -6,12 +6,10 @@
 		header('Location: index.php');
 	}
 
-	$idUsuario = $_SESSION["idUsuario"];
+	$idPersona = $_SESSION["idUsuario"];
 
-	$sqlPersona = "SELECT * FROM persona WHERE idUsuario=".$idUsuario;
+	$sqlPersona = "SELECT * FROM persona WHERE id=".$idPersona;
 	$resPersona = mysqli_query($conexion,$sqlPersona)->fetch_row();
-
-	$idPersona = $resPersona[0];
 
 	$sqlPersonaCata = "SELECT idCata FROM persona_cata WHERE idPersona = ".$idPersona;
 	$resIDCatas = mysqli_query($conexion,$sqlPersonaCata);
@@ -39,6 +37,10 @@
 					}
 				});
 			}
+		}
+
+		function editar(id){
+			window.location.replace("opiniones.php?id="+id);
 		}
 	</script>
  </head>
@@ -68,7 +70,7 @@
 			echo "<td><p>".$cata[2]."</p></td>";
 			echo "<td><p>".$nCervezas."</p></td>";
 			echo "<td><p>".$nPersonas."</p></td>";
-			echo "<td><p><button class='btn btn-link' onclick='javascript:borrar($idCata[0])'><i class='far fa-trash-alt' style='font-size: 25px'></i></button> <button class='btn btn-link'><i class='far fa-edit' style='font-size: 25px'></i></button></p></td>";
+			echo "<td><p><button class='btn btn-link' onclick='javascript:borrar($idCata[0])'><i class='far fa-trash-alt' style='font-size: 25px'></i></button> <button class='btn btn-link' onclick='javascript:editar($idCata[0])'><i class='far fa-edit' style='font-size: 25px'></i></button></p></td>";
 			echo "</tr>";
 		}
 		echo "</table>";
