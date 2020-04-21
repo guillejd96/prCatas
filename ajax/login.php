@@ -1,17 +1,17 @@
 <?php 
 
-include '../config.php';
+	include '../config.php';
 
-session_start();
+	session_start();
 
-$u = $_GET['u'];
+	$u = $_GET['u'];
 
-$sql = "SELECT id FROM persona WHERE idUsuario=".$u;
+	$sql = "SELECT id FROM persona WHERE idUsuario=".$u;
 
-$u = mysqli_query($conexion,$sql)->fetch_row()[0];
+	$id = mysqli_query($conexion,$sql)->fetch_row()[0];
 
-$_SESSION["idUsuario"] = $u;
+	$_SESSION["idUsuario"] = $id;
 
-echo "1";
+	echo "1";
 
 ?>
