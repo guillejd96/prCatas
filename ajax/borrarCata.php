@@ -26,7 +26,7 @@
 		$sqlBorrarPersonaCata = "DELETE FROM persona_cata WHERE idPersona=".$idPersona." AND idCata=".$idCata.";";
 		mysqli_query($conexion,$sqlBorrarPersonaCata);
 
-		$sqlBorrarPersona = "DELETE FROM persona WHERE id=".$idPersona." AND idUsuario=NULL";
+		$sqlBorrarPersona = "DELETE FROM persona WHERE id=".$idPersona." AND ISNULL(idUsuario);";
 		mysqli_query($conexion,$sqlBorrarPersona);
 	}
 
