@@ -1,8 +1,8 @@
 <?php 
 
-session_start();
+	session_start();
 
-include "config.php"
+	include "config.php"
 
 ?>
 <!DOCTYPE html>
@@ -14,22 +14,6 @@ include "config.php"
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 	<title>Inicio</title>
 	<script>
-		function entrar(){
-			var user = $("#user").val();
-			var pass = $("#pass").val();
-
-			$.get('ajax/buscarUsuario.php?u='+user+'&p='+pass, function(data) {
-				if(data!="error"){
-					$.get('ajax/login.php?u='+data, function(data2) {
-						if(data2=="1") window.location.replace("user.php")
-					});
-					
-				}else {
-					$("#error").text("El usuario o la contraseña están equivocados")
-				}
-			});
-		}
-
 		$(document).ready(function() {
 			$("#entrar").click(entrar);
 			var input = document.getElementById("pass");
@@ -40,24 +24,41 @@ include "config.php"
   				}
 			});
 		});
+
+		function entrar(){
+			var user = $("#user").val();
+			var pass = $("#pass").val();
+
+			$.post('ajax/login.php', {user: user,pass:pass}, function(data, textStatus, xhr) {
+				if(data=="1"){
+					window.location.replace("user.php");
+				}
+				else{
+					$("#error").text("El usuario o la contraseña están equivocados");
+					$("#error").css('color', 'red');
+				}
+			});
+		}
+
+
 	</script>
 </head>
 <body>
 	<table>
 		<tr>
 			<td><p align="right">Usuario:</p></td>
-			<td><input type="text" id="user"></td>
+			<td><input type="text" name="user" id="user"></td>
 		</tr>
 		<tr>
 			<td><p align="right">Contraseña:</p></td>
-			<td><input type="password" id="pass"></td>
+			<td><input type="password" name="pass" id="pass"></td>
 		</tr>
 		<tr>
 			<td colspan="2"><br></td>
 		</tr>
 		<tr>
 			<td colspan="2">
-				<button class="btn btn-info" id="entrar" onclick="javascript:entrar()">Entrar</button>
+				<input type="button" class="btn btn-info" id="entrar" onclick="javascript:entrar" value="Entrar">
 			</td>
 		</tr>
 		<tr>

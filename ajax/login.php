@@ -4,14 +4,25 @@
 
 	session_start();
 
-	$u = $_GET['u'];
+	$user = $_POST["user"];
+	$pass = $_POST["pass"];
 
-	$sql = "SELECT id FROM persona WHERE idUsuario=".$u;
+	$hashP = hash("sha256",$pass);
 
-	$id = mysqli_query($conexion,$sql)->fetch_row()[0];
+	$stmt = mysqli_prepare($conexion,"SELECT id FROM usuario WHERE usuario = ? AND password = ?");
 
-	$_SESSION["idUsuario"] = $id;
+	mysqli_stmt_bind_param($stmt,"ss",$user,$hashP);
 
-	echo "1";
+	mysqli_stmt_execute($stmt);
 
+	$res = mysqli_stmt_get_result($stmt);
+
+	if(mysqli_num_rows($res)>0){
+		$idUsuario = $res->fetch_row()[0];
+		$_SESSION["idUsuario"] = $idUsuario;
+		echo "1";
+	}
+	else{
+		echo "0";
+	}
 ?>

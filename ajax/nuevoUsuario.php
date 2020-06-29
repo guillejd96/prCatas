@@ -2,21 +2,36 @@
 
 	include '../config.php';
 
-	$usuario = $_GET['u'];
-	$nombre = $_GET['n'];
-	$password = $_GET['p'];
+	$usuario = $_POST['usuario'];
+	$nombre = $_POST['nombre'];
+	$password = $_POST['contrasenya'];
 
-	$sqlUsuario = "INSERT INTO usuario(usuario,password) VALUES ('".$usuario."','".$password."');";
-	if(mysqli_query($conexion,$sqlUsuario)){
-		$sqlIDUsuario = "SELECT id FROM usuario WHERE usuario = '".$usuario."' AND password = '".$password."';";
+	$hashP = $hashP = hash("sha256", $password);
+
+	$stmt = mysqli_prepare($conexion,"INSERT INTO usuario(usuario,password) VALUES (? , ?);");
+
+	mysqli_stmt_bind_param($stmt,"ss",$usuario,$hashP);
+
+	mysqli_stmt_execute($stmt);
+
+	if(mysqli_stmt_affected_rows($stmt)>0){
+		$sqlIDUsuario = "SELECT id FROM usuario WHERE password = '".$hashP."';";
 		$id = mysqli_query($conexion,$sqlIDUsuario)->fetch_row()[0];
-		$sql = "INSERT INTO persona(nombre,idUsuario) VALUES ('".$nombre."',".$id.");";
-		if(mysqli_query($conexion,$sql)){
+
+		$stmt = mysqli_prepare($conexion,"INSERT INTO persona(nombre,idUsuario) VALUES (?,?);");
+
+		mysqli_stmt_bind_param($stmt,"si",$nombre,$id);
+
+		mysqli_stmt_execute($stmt);
+
+		if(mysqli_stmt_affected_rows($stmt)>0){
 			echo "1";
-		} else {
+		}
+		else {
 			echo "0";
 		}
-	}else {
+	}
+	else{
 		echo "-1";
 	}
  ?>
