@@ -6,6 +6,6 @@ session_start();
 
 $_SESSION["idUsuario"] = NULL;
 
-echo "1";
+header('Location: ../index.php');
  
 ?>
