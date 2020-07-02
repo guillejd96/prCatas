@@ -1,18 +1,31 @@
 <?php 
 
-include '../config.php';
+	include '../config.php';
 
-$u = $_GET['u'];
-$p = $_GET['p'];
+	session_start();
 
-$sql = "SELECT id FROM usuario WHERE usuario='".$u."' AND password='".$p."';";
+	$usuario = $_POST['usuario'];
 
-$res = mysqli_query($conexion,$sql);
+	$stmt = mysqli_prepare($conexion,"SELECT * FROM usuario WHERE usuario LIKE ?");
 
-if(mysqli_num_rows($res)>0){
-	echo $res->fetch_row()[0];
-}else{
-	echo "error";
-}
- 
+	$sql = $usuario."%";
+
+	mysqli_stmt_bind_param($stmt,"s",$sql);
+
+	mysqli_stmt_execute($stmt);
+
+	$res = mysqli_stmt_get_result($stmt);
+
+	if(mysqli_num_rows($res)>0){
+		$return = "";
+		while($row = mysqli_fetch_array($res)){
+			$id = $row[0];
+			$user = $row[1];
+			$nombre = mysqli_query($conexion,"SELECT nombre FROM persona WHERE idUsuario=".$id)->fetch_row()[0];
+			$return = $return.$id.":".$user.":".$nombre.",";
+		}
+		echo $return;
+	} else{
+		echo "null";
+	}
 ?>
