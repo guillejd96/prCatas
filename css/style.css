@@ -1,7 +1,14 @@
 body {
   text-align: center;
-  background-color: #FAE96F;
+  background-color: #ffc65a;
   background-size:cover;
+}
+
+.main {
+  margin-top: 80px;
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
 }
 
 table {
@@ -11,7 +18,6 @@ table {
 	margin-left:auto; 
   margin-right:auto;
   border-collapse: separate; 
-  margin-top: 2%; 
   border: 2px solid gray; 
   border-radius: 15px;
   padding: 2% 2% 2% 2%;
@@ -39,7 +45,6 @@ p.error {
   font-size: 14px;
   color: red;
 }
-
 
 
 p.form{
