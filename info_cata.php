@@ -1,5 +1,6 @@
 <?php 
 	include "config.php";
+	include 'menus.php';
 
 	session_start();
 	if(!isset($_SESSION["idUsuario"])){
@@ -28,6 +29,10 @@
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
+	<?php echo banner(); ?>
+	<?php echo arriba(); ?>
+	<?php echo izquierda(); ?>
+	<div class="main">
 	<h1><?php echo $nombreCata ?></h1><br><br>
 	<table>
 		<tr>
@@ -69,5 +74,6 @@
 	</table>
 	<br>
 	<button class="btn btn-link" onclick="location.href='cata.php'">Volver</button></td>
+	</div>
 </body>
 </html>
