@@ -1,6 +1,6 @@
 <?php 
 	include "config.php";
-
+	include 'menus.php';
 	session_start();
 	if(!isset($_SESSION["idUsuario"])){
 		header('Location: index.php');
@@ -45,6 +45,10 @@
 	</script>
  </head>
  <body>
+ 	<?php echo banner(); ?>
+	<?php echo arriba(); ?>
+	<?php echo izquierda(); ?>
+	<div class="main">
  	<h1>Catas guardadas</h1><br>
  	<h3>Aquí se muestran un listado de las catas que has registrado</h3>
  	<?php if($resIDCatas->num_rows>0){
@@ -86,6 +90,6 @@
 		
  	<?php } ?>
  	<br>
- 	<button class="btn btn-link" onclick="location.href='user.php'">Volver</button>
+ </div>
  </body>
  </html>
