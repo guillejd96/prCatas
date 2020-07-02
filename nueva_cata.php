@@ -1,5 +1,6 @@
 <?php 
 	include "config.php"; 
+	include 'menus.php';
 
 	session_start();
 	if(!isset($_SESSION["idUsuario"])){
@@ -21,6 +22,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script>
 		var personas,cervezas,nP,nC,nombreCata,fechaCata;
 
@@ -181,53 +184,57 @@
 	</script>
 </head>
 <body>
-	
-	<h1>Nueva cata</h1><br>
-		<table width="600px">
-			<thead>
-				<tr>
-					<th colspan="2">
-						<div class="progress">
-		  					<div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"><p>0/3</p></div>
-						</div>
-					</th>
-				</tr>
-			</thead>
-			<tbody id="1">
-				<tr>
-					<td><p>Nombre de la cata:&nbsp;&nbsp;</p></td>
-					<td><input type="text" id="nombre"></td>
-				</tr>
-				<tr>
-					<td><p>Fecha de la cata:&nbsp;&nbsp;</p></td>
-					<td><input type="date" id="fecha"></td>
-				</tr>
-				<tr>
-					<td><p>Número de Personas:&nbsp;&nbsp;</p></td>
-					<td><input type="number" id="personas" min="0"></td>
-				</tr>
-				<tr>
-					<td><p>Número de Cervezas:&nbsp;&nbsp;</p></td>
-					<td><input type="number" id="cervezas" min="0"></td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<p class="error"></p>
-					</td>
-				</tr>
-				<tr>
-					<td><button class="btn btn-secondary" id="continuar1">Continuar</button></td>
-					<td><button class="btn btn-link" onclick="location.href='user.php'">Volver</button></td>
-				</tr>
-			</tbody>
-			<tbody id="2">
-			</tbody>
-			<tbody id="3">
-			</tbody>
-			<tbody id="4">
-				<tr><td><p></p></td></tr>
-			</tbody>
-	</table>
-	<br><br>
+	<?php echo banner(); ?>
+	<?php echo arriba(); ?>
+	<?php echo izquierda(); ?>
+	<div class="main">
+		<h1>Nueva cata</h1><br>
+			<table width="600px">
+				<thead>
+					<tr>
+						<th colspan="2">
+							<div class="progress">
+			  					<div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"><p>0/3</p></div>
+							</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody id="1">
+					<tr>
+						<td><p>Nombre de la cata:&nbsp;&nbsp;</p></td>
+						<td><input type="text" id="nombre"></td>
+					</tr>
+					<tr>
+						<td><p>Fecha de la cata:&nbsp;&nbsp;</p></td>
+						<td><input type="date" id="fecha"></td>
+					</tr>
+					<tr>
+						<td><p>Número de Personas:&nbsp;&nbsp;</p></td>
+						<td><input type="number" id="personas" min="0"></td>
+					</tr>
+					<tr>
+						<td><p>Número de Cervezas:&nbsp;&nbsp;</p></td>
+						<td><input type="number" id="cervezas" min="0"></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<p class="error"></p>
+						</td>
+					</tr>
+					<tr>
+						<td><button class="btn btn-secondary" id="continuar1">Continuar</button></td>
+						<td><button class="btn btn-link" onclick="location.href='user.php'">Volver</button></td>
+					</tr>
+				</tbody>
+				<tbody id="2">
+				</tbody>
+				<tbody id="3">
+				</tbody>
+				<tbody id="4">
+					<tr><td><p></p></td></tr>
+				</tbody>
+		</table>
+		<br><br>
+	</div>
 </body>
 </html>
