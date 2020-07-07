@@ -4,9 +4,15 @@
 
 	session_start();
 
+	if(!isset($_SESSION["idUsuario"])){
+		header('Location: index.php');
+	}
+
+	$idUsuario = $_SESSION["idUsuario"];
+
 	$usuario = $_POST['usuario'];
 
-	$stmt = mysqli_prepare($conexion,"SELECT * FROM usuario WHERE usuario LIKE ?");
+	$stmt = mysqli_prepare($conexion,"SELECT * FROM usuario WHERE id!=".$idUsuario." AND usuario LIKE ?");
 
 	$sql = $usuario."%";
 
