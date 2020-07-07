@@ -12,6 +12,8 @@
 
 	$id = $_POST['id'];
 
+	
+
 	$stmt = mysqli_prepare($conexion,"INSERT INTO amigos(idUsuario1,idUsuario2) VALUES (?,?)");
 
 	mysqli_stmt_bind_param($stmt,"ii",$idUsuario,$id);
