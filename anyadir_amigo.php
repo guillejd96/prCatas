@@ -18,6 +18,8 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script>
+		var amigos;
+
 		function add(id){
 			$.post('ajax/anyadirAmigo', {id: id}, function(data, textStatus, xhr) {
 				if(data=="1"){
@@ -38,13 +40,18 @@
 				} else{
 					$("#res").append("<table id='table_res' style='width: 100rem'><tr><th><p>Usuario</p></th><th><p>Nombre</p></th><th><p>Agregar</p></th></tr></table>");
 					var personas = data.split(",");
-					for(var i=0;i<personas.length-1;i++){
-						var p = personas[i].split(":");
-						var id = p[0]
-						var usuario = p[1];
-						var nombre = p[2];
-						$("#table_res").append("<tr><td><p>"+usuario+"</p></td><td><p>"+nombre+"</p></td><td><a href='javascript:add("+id+")'><p><i class='fas fa-user-plus'></i></p></a></td></tr>")
-					}
+					$.get('ajax/buscarAmigos.php', function(data) {
+						amigos = data.split(";");
+						for(var i=0;i<personas.length-1;i++){
+							var p = personas[i].split(":");
+							var id = p[0]
+							var usuario = p[1];
+							var nombre = p[2];
+							if(!amigos.includes(id)){
+								$("#table_res").append("<tr><td><p>"+usuario+"</p></td><td><p>"+nombre+"</p></td><td><a href='javascript:add("+id+")'><p><i class='fas fa-user-plus'></i></p></a></td></tr>");
+							}
+						}
+					});
 				}
 				});
 			} else {
