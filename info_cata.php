@@ -69,7 +69,7 @@
 			</td>
 		</tr>
 		<tr><td colspan="4"><br>
-			<button class="btn btn-dark" onclick="location.href='resultados.php'">Ver resultados</button>
+			<button class="btn btn-dark" onclick="location.href='resultados.php?id=<?php echo $idCata; ?>'">Ver resultados</button>
 		</td></tr>
 	</table>
 	<br>
