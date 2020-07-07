@@ -24,6 +24,9 @@
 
 	$sqlNCervezas = "SELECT COUNT(*) FROM opinion WHERE idPersona =".$idPersona;
 	$nCervezas = mysqli_query($conexion,$sqlNCervezas)->fetch_row()[0];
+
+	$sqlNAmigos = "SELECT COUNT(*) FROM amigos WHERE aceptada=1 AND idUsuario1 = ".$idUsuario;
+	$nAmigos = mysqli_query($conexion,$sqlNAmigos)->fetch_row()[0];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -41,7 +44,35 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
-		<h2>Bienvenido <?php echo $usuario ?></h2>
+		<?php 
+			$sqlSolicitudes = "SELECT idUsuario1 FROM amigos WHERE aceptada=0 AND idUsuario2 = ".$idUsuario;
+			$resSolicitudes = mysqli_query($conexion,$sqlSolicitudes);
+			if(mysqli_num_rows($resSolicitudes)>0){
+				echo "<a href='solicitudes.php'><p><i class='fas fa-exclamation'></i> Hay solicitudes de amistad pendientes</p></a>";
+			}
+		 ?>
+		<table width="1000">
+			<tr>
+				<td><p>Usuario: </p></td>
+				<td><p><?php echo $usuario ?></p></td>
+			</tr>
+			<tr>
+				<td><p>Nombre: </p></td>
+				<td><p><?php echo $nombre ?></p></td>
+			</tr>
+			<tr>
+				<td><p>Catas: </p></td>
+				<td><p><?php echo $nCatas ?></p></td>
+			</tr>
+			<tr>
+				<td><p>Cervezas: </p></td>
+				<td><p><?php echo $nCervezas ?></p></td>
+			</tr>
+			<tr>
+				<td><p>Amigos: </p></td>
+				<td><p><?php echo $nAmigos ?></p></td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html> 
