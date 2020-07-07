@@ -24,13 +24,25 @@
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script>
+		function del(id){
+			if(confirm("¿Está seguro de borrar el amigo?")){
+				$.post('ajax/borrarAmigo.php', {id: id}, function(data, textStatus, xhr) {
+					if(data=="1"){
+						window.location.reload();
+					} else {
+						alert("Error al borrar");
+					}
+				});
+			}
+		}
+	</script>
 </head>
 <body>
 	<?php echo banner(); ?>
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
-		<h1>Mis amigos</h1>
 		<table>
 			<tr>
 				<td>
@@ -48,7 +60,7 @@
 		<br>
 		<?php 
 			if(mysqli_num_rows($resAmigos)>0){
-				echo "<table><tr><th><p>Usuario</p></th><th><p>Nombre</p></th><th></th></tr>";
+				echo "<table><tr><th><p>Usuario</p></th><th><p>Nombre</p></th><th></th><th></th></tr>";
 				while($amigo = mysqli_fetch_array($resAmigos)){
 					$idAmigo = $amigo[0];
 					$pendiente = $amigo[1];
@@ -58,6 +70,8 @@
 						echo "<tr>";
 						echo "<td><p>".$usuario."</p></td>";
 						echo "<td><p>".$nombre."</p></td>";
+						echo "<td><a href='preview_user.php?u=".$idAmigo."'><p><i class='fas fa-eye' title='Ver información de usuario'></i></p></a></td>";
+						echo "<td><a href='javascript:del(".$idAmigo.")'><p><i class='fas fa-trash' title='Borrar amigo'></i></p></a></td>";
 						echo "</tr>";
 					}
 				}
