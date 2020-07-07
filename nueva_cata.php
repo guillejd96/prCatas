@@ -7,12 +7,16 @@
 		header('Location: index.php');
 	}
 
-	$idPersona = $_SESSION["idUsuario"];
+	$idUsuario = $_SESSION["idUsuario"];
 
-	$sqlPersona = "SELECT * FROM persona WHERE id=".$idPersona;
+	$sqlPersona = "SELECT * FROM persona WHERE idUsuario=".$idUsuario;
 	$resPersona = mysqli_query($conexion,$sqlPersona)->fetch_row();
 
+	$idPersona = $resPersona[0];
 	$nombrePersona = $resPersona[1];
+
+	$sql = "SELECT idUsuario2 FROM amigos WHERE idUsuario1=".$idUsuario;
+	$resAmigos = mysqli_query($conexion,$sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,11 +26,23 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script>
 		var personas,cervezas,nP,nC,nombreCata,fechaCata;
 
+		function anyadirAmigo(){
+			inputIndex = $('#modalAmigos').data('index');
+			var aux = $("#amigos").val();
+			aux = aux.split(";");
+			var idAmigo = aux[0];
+			var nombreAmigo = aux[1];
+			var input = $(".nombre_personas").get(inputIndex);
+			$(input).val(nombreAmigo);
+			$(input).data('id', idAmigo);
+			$(input).prop("readonly", true);
+		}
 
 		$(document).ready(function() {
 			$("#continuar1").click(continuar1);
@@ -35,12 +51,16 @@
 			$("#4").hide();
 		});
 
+		function showModal(i){
+			$('#modalAmigos').data('index',i);
+			$('#modalAmigos').modal('show');
+		}
+
 		function continuar1(){
 			nombreCata = $("#nombre").val();
 			fechaCata = $("#fecha").val();
 			nP = $("#personas").val();
 			nC = $("#cervezas").val();
-
 			nP=nP-1;
 
 			if(nombreCata==""){
@@ -63,7 +83,7 @@
 				$("#2").append('<tr><td colspan="2"><p><?php echo $nombrePersona; ?></p></td></tr>')
 
 				for (var i = 0; i < nP; i++) {
-					$("#2").append('<tr><td colspan="2"><input type="text" class="nombre_personas"><br><br></td></tr>')
+					$("#2").append('<tr><td colspan="2"><p><input type="text" class="nombre_personas">&nbsp&nbsp<i class="fas fa-plus" title="Añadir amigo" onclick="javascript:showModal('+i+')"></i><br><p></td></tr>')
 				}
 
 				$("#2").append('<tr><td colspan="2"><p class="error"></p></td></tr><tr><td><button class="btn btn-secondary" id="continuar2" onclick="javascript:continuar2()">Continuar</button></td><td><button class="btn btn-link" onclick="volver1()">Volver</button></td></tr></tr>');
@@ -95,7 +115,13 @@
 
 		function continuar2(){
 			personas = $("input[class='nombre_personas']").map(function(index, elem) {
-            	if($(elem).val()!="") return $(elem).val();
+            	if($(elem).val()!=""){
+            		var toReturn=$(elem).val();
+            		if($(elem).data("id")!=undefined){
+            			toReturn = toReturn+";"+$(elem).data("id");
+            		}
+            		return toReturn;
+            	} 
             }).get();
 
             if(personas.length!=nP){
@@ -149,14 +175,29 @@
 	            		var idCata = data,error1=false,error2=false;
 
 	            		personas.forEach(function(item){
-	            			if(!error1){
-	            				$.get('ajax/nuevaPersona.php?n='+item+'&c='+idCata, function(data) {
-		            				if(data=="0"){
-		            					$("#4").find('p').text('Error al insertar las personas en base de datos');
-		            					$("#4").find('p').css('color', 'red');
-		            					error1=true;
-		            				}
-		            			});
+	            			var aux = item.split(";");
+	            			if(aux.length>1){
+	            				var nombre = aux[0];
+	            				var idAmigo = aux[1];
+	            				if(!error1){
+		            				$.get('ajax/anyadirPersona.php?&c='+idCata+'&n='+idAmigo, function(data) {
+			            				if(data=="0"){
+			            					$("#4").find('p').text('Error al añadir el amigo a la cata');
+			            					$("#4").find('p').css('color', 'red');
+			            					error1=true;
+			            				}
+			            			});
+		            			}
+	            			} else {
+	            				if(!error1){
+		            				$.get('ajax/nuevaPersona.php?n='+item+'&c='+idCata, function(data) {
+			            				if(data=="0"){
+			            					$("#4").find('p').text('Error al insertar las personas en base de datos');
+			            					$("#4").find('p').css('color', 'red');
+			            					error1=true;
+			            				}
+			            			});
+		            			}
 	            			}
 	            		});
 
@@ -188,7 +229,7 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
-		<h1>Nueva cata</h1><br>
+		<br>
 			<table width="600px">
 				<thead>
 					<tr>
@@ -202,19 +243,19 @@
 				<tbody id="1">
 					<tr>
 						<td><p>Nombre de la cata:&nbsp;&nbsp;</p></td>
-						<td><input type="text" id="nombre"></td>
+						<td><input type="text" id="nombre" class="form-control"></td>
 					</tr>
 					<tr>
 						<td><p>Fecha de la cata:&nbsp;&nbsp;</p></td>
-						<td><input type="date" id="fecha"></td>
+						<td><input type="date" id="fecha" class="form-control"></td>
 					</tr>
 					<tr>
 						<td><p>Número de Personas:&nbsp;&nbsp;</p></td>
-						<td><input type="number" id="personas" min="0"></td>
+						<td><input type="number" id="personas" min="0" class="form-control"></td>
 					</tr>
 					<tr>
 						<td><p>Número de Cervezas:&nbsp;&nbsp;</p></td>
-						<td><input type="number" id="cervezas" min="0"></td>
+						<td><input type="number" id="cervezas" min="0" class="form-control"></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -222,8 +263,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td><button class="btn btn-secondary" id="continuar1">Continuar</button></td>
-						<td><button class="btn btn-link" onclick="location.href='user.php'">Volver</button></td>
+						<td colspan="2"><button class="btn btn-secondary" id="continuar1">Continuar</button></td>
 					</tr>
 				</tbody>
 				<tbody id="2">
@@ -235,6 +275,32 @@
 				</tbody>
 		</table>
 		<br><br>
+		<div class="modal fade" id="modalAmigos" role="dialog">
+    	<div class="modal-dialog modal-lg">
+      		<div class="modal-content">
+        		<div class="modal-header">
+        			<h4 class="modal-title">Añadir amigo a la cata</h4>
+        		</div>
+        		<div class="modal-body">
+        			<select id="amigos" class="browser-default custom-select custom-select-lg mb-3">
+        				<?php 
+        					while($row = mysqli_fetch_array($resAmigos)){
+        						$idAmigo = $row[0];
+        						$usuarioAmigo = mysqli_query($conexion,"SELECT usuario FROM usuario WHERE id =".$idAmigo)->fetch_row()[0];
+        						$nombreAmigo = mysqli_query($conexion,"SELECT  nombre FROM persona WHERE idUsuario=".$idAmigo)->fetch_row()[0];
+        						echo "<option value='".$idAmigo.";".$nombreAmigo."'>".$nombreAmigo." (".$usuarioAmigo.")</option>";
+        					}
+        				 ?>
+        			</select>
+        		</div>
+        		<div class="modal-footer">
+        			<button type="button" class="btn btn-primary" onclick="anyadirAmigo()" data-dismiss="modal">Añadir</button>
+          			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        		</div>
+      		</div>
+    	</div>
+  	</div>
 	</div>
+  	
 </body>
 </html>
