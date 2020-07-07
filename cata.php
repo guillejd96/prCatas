@@ -6,10 +6,11 @@
 		header('Location: index.php');
 	}
 
-	$idPersona = $_SESSION["idUsuario"];
+	$idUsuario = $_SESSION["idUsuario"];
 
-	$sqlPersona = "SELECT * FROM persona WHERE id=".$idPersona;
+	$sqlPersona = "SELECT * FROM persona WHERE idUsuario=".$idUsuario;
 	$resPersona = mysqli_query($conexion,$sqlPersona)->fetch_row();
+	$idPersona = $resPersona[0];
 
 	$sqlPersonaCata = "SELECT idCata FROM persona_cata WHERE idPersona = ".$idPersona;
 	$resIDCatas = mysqli_query($conexion,$sqlPersonaCata);
@@ -49,8 +50,6 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
- 	<h1>Catas guardadas</h1><br>
- 	<h3>Aquí se muestran un listado de las catas que has registrado</h3>
  	<?php if($resIDCatas->num_rows>0){
  		echo "<table>";
  		echo "<tr>";
