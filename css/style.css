@@ -5,10 +5,19 @@ body {
 }
 
 .main {
-  margin-top: 80px;
   margin-left: 200px; /* Same as the width of the sidenav */
   font-size: 20px; /* Increased text to enable scrolling */
   padding: 0px 10px;
+}
+
+.nolink {
+  text-decoration: none;
+  color: black;
+}
+
+.nolink:hover {
+  text-decoration: none;
+  color: grey;
 }
 
 table {
