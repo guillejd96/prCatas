@@ -1,6 +1,7 @@
 <?php 
 
 	include 'config.php';
+    include 'menus.php';
 
 	session_start();
 	if(!isset($_SESSION["idUsuario"])){
@@ -132,48 +133,53 @@
  	</script>
  </head>
  <body>
- 	<h1>Rellenar opiniones de <?php echo $resCata[1]?></h1>
-	
- 	<?php 
+    <?php echo banner(); ?>
+    <?php echo arriba(); ?>
+    <?php echo izquierda(); ?>
+    <div class="main">
+     	<h1>Rellenar opiniones de <?php echo $resCata[1]?></h1>
+    	
+     	<?php 
 
- 		while($persona_cata = mysqli_fetch_array($resPersonas)){
- 			$sqlPersonas = "SELECT * FROM persona WHERE id=".$persona_cata[0];
- 			$persona = mysqli_query($conexion,$sqlPersonas)->fetch_row();
+     		while($persona_cata = mysqli_fetch_array($resPersonas)){
+     			$sqlPersonas = "SELECT * FROM persona WHERE id=".$persona_cata[0];
+     			$persona = mysqli_query($conexion,$sqlPersonas)->fetch_row();
 
- 			$sqlCervezas = "SELECT * FROM cerveza WHERE idCata =".$idCata;
-			$resCervezas = mysqli_query($conexion,$sqlCervezas);
+     			$sqlCervezas = "SELECT * FROM cerveza WHERE idCata =".$idCata;
+    			$resCervezas = mysqli_query($conexion,$sqlCervezas);
 
- 			echo "<table id='datos'>";
- 			echo "<tr>";
- 			echo "<th class='idPersonas' data-id='".$persona[0]."'><p>".$persona[1]."</p></th>";
- 			echo "<th><p>Apariencia</p></th>";
- 			echo "<th><p>Aroma</p></th>";
- 			echo "<th><p>Sabor</p></th>";
- 			echo "<th><p>Cuerpo</p></th>";
- 			echo "<th><p>Botellín</p></th>";
- 			echo "</tr>";
- 			while($cerveza = mysqli_fetch_array($resCervezas)){
- 				echo "<tr>";
- 				echo "<td class='idCervezas' data-id='".$cerveza[0]."'><p>".$cerveza[1]."</p></td>";
- 				echo "<td><input type='number' class='apariencia' size='1' min='0' max='10'></td>";
- 				echo "<td><input type='number' class='aroma' size='1' min='0' max='10'></td>";
- 				echo "<td><input type='number' class='sabor' size='1' min='0' max='10'></td>";
- 				echo "<td><input type='number' class='cuerpo' size='1' min='0' max='10'></td>";
- 				echo "<td><input type='number' class='botellin' size='1' min='0' max='10'></td>";
- 				echo "</tr>";
- 			}
- 			echo "</table>";
- 		}
+     			echo "<table id='datos'>";
+     			echo "<tr>";
+     			echo "<th class='idPersonas' data-id='".$persona[0]."'><p>".$persona[1]."</p></th>";
+     			echo "<th><p>Apariencia</p></th>";
+     			echo "<th><p>Aroma</p></th>";
+     			echo "<th><p>Sabor</p></th>";
+     			echo "<th><p>Cuerpo</p></th>";
+     			echo "<th><p>Botellín</p></th>";
+     			echo "</tr>";
+     			while($cerveza = mysqli_fetch_array($resCervezas)){
+     				echo "<tr>";
+     				echo "<td class='idCervezas' data-id='".$cerveza[0]."'><p>".$cerveza[1]."</p></td>";
+     				echo "<td><input type='number' class='apariencia' size='1' min='0' max='10'></td>";
+     				echo "<td><input type='number' class='aroma' size='1' min='0' max='10'></td>";
+     				echo "<td><input type='number' class='sabor' size='1' min='0' max='10'></td>";
+     				echo "<td><input type='number' class='cuerpo' size='1' min='0' max='10'></td>";
+     				echo "<td><input type='number' class='botellin' size='1' min='0' max='10'></td>";
+     				echo "</tr>";
+     			}
+     			echo "</table>";
+     		}
 
 
- 	 ?>
-	<table class="no_background">
-        <tr><td colspan="2"><p id="res"></p></td></tr>
-		<tr>
-			<td><button id="guardar" class="btn btn-dark">Guardar</button></td>
-			<td><button class="btn btn-link" onclick="javascript:volver()">Volver</button></td>
-		</tr>
-	</table>
- 	<br>
+     	 ?>
+    	<table class="no_background">
+            <tr><td colspan="2"><p id="res"></p></td></tr>
+    		<tr>
+    			<td><button id="guardar" class="btn btn-dark">Guardar</button></td>
+    			<td><button class="btn btn-link" onclick="javascript:volver()">Volver</button></td>
+    		</tr>
+    	</table>
+     	<br>
+    </div>
  </body>
  </html>
