@@ -32,6 +32,7 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
+		<h2>Mis cervezas</h2>
 		<table class="display" id="content">
 			<?php if(mysqli_num_rows($resOpiniones)>0){
 				echo "<tr>
@@ -82,6 +83,7 @@
 				echo "</td></tr>";
 				echo "<tr><td>";
 				echo "<p>Para registrar tu primera cata pulsa <a href='nueva_cata.php'>aquí</a></p>";
+				echo "<p>Para registrar tu primera cerveza pulsa <a href='nueva_cerveza.php'>aquí</a></p>";
 				echo "</td></tr>";
 			} 
 			?>
