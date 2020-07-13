@@ -43,6 +43,7 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
+		<h2>Mis amigos</h2>
 		<table>
 			<tr>
 				<td>
