@@ -30,6 +30,9 @@
 		mysqli_query($conexion,$sqlBorrarPersona);
 	}
 
+	$sqlMedias = "DELETE FROM medias WHERE idCata=".$idCata;
+	mysqli_query($conexion,$sqlMedias);
+	
 	$sqlBorrarCata = "DELETE FROM cata WHERE id=".$idCata;
 	mysqli_query($conexion,$sqlBorrarCata);
 
