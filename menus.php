@@ -5,8 +5,8 @@
 	  width: 200px;
 	  position: fixed;
 	  left: 0;
-	  z-index: 1;
 	  top: 252px;
+	  z-index: 3;
 	  background-color: #503522;
 	  overflow-x: hidden;
 	  padding-top: 20px;
@@ -26,6 +26,8 @@
 	}
 	#menu_arriba{
 		background-color: #503522;
+		width: 100%;
+		z-index: 1;
 	}
 	#menu_arriba a {
 		width: 17rem;
@@ -36,12 +38,40 @@
 		background-color: #784e2f;
 		color: black;
 	}
+	#banner {
+		z-index: 2;
+	}
+
+	#space {
+		height: 252px;
+	}
 </style>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+	$(window).scroll(function(){
+		var elementPosition = $('#menu_arriba').offset();
+        if($(window).scrollTop() >= elementPosition.top){
+            $('#menu_arriba').css('position','fixed').css('top','0');
+            $(".sidenav").css('top', '35');
+        } else {
+        	$('#menu_arriba').css('position','initial');
+        }
+
+        if(elementPosition.top <= 200){
+        	$('#menu_arriba').css('position','initial').css('top', '200');
+        	var x = elementPosition.top+35;
+        	$(".sidenav").css('top', x);
+        }
+
+
+	});
+</script>
 
 <?php function izquierda() { ?>
 
 
 <nav id="menu_izq" class="sidenav">
+	<div></div>
 	<a href="nueva_cata.php">
 			<p>Nueva Cata</p>
 	</a>
@@ -57,7 +87,7 @@
 	<a href="mis_amigos.php">
 			<p>Mis amigos</p>
 	</a>
-</nav>
+	</nav>
 
 <?php } ?>
 
