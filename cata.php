@@ -50,6 +50,7 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
+		<h2>Mis catas</h2>
  	<?php if($resIDCatas->num_rows>0){
  		echo "<table>";
  		echo "<tr>";
