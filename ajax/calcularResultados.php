@@ -27,7 +27,9 @@
 		$mediaCuerpo = $res[3];
 		$mediaBotellin = $res[4];
 
-		$sql = "INSERT INTO medias(aroma,apariencia,sabor,cuerpo,botellin,idCerveza) VALUES(".$mediaAroma.",".$mediaApariencia.",".$mediaSabor.",".$mediaCuerpo.",".$mediaBotellin.",".$idCerveza.")";
+		$media = round(($mediaAroma+$mediaApariencia+$mediaSabor+$mediaCuerpo+$mediaBotellin)/5,2);
+
+		$sql = "INSERT INTO medias(aroma,apariencia,sabor,cuerpo,botellin,media,idCerveza,idCata) VALUES(".$mediaAroma.",".$mediaApariencia.",".$mediaSabor.",".$mediaCuerpo.",".$mediaBotellin.",".$media.",".$idCerveza.",".$idCata.")";
 		if(!mysqli_query($conexion,$sql)){
 			$error=true;
 		}
