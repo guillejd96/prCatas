@@ -229,7 +229,7 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
-		<br>
+		<h2>Nueva cata</h2>
 			<table width="600px">
 				<thead>
 					<tr>
