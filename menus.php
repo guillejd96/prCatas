@@ -45,6 +45,9 @@
 	<a href="nueva_cata.php">
 			<p>Nueva Cata</p>
 	</a>
+	<a href="nueva_cerveza.php">
+			<p>Nueva Cerveza</p>
+	</a>
 	<a href="cata.php">
 			<p>Mis catas</p>
 	</a>
