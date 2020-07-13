@@ -41,6 +41,11 @@ table.no_background {
   background-color: #FAE96F;
 }
 
+table.simple {
+  background-color: transparent;
+  border: none;
+}
+
 p {
 	font-size: 25px;
 }
