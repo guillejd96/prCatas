@@ -29,8 +29,10 @@
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
  	<title>Rellenar opiniones</title>
  	<script>
+        var idCata;
  		$(document).ready(function() {
  			$("#guardar").click(guardar);
+            idCata = <?php echo $idCata; ?>;
  		});
 
         function volver(){
@@ -124,9 +126,16 @@
                 } else {
                     $("#res").text("Se han introducido los datos correctamente. Redireccionando...");
                     $("#res").css('color', 'green');
-                    setTimeout(function () {
-                        window.location.replace("user.php");    
-                    },1000);
+                    $.post('ajax/calcularResultados.php', {id: idCata}, function(data, textStatus, xhr) {
+                        if(data=="0"){
+                            $("#res").text("Error al calcular los resultados");
+                            $("#res").css('color', 'red');
+                        }else {
+                            setTimeout(function () {
+                                window.location.replace("user.php");    
+                            },1000);
+                        }
+                    });
                 }
             }
  		}
