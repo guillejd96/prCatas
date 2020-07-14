@@ -44,31 +44,51 @@
                 return 1;
             })
 
-            nOpiniones = aux.length;
+            var nOpiniones = aux.length;
 
  			var apariencias = $("input[class='apariencia']")
               .map(function(index,elem){
-                if($(elem).val()!="") return $(elem).val();
+                if($(elem).val()!="") {
+                    return $(elem).val();
+                } else {
+                    $(elem).css('border', '1px solid red');
+                }
             }).get();
 
             var aromas = $("input[class='aroma']")
               .map(function(index,elem){
-                if($(elem).val()!="") return $(elem).val();
+                if($(elem).val()!="") {
+                    return $(elem).val();
+                } else {
+                    $(elem).css('border', '1px solid red');
+                }
             }).get();
 
             var cuerpos = $("input[class='cuerpo']")
               .map(function(index,elem){
-                if($(elem).val()!="") return $(elem).val();
+                if($(elem).val()!="") {
+                    return $(elem).val();
+                } else {
+                    $(elem).css('border', '1px solid red');
+                }
             }).get();
 
             var botellines = $("input[class='botellin']")
               .map(function(index,elem){
-                if($(elem).val()!="") return $(elem).val();
+                if($(elem).val()!="") {
+                    return $(elem).val();
+                } else {
+                    $(elem).css('border', '1px solid red');
+                }
             }).get();
 
             var sabores = $("input[class='sabor']")
               .map(function(index,elem){
-                if($(elem).val()!="") return $(elem).val();
+                if($(elem).val()!="") {
+                    return $(elem).val();
+                } else {
+                    $(elem).css('border', '1px solid red');
+                }
             }).get();
 
             if(apariencias.length!=nOpiniones || sabores.length!=nOpiniones || aromas.length!=nOpiniones || botellines.length!=nOpiniones || cuerpos.length!=nOpiniones){
@@ -169,11 +189,11 @@
      			while($cerveza = mysqli_fetch_array($resCervezas)){
      				echo "<tr>";
      				echo "<td class='idCervezas' data-id='".$cerveza[0]."'><p>".$cerveza[1]."</p></td>";
-     				echo "<td><input type='number' class='apariencia' size='1' min='0' max='10'></td>";
-     				echo "<td><input type='number' class='aroma' size='1' min='0' max='10'></td>";
-     				echo "<td><input type='number' class='sabor' size='1' min='0' max='10'></td>";
-     				echo "<td><input type='number' class='cuerpo' size='1' min='0' max='10'></td>";
-     				echo "<td><input type='number' class='botellin' size='1' min='0' max='10'></td>";
+     				echo "<td><input type='number' class='apariencia form-control col-xs-1' size='1' min='0' max='10'></td>";
+     				echo "<td><input type='number' class='aroma form-control col-xs-1' size='1' min='0' max='10'></td>";
+     				echo "<td><input type='number' class='sabor form-control col-xs-1' size='1' min='0' max='10'></td>";
+     				echo "<td><input type='number' class='cuerpo form-control col-xs-1' size='1' min='0' max='10'></td>";
+     				echo "<td><input type='number' class='botellin form-control col-xs-1' size='1' min='0' max='10'></td>";
      				echo "</tr>";
      			}
      			echo "</table>";
