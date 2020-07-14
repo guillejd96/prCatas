@@ -44,14 +44,15 @@
 	</script>
 </head>
 <body>
+	<h1>DeCatas</h1>
 	<table>
 		<tr>
 			<td><p align="right">Usuario:</p></td>
-			<td><input type="text" name="user" id="user"></td>
+			<td><input type="text" name="user" id="user" class="form-control"></td>
 		</tr>
 		<tr>
 			<td><p align="right">Contraseña:</p></td>
-			<td><input type="password" name="pass" id="pass"></td>
+			<td><input type="password" name="pass" id="pass" class="form-control"></td>
 		</tr>
 		<tr>
 			<td colspan="2"><br></td>
@@ -65,9 +66,6 @@
 			<td colspan="2">
 				<p id="error" style="margin-top: 1%"></p>
 			</td>
-		</tr>
-		<tr>
-			<td colspan="2"><a href="recuperar_contrasenya.php">¿Has olvidado la contraseña?</a></td>
 		</tr>
 		<tr>
 			<td colspan="2"><a href="nuevo_usuario.php">¿No tienes usuario?</a></td>
