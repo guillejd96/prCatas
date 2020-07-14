@@ -50,6 +50,8 @@
 <script>
 	$(window).scroll(function(){
 		var elementPosition = $('#menu_arriba').offset();
+		var elementHeigth = $('#menu_arriba').height();
+
         if($(window).scrollTop() >= elementPosition.top){
             $('#menu_arriba').css('position','fixed').css('top','0');
             $(".sidenav").css('top', '35');
@@ -59,8 +61,10 @@
 
         if(elementPosition.top <= 200){
         	$('#menu_arriba').css('position','initial').css('top', '200');
-        	var x = elementPosition.top+35;
-        	$(".sidenav").css('top', x);
+        }
+
+        if($(window).scrollTop() <= 200){
+        	$(".sidenav").css('top', elementPosition.top+elementHeigth);
         }
 
 
@@ -87,6 +91,9 @@
 	<a href="mis_amigos.php">
 			<p>Mis amigos</p>
 	</a>
+	<p id="off1"></p>
+	<p id="off2"></p>
+	<p id="off3"></p>
 	</nav>
 
 <?php } ?>
