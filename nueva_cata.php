@@ -61,20 +61,29 @@
 			fechaCata = $("#fecha").val();
 			nP = $("#personas").val();
 			nC = $("#cervezas").val();
+			$("#nombre").css('border', '1px solid #ccc');
+			$("#fecha").css('border', '1px solid #ccc');
+			$("#personas").css('border', '1px solid #ccc');
+			$("#cervezas").css('border', '1px solid #ccc');
+			$(".error").text('');
 			nP=nP-1;
 
 			if(nombreCata==""){
 				$(".error").text('Introduce un nombre para la cata');
 				$(".error").css('color', 'red');
 				$(".error").css('font-size', '14px');
+				$("#nombre").css('border', '1px solid red');
 			}else if(fechaCata==""){
 				$(".error").text('Introduce la fecha de la cata');
 				$(".error").css('color', 'red');
 				$(".error").css('font-size', '14px');
+				$("#fecha").css('border', '1px solid red');
 			}else if(nP<1 || nC<1){
 				$(".error").text('Introduce un número positivo de personas y cervezas');
 				$(".error").css('color', 'red');
 				$(".error").css('font-size', '14px');
+				$("#personas").css('border', '1px solid red');
+				$("#cervezas").css('border', '1px solid red');
 			}else{
 				$("#1").hide();
 
@@ -83,7 +92,7 @@
 				$("#2").append('<tr><td colspan="2"><p><?php echo $nombrePersona; ?></p></td></tr>')
 
 				for (var i = 0; i < nP; i++) {
-					$("#2").append('<tr><td colspan="2"><p><input type="text" class="nombre_personas">&nbsp&nbsp<i class="fas fa-plus" title="Añadir amigo" onclick="javascript:showModal('+i+')"></i><br><p></td></tr>')
+					$("#2").append('<tr><td colspan="2"><div class="input-group"><input type="text" class="nombre_personas form-control" size="75"><span class="input-group-addon" title="Añadir amigo" onclick="javascript:showModal('+i+')"><i class="fas fa-plus"></i></span></div><br></td></tr>')
 				}
 
 				$("#2").append('<tr><td colspan="2"><p class="error"></p></td></tr><tr><td><button class="btn btn-secondary" id="continuar2" onclick="javascript:continuar2()">Continuar</button></td><td><button class="btn btn-link" onclick="volver1()">Volver</button></td></tr></tr>');
@@ -110,30 +119,45 @@
 			$(".progress-bar").children('p').text('1/3');
 
 			$("#2").show();
-			$("#3").hide();
+			$(".nombre_personas").each(function(index, el) {
+            		if($(el).val()=="") {
+            			$(el).css('border', '1px solid red');
+            		} else {
+            			$(el).css('border', '1px solid #ccc');
+            		}
+            	});
+			$(".error").text("");
+			$("#3").empty();
 		}
 
 		function continuar2(){
-			personas = $("input[class='nombre_personas']").map(function(index, elem) {
+			personas = $(".nombre_personas").map(function(index, elem) {
             	if($(elem).val()!=""){
             		var toReturn=$(elem).val();
             		if($(elem).data("id")!=undefined){
             			toReturn = toReturn+";"+$(elem).data("id");
             		}
             		return toReturn;
-            	} 
+            	}
             }).get();
 
             if(personas.length!=nP){
             	$(".error").text("Introduce todos los nombres de las personas");
             	$(".error").css('color', 'red');
+            	$(".nombre_personas").each(function(index, el) {
+            		if($(el).val()=="") {
+            			$(el).css('border', '1px solid red');
+            		} else {
+            			$(el).css('border', '1px solid #ccc');
+            		}
+            	});
             } else {
             	$("#2").hide();
 
 	        	$("#3").append('<tr><td colspan="2"><p>Cervezas</p></td></tr>');
 
 	            for (var i = 0; i < nC; i++) {
-					$("#3").append('<tr><td colspan="2"><input type="text" class="nombre_cervezas"><br><br></td></tr>')
+					$("#3").append('<tr><td colspan="2"><input type="text" class="nombre_cervezas form-control" size="75"><br></td></tr>')
 				}
 
 				$("#3").append('<tr><td><p></p></td></tr>');
@@ -149,13 +173,20 @@
 		
 
 		function continuar3(){
-			cervezas = $("input[class='nombre_cervezas']").map(function(index, elem) {
+			cervezas = $(".nombre_cervezas").map(function(index, elem) {
             	if($(elem).val()!="") return $(elem).val();
             }).get();
 
             if(cervezas.length!=nC){
             	$(".error").text("Introduce todos los nombres de las cervezas");
             	$(".error").css('color', 'red');
+            	$(".nombre_cervezas").each(function(index, el) {
+            		if($(el).val()=="") {
+            			$(el).css('border', '1px solid red');
+            		} else {
+            			$(el).css('border', '1px solid #ccc');
+            		}
+            	});
             }else {
             	$("#3").hide();
 
@@ -235,7 +266,9 @@
 					<tr>
 						<th colspan="2">
 							<div class="progress">
-			  					<div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"><p>0/3</p></div>
+			  					<div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">
+			  						<p>0/3</p>
+			  					</div>
 							</div>
 						</th>
 					</tr>
@@ -279,17 +312,23 @@
     	<div class="modal-dialog modal-lg">
       		<div class="modal-content">
         		<div class="modal-header">
-        			<h4 class="modal-title">Añadir amigo a la cata</h4>
+        			<h3 class="modal-title">Añadir amigo a la cata</h3>
         		</div>
         		<div class="modal-body">
-        			<select id="amigos" class="browser-default custom-select custom-select-lg mb-3">
+        			
         				<?php 
-        					while($row = mysqli_fetch_array($resAmigos)){
-        						$idAmigo = $row[0];
-        						$usuarioAmigo = mysqli_query($conexion,"SELECT usuario FROM usuario WHERE id =".$idAmigo)->fetch_row()[0];
-        						$nombreAmigo = mysqli_query($conexion,"SELECT  nombre FROM persona WHERE idUsuario=".$idAmigo)->fetch_row()[0];
-        						echo "<option value='".$idAmigo.";".$nombreAmigo."'>".$nombreAmigo." (".$usuarioAmigo.")</option>";
+        					if(mysqli_num_rows($resAmigos)>0){
+        						echo '<select id="amigos" class="browser-default custom-select custom-select-lg mb-3">';
+	        					while($row = mysqli_fetch_array($resAmigos)){
+	        						$idAmigo = $row[0];
+	        						$usuarioAmigo = mysqli_query($conexion,"SELECT usuario FROM usuario WHERE id =".$idAmigo)->fetch_row()[0];
+	        						$nombreAmigo = mysqli_query($conexion,"SELECT  nombre FROM persona WHERE idUsuario=".$idAmigo)->fetch_row()[0];
+	        						echo "<option value='".$idAmigo.";".$nombreAmigo."'>".$nombreAmigo." (".$usuarioAmigo.")</option>";
+	        					}
+        					}else{
+        						echo "<p style='font-size: 20px'>Todavía no has agregado a ningún amigo</p>";
         					}
+
         				 ?>
         			</select>
         		</div>
