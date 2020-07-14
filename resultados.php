@@ -61,7 +61,7 @@
 
 					$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-					echo "<tr><td><p>#".$i."</p></td><td><p>".$nombre."</p></td><td><p>".round($media,2)."</p></td><tr>";
+					echo "<tr><td><p>".$i."º</p></td><td><p>".$nombre."</p></td><td><p>".round($media,2)."</p></td><tr>";
 					$i++;
 				}
 			 ?>
@@ -81,7 +81,7 @@
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>#".$i."</p></td><td><p>".$nombre."</p></td><td><p>".round($aroma,2)."</p></td><tr>";
+								echo "<tr><td><p>".$i."º</p></td><td><p>".$nombre."</p></td><td><p>".round($aroma,2)."</p></td><tr>";
 								$i++;
 							}
 						 ?>
@@ -101,7 +101,7 @@
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>#".$i."</p></td><td><p>".$nombre."</p></td><td><p>".round($apariencia,2)."</p></td><tr>";
+								echo "<tr><td><p>".$i."º</p></td><td><p>".$nombre."</p></td><td><p>".round($apariencia,2)."</p></td><tr>";
 								$i++;
 							}
 						 ?>
@@ -123,7 +123,7 @@
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>#".$i."</p></td><td><p>".$nombre."</p></td><td><p>".round($sabor,2)."</p></td><tr>";
+								echo "<tr><td><p>".$i."º</p></td><td><p>".$nombre."</p></td><td><p>".round($sabor,2)."</p></td><tr>";
 								$i++;
 							}
 						 ?>
@@ -143,7 +143,7 @@
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>#".$i."</p></td><td><p>".$nombre."</p></td><td><p>".round($cuerpo,2)."</p></td><tr>";
+								echo "<tr><td><p>".$i."º</p></td><td><p>".$nombre."</p></td><td><p>".round($cuerpo,2)."</p></td><tr>";
 								$i++;
 							}
 						 ?>
@@ -165,7 +165,7 @@
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>#".$i."</p></td><td><p>".$nombre."</p></td><td><p>".round($botellin,2)."</p></td><tr>";
+								echo "<tr><td><p>".$i."º</p></td><td><p>".$nombre."</p></td><td><p>".round($botellin,2)."</p></td><tr>";
 								$i++;
 							}
 						 ?>
