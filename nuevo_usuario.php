@@ -28,14 +28,14 @@
 			// Minimo 4 caracteres
 			if(u.length<4) {
 				$(".error").text("El usuario debe tener 4 o más caracteres");
-				$("#usuario").css('border', '1px solid red');
+				$("#usuario").css('border', '2px solid red');
 				return false;
 			}
 			else {
 				$.post('ajax/existeUsuario.php', {u: u}, function(data, textStatus, xhr) {
 					if(data=="0"){
 						$(".error").text("El usuario ya existe");
-						$("#usuario").css('border', '1px solid red');
+						$("#usuario").css('border', '2px solid red');
 						return false;
 					}else {
 						return true;
@@ -48,7 +48,7 @@
 		function checkName(n){
 			if(n==""){
 				$(".error").text("El campo nombre está vacío");
-				$("#nombre").css('border', '1px solid red');
+				$("#nombre").css('border', '2px solid red');
 				return false;
 			}else {
 				return true;
@@ -58,8 +58,8 @@
 		function checkEqualPasswords(p1,p2){
 			if(p1!=p2) {
 				$(".error").text("Las contraseñas no son iguales");
-				$("#pass1").css('border', '1px solid red');
-				$("#pass2").css('border', '1px solid red');
+				$("#pass1").css('border', '2px solid red');
+				$("#pass2").css('border', '2px solid red');
 				return false;
 			}
 			else return true;
@@ -71,7 +71,7 @@
 			if(p.match(decimal)) return true;
 			else {
 				$(".error").text("La contraseña no cumple los requisitos");
-				$("#pass1").css('border', '1px solid red');
+				$("#pass1").css('border', '2px solid red');
 				return false
 			}
 		}
