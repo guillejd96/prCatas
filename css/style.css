@@ -65,3 +65,7 @@ p.form{
   font-size: 18px;
   text-align: right;
 }
+
+ul {
+  list-style-position: inside;
+}
