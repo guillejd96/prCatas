@@ -19,6 +19,12 @@
 	while($row = mysqli_fetch_array($resCervezas)){
 		$idCerveza = $row[0];
 
+		$resMedias = mysqli_query($conexion,"SELECT * FROM medias WHERE idCerveza=".$idCerveza);
+
+		if(mysqli_num_rows($resMedias)>0){
+			mysqli_query($conexion,"DELETE FROM medias WHERE idCerveza=".$idCerveza);
+		}	
+
 		$res = mysqli_query($conexion,"SELECT AVG(aroma),AVG(apariencia),AVG(sabor),AVG(cuerpo),AVG(botellin) FROM opinion WHERE idCerveza=".$idCerveza)->fetch_row();
 
 		$mediaAroma = $res[0];
