@@ -35,66 +35,111 @@
             idCata = <?php echo $idCata; ?>;
  		});
 
+        function sum(input){
+            var total =  0;
+            for(var i=0;i<input.length;i++) {                  
+                if(isNaN(input[i])){
+                    continue;
+                }
+                total += Number(input[i]);
+            }
+            return total;
+        }
+
         function volver(){
             window.location.replace("cata.php");
         }
 
  		function guardar(){
-            var aux = $("input[class='apariencia']").map(function(index, elem) {
+            $(".apariencia").css('border', '1px solid #ccc');
+            $(".aroma").css('border', '1px solid #ccc');
+            $(".sabor").css('border', '1px solid #ccc');
+            $(".cuerpo").css('border', '1px solid #ccc');
+            $(".botellin").css('border', '1px solid #ccc');
+            var aux = $(".apariencia").map(function(index, elem) {
                 return 1;
             })
 
             var nOpiniones = aux.length;
 
- 			var apariencias = $("input[class='apariencia']")
+ 			var apariencias = $(".apariencia")
               .map(function(index,elem){
                 if($(elem).val()!="") {
                     return $(elem).val();
-                } else {
-                    $(elem).css('border', '1px solid red');
                 }
             }).get();
 
-            var aromas = $("input[class='aroma']")
+            var aromas = $(".aroma")
               .map(function(index,elem){
                 if($(elem).val()!="") {
                     return $(elem).val();
-                } else {
-                    $(elem).css('border', '1px solid red');
                 }
             }).get();
 
-            var cuerpos = $("input[class='cuerpo']")
+            var cuerpos = $(".cuerpo")
               .map(function(index,elem){
                 if($(elem).val()!="") {
                     return $(elem).val();
-                } else {
-                    $(elem).css('border', '1px solid red');
                 }
             }).get();
 
-            var botellines = $("input[class='botellin']")
+            var botellines = $(".botellin")
               .map(function(index,elem){
                 if($(elem).val()!="") {
                     return $(elem).val();
-                } else {
-                    $(elem).css('border', '1px solid red');
                 }
             }).get();
 
-            var sabores = $("input[class='sabor']")
+            var sabores = $(".sabor")
               .map(function(index,elem){
                 if($(elem).val()!="") {
                     return $(elem).val();
-                } else {
-                    $(elem).css('border', '1px solid red');
                 }
             }).get();
+
+            var error = false;
+            $(':input[type="number"]').each(function(index, el) {
+               if($(el).val()<0 || $(el).val()>10) error=true;
+            }); 
 
             if(apariencias.length!=nOpiniones || sabores.length!=nOpiniones || aromas.length!=nOpiniones || botellines.length!=nOpiniones || cuerpos.length!=nOpiniones){
                 $("#res").text("Introduce todas las opiniones");
                 $("#res").css('color', 'red');
                 $("#res").css('font-size', '15px');
+                $(".aroma").each(function(index, el) {
+                    if($(el).val()=="") $(el).css('border', '2px solid red');
+                });
+                $(".apariencia").each(function(index, el) {
+                    if($(el).val()=="") $(el).css('border', '2px solid red');
+                });
+                $(".sabor").each(function(index, el) {
+                    if($(el).val()=="") $(el).css('border', '2px solid red');
+                });
+                $(".cuerpo").each(function(index, el) {
+                    if($(el).val()=="") $(el).css('border', '2px solid red');
+                });
+                $(".botellin").each(function(index, el) {
+                    if($(el).val()=="") $(el).css('border', '2px solid red');
+                });
+            }else if(error){
+                $("#res").text("Introduce valoraciones entre 0 y 10");
+                $("#res").css('color', 'red');
+                $("#res").css('font-size', '15px');
+                $(".aroma").each(function(index, el) {
+                    if($(el).val()<0 || $(el).val()>10) $(el).css('border', '2px solid red');
+                });
+                $(".apariencia").each(function(index, el) {
+                    if($(el).val()<0 || $(el).val()>10) $(el).css('border', '2px solid red');
+                });
+                $(".sabor").each(function(index, el) {
+                    if($(el).val()<0 || $(el).val()>10) $(el).css('border', '2px solid red');
+                });
+                $(".cuerpo").each(function(index, el) {
+                    if($(el).val()<0 || $(el).val()>10) $(el).css('border', '2px solid red');
+                });
+                $(".botellin").each(function(index, el) {
+                    if($(el).val()<0 || $(el).val()>10) $(el).css('border', '2px solid red');
+                });
             }else {
                 var idPersonas = $(".idPersonas").map(function(index, elem) {
                 return $(elem).attr('data-id');
@@ -129,9 +174,7 @@
                         var cuerpo = cuerpos[k];
                         var botellin = botellines[k];
 
-                        var link = 'ajax/nuevaOpinion.php?p='+idPersona+'&c='+idCerveza+'&ar='+aroma+'&ap='+apariencia+'&s='+sabor+'&cu='+cuerpo+'&b='+botellin;
-
-                        $.get(link, function(data) {
+                        $.post('ajax/nuevaOpinion.php', {idP: idPersona, idC: idCerveza, c: cuerpo, ar: aroma, ap: apariencia, s: sabor, b: botellin}, function(data, textStatus, xhr) {
                             if(data!="1"){
                                 error = true;
                             }
@@ -166,7 +209,7 @@
     <?php echo arriba(); ?>
     <?php echo izquierda(); ?>
     <div class="main">
-     	<h1>Rellenar opiniones de <?php echo $resCata[1]?></h1>
+     	<h1>Valoraciones de <?php echo $resCata[1]?></h1>
     	
      	<?php 
 
@@ -187,24 +230,36 @@
      			echo "<th><p>Botellín</p></th>";
      			echo "</tr>";
      			while($cerveza = mysqli_fetch_array($resCervezas)){
-     				echo "<tr>";
-     				echo "<td class='idCervezas' data-id='".$cerveza[0]."'><p>".$cerveza[1]."</p></td>";
-     				echo "<td><input type='number' class='apariencia form-control col-xs-1' size='1' min='0' max='10'></td>";
-     				echo "<td><input type='number' class='aroma form-control col-xs-1' size='1' min='0' max='10'></td>";
-     				echo "<td><input type='number' class='sabor form-control col-xs-1' size='1' min='0' max='10'></td>";
-     				echo "<td><input type='number' class='cuerpo form-control col-xs-1' size='1' min='0' max='10'></td>";
-     				echo "<td><input type='number' class='botellin form-control col-xs-1' size='1' min='0' max='10'></td>";
+                    echo "<tr>";
+                    echo "<td class='idCervezas' data-id='".$cerveza[0]."'><p>".$cerveza[1]."</p></td>";
+                    $resOpinion = mysqli_query($conexion,"SELECT * FROM opinion WHERE idPersona=".$persona[0]." AND idCerveza=".$cerveza[0]);
+                    if(mysqli_num_rows($resOpinion)>0){
+                        $row = $resOpinion->fetch_row();
+                        echo "<td><input type='number' class='apariencia form-control col-xs-1' size='1' min='0' max='10' value='".$row[1]."'></td>";
+                        echo "<td><input type='number' class='aroma form-control col-xs-1' size='1' min='0' max='10'  value='".$row[2]."'></td>";
+                        echo "<td><input type='number' class='sabor form-control col-xs-1' size='1' min='0' max='10'  value='".$row[3]."'></td>";
+                        echo "<td><input type='number' class='cuerpo form-control col-xs-1' size='1' min='0' max='10'  value='".$row[4]."'></td>";
+                        echo "<td><input type='number' class='botellin form-control col-xs-1' size='1' min='0' max='10'  value='".$row[5]."'></td>";
+                    }else {
+                        echo "<td><input type='number' class='apariencia form-control col-xs-1' size='1' min='0' max='10'></td>";
+                        echo "<td><input type='number' class='aroma form-control col-xs-1' size='1' min='0' max='10'></td>";
+                        echo "<td><input type='number' class='sabor form-control col-xs-1' size='1' min='0' max='10'></td>";
+                        echo "<td><input type='number' class='cuerpo form-control col-xs-1' size='1' min='0' max='10'></td>";
+                        echo "<td><input type='number' class='botellin form-control col-xs-1' size='1' min='0' max='10'></td>";
+                    }
+     				
+     				
      				echo "</tr>";
      			}
-     			echo "</table>";
+     			echo "</table><br>";
      		}
 
 
      	 ?>
-    	<table class="no_background">
+    	<table class="simple">
             <tr><td colspan="2"><p id="res"></p></td></tr>
     		<tr>
-    			<td><button id="guardar" class="btn btn-dark">Guardar</button></td>
+    			<td><button id="guardar" class="btn btn-primary">Guardar</button></td>
     			<td><button class="btn btn-link" onclick="javascript:volver()">Volver</button></td>
     		</tr>
     	</table>
