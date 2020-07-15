@@ -69,11 +69,9 @@
 			</td>
 		</tr>
 		<tr><td colspan="4"><br>
-			<button class="btn btn-dark" onclick="location.href='resultados.php?id=<?php echo $idCata; ?>'">Ver resultados</button>
+			<button class="btn btn-primary" onclick="location.href='resultados.php?id=<?php echo $idCata; ?>'">Resultados</button>
 		</td></tr>
 	</table>
-	<br>
-	<button class="btn btn-link" onclick="location.href='cata.php'">Volver</button></td>
 	</div>
 </body>
 </html>
