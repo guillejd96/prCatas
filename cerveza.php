@@ -76,24 +76,17 @@
 	 				$sumApariencia+=$row['apariencia'];
 	 				$sumSabor+=$row['sabor'];
 	 				$sumCuerpo+=$row['cuerpo'];
+	 				$sumBotellin+=$row['botellin'];
+	 				$media = ($row['cuerpo']+$row['aroma']+$row['apariencia']+$row['sabor']+$row['botellin']) / 5;
+	 				$sumMedia+= $media;
 	 				echo "<tr>";
 	 				echo "<td><p>".$nombrePersona."</p></td>";
 	 				echo "<td><p>".$row['aroma']."</p></td>";
 	 				echo "<td><p>".$row['apariencia']."</p></td>";
 	 				echo "<td><p>".$row['sabor']."</p></td>";
 	 				echo "<td><p>".$row['cuerpo']."</p></td>";
-	 				if($row['botellin']!=NULL){
-	 					echo "<td><p>".$row['botellin']."</p></td>";
-	 					$media = ($row['cuerpo']+$row['aroma']+$row['apariencia']+$row['sabor']+$row['botellin']) / 5;
-	 					echo "<td><p>".round($media,2)."</p></td>";
-	 					$sumBotellin+=$row['botellin'];
-	 					echo "</tr>";
-	 				} else {
-	 					echo "<td><p>--</p></td>";
-	 					$media = ($row['cuerpo']+$row['aroma']+$row['apariencia']+$row['sabor']) / 4;
-	 					echo "<td><p>".round($media,2)."</p></td>";
-	 					$sumMedia+= $media;
-	 				}
+	 				echo "<td><p>".$row['botellin']."</p></td>";
+	 				echo "<td><p>".round($media,2)."</p></td>";
 	 			}
 	 			echo "</tr>";
 	 			echo "<tr>";
@@ -108,11 +101,7 @@
 	 			echo "<td><p>".round($mediaApariencia,2)."</p></td>";
 	 			echo "<td><p>".round($mediaSabor,2)."</p></td>";
 	 			echo "<td><p>".round($mediaCuerpo,2)."</p></td>";
-	 			if($row['botellin']!=NULL){
-	 				echo "<td><p>".round($mediaBotellin,2)."</p></td>";
-	 			} else {
-	 				echo "<td><p>--</p></td>";
-	 			}
+	 			echo "<td><p>".round($mediaBotellin,2)."</p></td>";
 	 			echo "<td><p>".round($mediaMedia,2)."</p></td>";
 	 			echo "</tr>";
 	 		}
