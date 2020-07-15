@@ -72,18 +72,18 @@
 				$(".error").text('Introduce un nombre para la cata');
 				$(".error").css('color', 'red');
 				$(".error").css('font-size', '14px');
-				$("#nombre").css('border', '1px solid red');
+				$("#nombre").css('border', '2px solid red');
 			}else if(fechaCata==""){
 				$(".error").text('Introduce la fecha de la cata');
 				$(".error").css('color', 'red');
 				$(".error").css('font-size', '14px');
-				$("#fecha").css('border', '1px solid red');
+				$("#fecha").css('border', '2px solid red');
 			}else if(nP<1 || nC<1){
 				$(".error").text('Introduce un número positivo de personas y cervezas');
 				$(".error").css('color', 'red');
 				$(".error").css('font-size', '14px');
-				$("#personas").css('border', '1px solid red');
-				$("#cervezas").css('border', '1px solid red');
+				$("#personas").css('border', '2px solid red');
+				$("#cervezas").css('border', '2px solid red');
 			}else{
 				$("#1").hide();
 
@@ -95,7 +95,7 @@
 					$("#2").append('<tr><td colspan="2"><div class="input-group"><input type="text" class="nombre_personas form-control" size="75"><span class="input-group-addon" title="Añadir amigo" onclick="javascript:showModal('+i+')"><i class="fas fa-plus"></i></span></div><br></td></tr>')
 				}
 
-				$("#2").append('<tr><td colspan="2"><p class="error"></p></td></tr><tr><td><button class="btn btn-secondary" id="continuar2" onclick="javascript:continuar2()">Continuar</button></td><td><button class="btn btn-link" onclick="volver1()">Volver</button></td></tr></tr>');
+				$("#2").append('<tr><td colspan="2"><p class="error"></p></td></tr><tr><td><button class="btn btn-primary" id="continuar2" onclick="javascript:continuar2()">Continuar</button></td><td><button class="btn btn-link" onclick="volver1()">Volver</button></td></tr></tr>');
 
 				$(".progress-bar").css('width', '33%');
 				$(".progress-bar").children('p').text('1/3');
@@ -121,7 +121,7 @@
 			$("#2").show();
 			$(".nombre_personas").each(function(index, el) {
             		if($(el).val()=="") {
-            			$(el).css('border', '1px solid red');
+            			$(el).css('border', '2px solid red');
             		} else {
             			$(el).css('border', '1px solid #ccc');
             		}
@@ -146,7 +146,7 @@
             	$(".error").css('color', 'red');
             	$(".nombre_personas").each(function(index, el) {
             		if($(el).val()=="") {
-            			$(el).css('border', '1px solid red');
+            			$(el).css('border', '2px solid red');
             		} else {
             			$(el).css('border', '1px solid #ccc');
             		}
@@ -162,7 +162,7 @@
 
 				$("#3").append('<tr><td><p></p></td></tr>');
 
-	            $("#3").append('<tr><td colspan="2"><p class="error"></p></td></tr><tr><td><button class="btn btn-secondary" id="continuar3" onclick="javascript:continuar3()">Continuar</button></td><td><button class="btn btn-link" onclick="volver2()">Volver</button></td></tr></tr>');
+	            $("#3").append('<tr><td colspan="2"><p class="error"></p></td></tr><tr><td><button class="btn btn-primary" id="continuar3" onclick="javascript:continuar3()">Continuar</button></td><td><button class="btn btn-link" onclick="volver2()">Volver</button></td></tr></tr>');
 
 	            $(".progress-bar").css('width', '66%');
 				$(".progress-bar").children('p').text('2/3');
@@ -182,7 +182,7 @@
             	$(".error").css('color', 'red');
             	$(".nombre_cervezas").each(function(index, el) {
             		if($(el).val()=="") {
-            			$(el).css('border', '1px solid red');
+            			$(el).css('border', '2px solid red');
             		} else {
             			$(el).css('border', '1px solid #ccc');
             		}
@@ -296,7 +296,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2"><button class="btn btn-secondary" id="continuar1">Continuar</button></td>
+						<td colspan="2"><button class="btn btn-primary" id="continuar1">Continuar</button></td>
 					</tr>
 				</tbody>
 				<tbody id="2">
