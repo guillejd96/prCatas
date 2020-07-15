@@ -36,33 +36,53 @@
 			var s = $("#sabor").val();
 			var c = $("#cuerpo").val();
 			var b = $("#botellin").val();
-			var error = false;
+			var error1 = false;
+			var error2 = false;
 			if(n==""){
-				error=true;
-				$("#nombre").css('border', '1px solid red');
+				error1=true;
+				$("#nombre").css('border', '2px solid red');
 			}
 			if(ar==""){
-				error=true;
-				$("#aroma").css('border', '1px solid red');
+				error1=true;
+				$("#aroma").css('border', '2px solid red');
+			} else if(ar<0 || ar>10){
+				error2=true;
+				$("#aroma").css('border', '2px solid red');
 			}
 			if(ap==""){
-				error=true;
-				$("#apariencia").css('border', '1px solid red');
+				error1=true;
+				$("#apariencia").css('border', '2px solid red');
+			} else if(ap<0 || ap>10){
+				error2=true;
+				$("#apariencia").css('border', '2px solid red');
 			}
 			if(s==""){
-				error=true;
-				$("#sabor").css('border', '1px solid red');
+				error1=true;
+				$("#sabor").css('border', '2px solid red');
+			} else if(s<0 || s>10){
+				error2=true;
+				$("#sabor").css('border', '2px solid red');
 			}
 			if(c==""){
-				error=true;
-				$("#cuerpo").css('border', '1px solid red');
+				error1=true;
+				$("#cuerpo").css('border', '2px solid red');
+			} else if(c<0 || c>10){
+				error2=true;
+				$("#cuerpo").css('border', '2px solid red');
 			}
 			if(b==""){
-				error=true;
-				$("#botellin").css('border', '1px solid red');
+				error1=true;
+				$("#botellin").css('border', '2px solid red');
+			} else if(b<0 || b>10){
+				error2=true;
+				$("#botellin").css('border', '2px solid red');
 			}
-			if (error) {
+			if (error1) {
 				$("#error").text("Introduce todos los campos");
+				$("#error").css('font-size', '18px');
+				$("#error").css('color', 'red');
+			}else if(error2){
+				$("#error").text("Introduce valoraciones entre 0 y 10");
 				$("#error").css('font-size', '18px');
 				$("#error").css('color', 'red');
 			}else {
@@ -124,7 +144,7 @@
 			</tr>
 		</table>
 		<p id="error"></p>
-		<button class="btn btn-info" onclick="javascript:guardar()">Guardar</button>
+		<button class="btn btn-primary" onclick="javascript:guardar()">Guardar</button>
 	</div>
 </body>
 </html>
