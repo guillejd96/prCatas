@@ -66,6 +66,10 @@ p.form{
   text-align: right;
 }
 
-ul {
+ul li {
   list-style-position: inside;
+}
+
+ul  {
+ padding: 0;
 }
