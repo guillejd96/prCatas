@@ -25,6 +25,301 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Mis cervezas</title>
 	<script>
+		var sortMedia=true,sortApariencia=true,sortAroma=true,sortSabor=true,sortCuerpo=true,sortBotellin=true;
+
+		function sortTableByMedia() {
+			var table, rows, switching, i, x, y, shouldSwitch;
+			table = document.getElementById("content");
+			switching = true;
+			while (switching) {
+				switching = false;
+				rows = table.rows;
+				for (i = 1; i < (rows.length - 1); i++) {
+				   	shouldSwitch = false;
+				   	x = $(rows[i]).find('#media');
+				   	y = $(rows[i+1]).find('#media');
+				   	if(sortMedia){
+				   		if (Number($(x).html()) < Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					} else {
+					   	if (Number($(x).html()) > Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					}
+			 	}
+				if (shouldSwitch) {
+				 	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+					switching = true;
+				}
+			}
+			if(sortMedia) {
+				sortMedia=false;
+				$("#titleMedia").empty();
+				$("#titleMedia").append("<p>Media <i class='fas fa-sort-down'></i></p>");
+			}else {
+				sortMedia=true;
+				$("#titleMedia").empty();
+				$("#titleMedia").append("<p>Media <i class='fas fa-sort-up'></i></p>");
+			}
+			$("#titleAroma").empty();
+			$("#titleAroma").append("<p>Aroma <i class='fas fa-sort'></i></p>");
+			$("#titleApariencia").empty();
+			$("#titleApariencia").append("<p>Apariencia <i class='fas fa-sort'></i></p>");
+			$("#titleSabor").empty();
+			$("#titleSabor").append("<p>Sabor <i class='fas fa-sort'></i></p>");
+			$("#titleCuerpo").empty();
+			$("#titleCuerpo").append("<p>Cuerpo <i class='fas fa-sort'></i></p>");
+			$("#titleBotellin").empty();
+			$("#titleBotellin").append("<p>Botellín <i class='fas fa-sort'></i></p>");
+		}
+
+		function sortTableByAroma() {
+			var table, rows, switching, i, x, y, shouldSwitch;
+			table = document.getElementById("content");
+			switching = true;
+			while (switching) {
+			    switching = false;
+			    rows = table.rows;
+			    for (i = 1; i < (rows.length - 1); i++) {
+			    	shouldSwitch = false;
+			      	x = $(rows[i]).find('#aroma');
+			      	y = $(rows[i+1]).find('#aroma');
+			      	if(sortAroma){
+				   		if (Number($(x).html()) < Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					} else {
+					   	if (Number($(x).html()) > Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					}
+			    }
+			    if (shouldSwitch) {
+			     	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			    	switching = true;
+			    }
+			}
+			if(sortAroma) {
+				sortAroma=false;
+				$("#titleAroma").empty();
+				$("#titleAroma").append("<p>Aroma <i class='fas fa-sort-down'></i></p>");
+			}else {
+				sortAroma=true;
+				$("#titleAroma").empty();
+				$("#titleAroma").append("<p>Aroma <i class='fas fa-sort-up'></i></p>");
+			}
+			$("#titleBotellin").empty();
+			$("#titleBotellin").append("<p>Botellín <i class='fas fa-sort'></i></p>");
+			$("#titleApariencia").empty();
+			$("#titleApariencia").append("<p>Apariencia <i class='fas fa-sort'></i></p>");
+			$("#titleSabor").empty();
+			$("#titleSabor").append("<p>Sabor <i class='fas fa-sort'></i></p>");
+			$("#titleCuerpo").empty();
+			$("#titleCuerpo").append("<p>Cuerpo <i class='fas fa-sort'></i></p>");
+			$("#titleMedia").empty();
+			$("#titleMedia").append("<p>Media <i class='fas fa-sort'></i></p>");
+		}
+
+		function sortTableByApariencia() {
+			var table, rows, switching, i, x, y, shouldSwitch;
+			table = document.getElementById("content");
+			switching = true;
+			while (switching) {
+			    switching = false;
+			    rows = table.rows;
+			    for (i = 1; i < (rows.length - 1); i++) {
+			    	shouldSwitch = false;
+			      	x = $(rows[i]).find('#apariencia');
+			      	y = $(rows[i+1]).find('#apariencia');
+			      	if(sortApariencia){
+				   		if (Number($(x).html()) < Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					} else {
+					   	if (Number($(x).html()) > Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					}
+			    }
+			    if (shouldSwitch) {
+			     	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			    	switching = true;
+			    }
+			}
+			if(sortApariencia) {
+				sortApariencia=false;
+				$("#titleApariencia").empty();
+				$("#titleApariencia").append("<p>Apariencia <i class='fas fa-sort-down'></i></p>");
+			}else {
+				sortApariencia=true;
+				$("#titleApariencia").empty();
+				$("#titleApariencia").append("<p>Apariencia <i class='fas fa-sort-up'></i></p>");
+			}
+			$("#titleAroma").empty();
+			$("#titleAroma").append("<p>Aroma <i class='fas fa-sort'></i></p>");
+			$("#titleBotellin").empty();
+			$("#titleBotellin").append("<p>Botellín <i class='fas fa-sort'></i></p>");
+			$("#titleSabor").empty();
+			$("#titleSabor").append("<p>Sabor <i class='fas fa-sort'></i></p>");
+			$("#titleCuerpo").empty();
+			$("#titleCuerpo").append("<p>Cuerpo <i class='fas fa-sort'></i></p>");
+			$("#titleMedia").empty();
+			$("#titleMedia").append("<p>Media <i class='fas fa-sort'></i></p>");
+		}
+
+		function sortTableBySabor() {
+			var table, rows, switching, i, x, y, shouldSwitch;
+			table = document.getElementById("content");
+			switching = true;
+			while (switching) {
+			    switching = false;
+			    rows = table.rows;
+			    for (i = 1; i < (rows.length - 1); i++) {
+			    	shouldSwitch = false;
+			      	x = $(rows[i]).find('#sabor');
+			      	y = $(rows[i+1]).find('#sabor');
+			      	if(sortSabor){
+				   		if (Number($(x).html()) < Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					} else {
+					   	if (Number($(x).html()) > Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					}
+			    }
+			    if (shouldSwitch) {
+			     	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			    	switching = true;
+			    }
+			}
+			if(sortSabor) {
+				sortSabor=false;
+				$("#titleSabor").empty();
+				$("#titleSabor").append("<p>Sabor <i class='fas fa-sort-down'></i></p>");
+			}else {
+				sortSabor=true;
+				$("#titleSabor").empty();
+				$("#titleSabor").append("<p>Sabor <i class='fas fa-sort-up'></i></p>");
+			}
+			$("#titleAroma").empty();
+			$("#titleAroma").append("<p>Aroma <i class='fas fa-sort'></i></p>");
+			$("#titleApariencia").empty();
+			$("#titleApariencia").append("<p>Apariencia <i class='fas fa-sort'></i></p>");
+			$("#titleBotellin").empty();
+			$("#titleBotellin").append("<p>Botellín <i class='fas fa-sort'></i></p>");
+			$("#titleCuerpo").empty();
+			$("#titleCuerpo").append("<p>Cuerpo <i class='fas fa-sort'></i></p>");
+			$("#titleMedia").empty();
+			$("#titleMedia").append("<p>Media <i class='fas fa-sort'></i></p>");
+		}
+
+		function sortTableByCuerpo() {
+			var table, rows, switching, i, x, y, shouldSwitch;
+			table = document.getElementById("content");
+			switching = true;
+			while (switching) {
+			    switching = false;
+			    rows = table.rows;
+			    for (i = 1; i < (rows.length - 1); i++) {
+			    	shouldSwitch = false;
+			      	x = $(rows[i]).find('#cuerpo');
+			      	y = $(rows[i+1]).find('#cuerpo');
+			      	if(sortCuerpo){
+				   		if (Number($(x).html()) < Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					} else {
+					   	if (Number($(x).html()) > Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					}
+			    }
+			    if (shouldSwitch) {
+			     	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			    	switching = true;
+			    }
+			}
+			if(sortCuerpo) {
+				sortCuerpo=false;
+				$("#titleCuerpo").empty();
+				$("#titleCuerpo").append("<p>Cuerpo <i class='fas fa-sort-down'></i></p>");
+			}else {
+				sortCuerpo=true;
+				$("#titleCuerpo").empty();
+				$("#titleCuerpo").append("<p>Cuerpo <i class='fas fa-sort-up'></i></p>");
+			}
+			$("#titleAroma").empty();
+			$("#titleAroma").append("<p>Aroma <i class='fas fa-sort'></i></p>");
+			$("#titleApariencia").empty();
+			$("#titleApariencia").append("<p>Apariencia <i class='fas fa-sort'></i></p>");
+			$("#titleSabor").empty();
+			$("#titleSabor").append("<p>Sabor <i class='fas fa-sort'></i></p>");
+			$("#titleBotellin").empty();
+			$("#titleBotellin").append("<p>Botellín <i class='fas fa-sort'></i></p>");
+			$("#titleMedia").empty();
+			$("#titleMedia").append("<p>Media <i class='fas fa-sort'></i></p>");
+		}
+
+		function sortTableByBotellin() {
+			var table, rows, switching, i, x, y, shouldSwitch;
+			table = document.getElementById("content");
+			switching = true;
+			while (switching) {
+			    switching = false;
+			    rows = table.rows;
+			    for (i = 1; i < (rows.length - 1); i++) {
+			    	shouldSwitch = false;
+			      	x = $(rows[i]).find('#botellin');
+			      	y = $(rows[i+1]).find('#botellin');
+			      	if(sortBotellin){
+				   		if (Number($(x).html()) < Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					} else {
+					   	if (Number($(x).html()) > Number($(y).html())) {
+					     	shouldSwitch = true;
+					       	break;
+					   	}
+					}
+			    }
+			    if (shouldSwitch) {
+			     	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			    	switching = true;
+			    }
+			}
+			if(sortBotellin) {
+				sortBotellin=false;
+				$("#titleBotellin").empty();
+				$("#titleBotellin").append("<p>Botellín <i class='fas fa-sort-down'></i></p>");
+			}else {
+				sortBotellin=true;
+				$("#titleBotellin").empty();
+				$("#titleBotellin").append("<p>Botellín <i class='fas fa-sort-up'></i></p>");
+			}
+			$("#titleAroma").empty();
+			$("#titleAroma").append("<p>Aroma <i class='fas fa-sort'></i></p>");
+			$("#titleApariencia").empty();
+			$("#titleApariencia").append("<p>Apariencia <i class='fas fa-sort'></i></p>");
+			$("#titleSabor").empty();
+			$("#titleSabor").append("<p>Sabor <i class='fas fa-sort'></i></p>");
+			$("#titleCuerpo").empty();
+			$("#titleCuerpo").append("<p>Cuerpo <i class='fas fa-sort'></i></p>");
+			$("#titleMedia").empty();
+			$("#titleMedia").append("<p>Media <i class='fas fa-sort'></i></p>");
+		}
 	</script>
 </head>
 <body>
@@ -39,23 +334,23 @@
 			 			<th>
 			 				<p>Cerveza</p>
 			 			</th>
-			 			<th title='Ordenar'>
-			 				<p>Aroma</p>
+			 			<th title='Ordenar' onclick='javascript:sortTableByAroma()' id='titleAroma'>
+			 				<p>Aroma <i class='fas fa-sort'></i></p>
 			 			</th>
-			 			<th title='Ordenar'>
-			 				<p>Apariencia</p>
+			 			<th title='Ordenar'  onclick='javascript:sortTableByApariencia()' id='titleApariencia'>
+			 				<p>Apariencia <i class='fas fa-sort'></i></p>
 			 			</th>
-			 			<th title='Ordenar'>
-			 				<p>Sabor</p>
+			 			<th title='Ordenar'  onclick='javascript:sortTableBySabor()'  id='titleSabor'>
+			 				<p>Sabor <i class='fas fa-sort'></i></p>
 			 			</th>
-			 			<th title='Ordenar'>
-			 				<p>Cuerpo</p>
+			 			<th title='Ordenar' onclick='javascript:sortTableByCuerpo()' id='titleCuerpo'>
+			 				<p>Cuerpo <i class='fas fa-sort'></i></p>
 			 			</th>
-			 			<th title='Ordenar'>
-			 				<p>Botellín</p>
+			 			<th title='Ordenar' onclick='javascript:sortTableByBotellin	()' id='titleBotellin'>
+			 				<p>Botellín <i class='fas fa-sort'></i></p>
 			 			</th>
-			 			<th title='Ordenar'>
-			 				<p>Media</p>
+			 			<th title='Ordenar' onclick='javascript:sortTableByMedia()' id='titleMedia'>
+			 				<p>Media <i class='fas fa-sort'></i></p>
 			 			</th>
 			 		</tr>";
 			 		if($resOpiniones->num_rows>0){
@@ -64,13 +359,13 @@
 		 					$cerveza = mysqli_query($conexion,$sqlCerveza)->fetch_row()[0];
 		 					echo "<tr>";
 		 					echo "<td><p>".$cerveza."</p></td>";
-		 					echo "<td><p>".$row['aroma']."</p></td>";
-		 					echo "<td><p>".$row['apariencia']."</p></td>";
-		 					echo "<td><p>".$row['sabor']."</p></td>";
-		 					echo "<td><p>".$row['cuerpo']."</p></td>";
-		 					echo "<td><p>".$row['botellin']."</p></td>";
+		 					echo "<td><p id='aroma'>".$row['aroma']."</p></td>";
+		 					echo "<td><p id='apariencia'>".$row['apariencia']."</p></td>";
+		 					echo "<td><p id='sabor'>".$row['sabor']."</p></td>";
+		 					echo "<td><p id='cuerpo'>".$row['cuerpo']."</p></td>";
+		 					echo "<td><p id='botellin'>".$row['botellin']."</p></td>";
 		 					$media = ($row['cuerpo']+$row['aroma']+$row['apariencia']+$row['sabor']+$row['botellin']) / 5;
-		 					echo "<td><p>".$media."</p></td>";
+		 					echo "<td><p id='media'>".$media."</p></td>";
 		 					echo "</tr>";
 	 					}
 	 				} else {
