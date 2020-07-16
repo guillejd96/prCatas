@@ -23,6 +23,18 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
+		<h2>Contacto</h2><br><br>
+		<table class="simple">
+			<tr>
+				<td><img src="images/COLOR_FONDOBLANCO_INFORMATICA.png" alt="Logo ETSI" height="200" width="600" border="1"></td>
+				<td>
+					<p>Trabajo de Fin de Grado para la Escuela Técnica Superior de Ingeniería Informática 2019/2020</p>
+					<p>Grado en Ingeniería del Software</p>
+					<p>Guillermo Jimena Domínguez</p>
+					<p>guillejd96@gmail.com</p>
+				</td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>
