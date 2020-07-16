@@ -113,8 +113,8 @@
 
 <?php function banner() { ?>
 
-<nav id="banner" style="height: 180px; background-color: white">
-		<h1>DeCatas</h1>
+<nav id="banner" style="height: 200; background-image: url(images/untitled.png); background-size:cover">
+	<p>DeCatas</p>
 </nav>
 
 <?php } ?>
