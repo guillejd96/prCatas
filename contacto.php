@@ -23,7 +23,7 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
-		<h2>Contacto</h2><br><br>
+				<h2 align="left" style="margin-left: 2%">Contacto: </h2><br><br>
 		<table class="simple">
 			<tr>
 				<td><img src="images/COLOR_FONDOBLANCO_INFORMATICA.png" alt="Logo ETSI" height="200" width="600" border="1"></td>
