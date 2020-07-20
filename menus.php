@@ -91,9 +91,6 @@
 	<a href="mis_amigos.php">
 			<p>Mis amigos</p>
 	</a>
-	<p id="off1"></p>
-	<p id="off2"></p>
-	<p id="off3"></p>
 	</nav>
 
 <?php } ?>
@@ -108,6 +105,7 @@
 	<a href="faq.php" class="navbar-brand"><p>FaQ</p></a>
 	<a href="ajax/logout.php" class="navbar-brand"><p><i class="fas fa-sign-out-alt"></i> Salir</p></a>
 </nav>
+
 
 <?php } ?>
 
