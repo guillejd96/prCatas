@@ -44,7 +44,7 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
-		<h2>Instrucciones para catar una cerveza</h2>
+		<h2 align="left" style="margin-left: 2%">Instrucciones para catar una cerveza: </h2>
 		<p>Para catar una cerveza, debes apreciar 4 variables fundamentales</p>
 		<table class="simple">
 			<tr>
