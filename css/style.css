@@ -60,6 +60,10 @@ p.error {
   color: red;
 }
 
+p.ec {
+  font-size: 18px;
+}
+
 
 p.form{
   font-size: 18px;
