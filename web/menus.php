@@ -1,6 +1,6 @@
 <style>
 	/* Fixed sidenav, full height */
-	.sidenav {
+	#menu_izq {
 	  height: 100%;
 	  width: 200px;
 	  position: fixed;
@@ -50,24 +50,18 @@
 <script>
 	$(window).scroll(function(){
 		var elementPosition = $('#menu_arriba').offset();
-		var elementHeigth = $('#menu_arriba').height();
 
         if($(window).scrollTop() >= elementPosition.top){
             $('#menu_arriba').css('position','fixed').css('top','0');
-            $(".sidenav").css('top', '35');
+            $("#menu_izq").css('position','fixed').css('top', '35');
         } else {
         	$('#menu_arriba').css('position','initial');
         }
 
         if(elementPosition.top <= 200){
         	$('#menu_arriba').css('position','initial').css('top', '200');
+        	$("#menu_izq").css('top', '250');
         }
-
-        if($(window).scrollTop() <= 200){
-        	$(".sidenav").css('top', elementPosition.top+elementHeigth);
-        }
-
-
 	});
 </script>
 
@@ -76,22 +70,12 @@
 
 <nav id="menu_izq" class="sidenav">
 	<div></div>
-	<a href="nueva_cata.php">
-			<p>Nueva Cata</p>
-	</a>
-	<a href="nueva_cerveza.php">
-			<p>Nueva Cerveza</p>
-	</a>
-	<a href="cata.php">
-			<p>Mis catas</p>
-	</a>
-	<a href="mis_cervezas.php">
-			<p>Mis cervezas</p>
-	</a>
-	<a href="mis_amigos.php">
-			<p>Mis amigos</p>
-	</a>
-	</nav>
+	<a href="nueva_cata.php"><p>Nueva Cata</p></a>
+	<a href="nueva_cerveza.php"><p>Nueva Cerveza</p></a>
+	<a href="cata.php"><p>Mis catas</p></a>
+	<a href="mis_cervezas.php"><p>Mis cervezas</p></a>
+	<a href="mis_amigos.php"><p>Mis amigos</p></a>
+</nav>
 
 <?php } ?>
 
@@ -100,9 +84,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menu_arriba">
 	<div class="navbar-brand" style="width: 200px;"></div>
 	<a href="user.php" class="navbar-brand"><p>Inicio</p></a>
+	<a href="top.php" class="navbar-brand"><p>Top 10</p></a>
 	<a href="instrucciones.php" class="navbar-brand"><p>Instrucciones</p></a>
 	<a href="contacto.php" class="navbar-brand"><p>Contacto</p></a>
 	<a href="faq.php" class="navbar-brand"><p>FaQ</p></a>
+	<div class="navbar-brand" style="width: 300px;"></div>
 	<a href="ajax/logout.php" class="navbar-brand"><p><i class="fas fa-sign-out-alt"></i> Salir</p></a>
 </nav>
 

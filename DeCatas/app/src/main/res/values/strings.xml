@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">DeCatas</string>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar sesión o registrarse</string>
+    <string name="action_sign_in_short">"Login "</string>
+    <string name="welcome">Bienvenido!</string>
+    <string name="invalid_username">El usuario no es correcto</string>
+    <string name="invalid_password">La contraseña no es correcta</string>
+    <string name="login_failed">No se pudo realizar el login</string>
+    <string name="user">Usuario</string>
+    <string name="ask_new_user">¿No tienes usuario?</string>
+</resources>

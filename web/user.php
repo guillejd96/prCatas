@@ -44,6 +44,7 @@
 	<?php echo arriba(); ?>
 	<?php echo izquierda(); ?>
 	<div class="main">
+		<h2 align="left" style="margin-left: 2%">Inicio</h2>
 		<?php 
 			$sqlSolicitudes = "SELECT idUsuario1 FROM amigos WHERE aceptada=0 AND idUsuario2 = ".$idUsuario;
 			$resSolicitudes = mysqli_query($conexion,$sqlSolicitudes);

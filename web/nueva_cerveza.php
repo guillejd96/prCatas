@@ -24,6 +24,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script>
 		function guardar(){
+			$(".error").text("");
 			$("#nombre").css('border', '1px solid #ccc');
 			$("#aroma").css('border', '1px solid #ccc');
 			$("#apariencia").css('border', '1px solid #ccc');
@@ -78,13 +79,13 @@
 				$("#botellin").css('border', '2px solid red');
 			}
 			if (error1) {
-				$("#error").text("Introduce todos los campos");
-				$("#error").css('font-size', '18px');
-				$("#error").css('color', 'red');
+				$(".error").text('Introduce todos los campos');
+				$(".error").css('color', 'red');
+				$(".error").css('font-size', '16px');
 			}else if(error2){
-				$("#error").text("Introduce valoraciones entre 0 y 10");
-				$("#error").css('font-size', '18px');
-				$("#error").css('color', 'red');
+				$(".error").text("Introduce valoraciones entre 0 y 10");
+				$(".error").css('font-size', '16px');
+				$(".error").css('color', 'red');
 			}else {
 				$.post('ajax/nuevaCervezaIndividual.php', {n: n, ar: ar, ap: ap, s: s, c: c, b: b}, function(data, textStatus, xhr) {
 					if(data!="1"){
@@ -142,8 +143,10 @@
 				<td><input type="number" id="cuerpo" min="0" max="10" class="form-control" size="2"></td>
 				<td><input type="number" id="botellin" min="0" max="10" class="form-control" size="2"></td>
 			</tr>
+			<tr>
+				<td colspan="6"><p class="error"></p></td>
+			</tr>
 		</table>
-		<p id="error"></p>
 		<button class="btn btn-primary" onclick="javascript:guardar()">Guardar</button>
 	</div>
 </body>

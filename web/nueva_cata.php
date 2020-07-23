@@ -71,17 +71,17 @@
 			if(nombreCata==""){
 				$(".error").text('Introduce un nombre para la cata');
 				$(".error").css('color', 'red');
-				$(".error").css('font-size', '14px');
+				$(".error").css('font-size', '16px');
 				$("#nombre").css('border', '2px solid red');
 			}else if(fechaCata==""){
 				$(".error").text('Introduce la fecha de la cata');
 				$(".error").css('color', 'red');
-				$(".error").css('font-size', '14px');
+				$(".error").css('font-size', '16px');
 				$("#fecha").css('border', '2px solid red');
 			}else if(nP<1 || nC<1){
 				$(".error").text('Introduce un número positivo de personas y cervezas');
 				$(".error").css('color', 'red');
-				$(".error").css('font-size', '14px');
+				$(".error").css('font-size', '16px');
 				$("#personas").css('border', '2px solid red');
 				$("#cervezas").css('border', '2px solid red');
 			}else{
@@ -144,6 +144,7 @@
             if(personas.length!=nP){
             	$(".error").text("Introduce todos los nombres de las personas");
             	$(".error").css('color', 'red');
+            	$(".error").css('font-size', '14px');
             	$(".nombre_personas").each(function(index, el) {
             		if($(el).val()=="") {
             			$(el).css('border', '2px solid red');
@@ -180,6 +181,7 @@
             if(cervezas.length!=nC){
             	$(".error").text("Introduce todos los nombres de las cervezas");
             	$(".error").css('color', 'red');
+            	$(".error").css('font-size', '14px');
             	$(".nombre_cervezas").each(function(index, el) {
             		if($(el).val()=="") {
             			$(el).css('border', '2px solid red');

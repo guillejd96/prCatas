@@ -320,6 +320,20 @@
 			$("#titleMedia").empty();
 			$("#titleMedia").append("<p>Media <i class='fas fa-sort'></i></p>");
 		}
+
+		function borrar(id){
+			b = confirm("¿Quiere borrar la cerveza seleccionada?");
+			if(b){
+				$("#error").remove();
+				$.post('ajax/borrarCerveza.php', {id: id}, function(data, textStatus, xhr) {
+					if(data=="1"){
+						window.location.reload();
+					}else {
+						$(".main").append('<p id="error">Error al borrar la cerveza</p>');
+					}
+				});
+			}
+		}
 	</script>
 </head>
 <body>
@@ -352,11 +366,15 @@
 			 			<th title='Ordenar' onclick='javascript:sortTableByMedia()' id='titleMedia'>
 			 				<p>Media <i class='fas fa-sort'></i></p>
 			 			</th>
+			 			<th></th>
 			 		</tr>";
 			 		if($resOpiniones->num_rows>0){
 	 					while($row = mysqli_fetch_assoc($resOpiniones)){
-	 						$sqlCerveza = "SELECT nombre FROM cerveza WHERE id=".$row['idCerveza'].";";
-		 					$cerveza = mysqli_query($conexion,$sqlCerveza)->fetch_row()[0];
+	 						$idCerveza = $row['idCerveza'];
+	 						$sqlCerveza = "SELECT nombre,idCata FROM cerveza WHERE id=".$idCerveza.";";
+		 					$res = mysqli_query($conexion,$sqlCerveza)->fetch_row();
+		 					$cerveza = $res[0];
+		 					$idCata = $res[1];
 		 					echo "<tr>";
 		 					echo "<td><p>".$cerveza."</p></td>";
 		 					echo "<td><p id='aroma'>".$row['aroma']."</p></td>";
@@ -366,6 +384,11 @@
 		 					echo "<td><p id='botellin'>".$row['botellin']."</p></td>";
 		 					$media = ($row['cuerpo']+$row['aroma']+$row['apariencia']+$row['sabor']+$row['botellin']) / 5;
 		 					echo "<td><p id='media'>".$media."</p></td>";
+		 					if($idCata==""){
+		 						echo "<td><p title='Borrar'><a onclick='javascript:borrar(".$idCerveza.")'><i class='far fa-trash-alt' style='font-size: 25px'></i></a></p></td>";
+		 					} else {
+		 						echo "<td><p title='No puedes borrar esta cerveza al pertenecer a una cata'><a href='#'><i class='fas fa-question-circle'></i></a></p></td>";
+		 					}
 		 					echo "</tr>";
 	 					}
 	 				} else {
