@@ -6,7 +6,7 @@
 
 	$stmt = mysqli_prepare($conexion,"SELECT id FROM usuario WHERE usuario= ?;");
 
-	mysqli_bind_param($stmt,"i",$u);
+	mysqli_stmt_bind_param($stmt,"i",$u);
 
 	mysqli_stmt_execute($stmt);
 

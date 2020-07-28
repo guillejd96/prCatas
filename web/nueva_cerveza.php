@@ -146,7 +146,7 @@
 			<tr>
 				<td colspan="6"><p class="error"></p></td>
 			</tr>
-		</table>
+		</table><br>
 		<button class="btn btn-primary" onclick="javascript:guardar()">Guardar</button>
 	</div>
 </body>

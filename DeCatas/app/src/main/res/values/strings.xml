@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">DeCatas</string>
+    <string name="title_activity_login" translatable="false">Login</string>
+    <string name="prompt_email" translatable="false">Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar sesión o registrarse</string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
+    <string name="welcome">Bienvenido!</string>
+    <string name="invalid_username">E usuario no es correcto</string>
+    <string name="invalid_password">La contraseña no es correcta</string>
+    <string name="login_failed">Usuario o contraseña están equivocados</string>
+    <string name="user">Usuario</string>
+    <string name="ask_new_user">¿No tienes usuario?</string>
+    <string name="empty_login_input">El usuario o la contraseña están vacío</string>
+    <string name="title_activity_new_user">Nuevo Usuario</string>
+    <string name="name">Nombre</string>
+    <string name="repeat_password">Repita su contraseña</string>
+    <string name="create_user">Crear usuario</string>
+    <string name="empty_user">Escribe un nombre de usuario</string>
+    <string name="empty_name">Escribe tu nombre</string>
+    <string name="user_exists">El usuario ya existe</string>
+    <string name="empty_pass">Escribe una contraseña</string>
+    <string name="password_not_secure">La contraseña no es segura</string>
+    <string name="different_pass">Las contraseñas no coinciden</string>
+    <string name="title_activity_instrucciones" translatable="false">Instrucciones</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+    <string name="instructions">Instrucciones</string>
+    <string name="title_activity_user" translatable="false">User</string>
+    <string name="labelUsuario">Usuario:</string>
+    <string name="labelNombre">Nombre:</string>
+    <string name="labelCatas">Catas:</string>
+    <string name="labelCervezas">Cervezas:</string>
+    <string name="labelAmigos">Amigos:</string>
+    <string name="new_beer">Nueva cerveza</string>
+    <string name="title_activity_nueva__cerveza" translatable="false">Nueva_Cerveza</string>
+    <string name="beer_name">Nombre de la cerveza</string>
+    <string name="aroma">Aroma</string>
+    <string name="sabor">Sabor</string>
+    <string name="apariencia">Apariencia</string>
+    <string name="cuerpo">Cuerpo</string>
+    <string name="botellin">Botellin</string>
+    <string name="save">Guardar</string>
+    <string name="title_activity_mis_cervezas">MisCervezas</string>
+</resources>

@@ -4,12 +4,19 @@
 	  height: 100%;
 	  width: 200px;
 	  position: fixed;
-	  left: 0;
-	  top: 252px;
+	  top: 235;
 	  z-index: 3;
 	  background-color: #503522;
 	  overflow-x: hidden;
 	  padding-top: 20px;
+	}
+
+	#menu_arriba{
+		background-color: #503522;
+		position: sticky;
+		top: 0;
+		width: 100%;
+		z-index: 1;
 	}
 	#menu_izq a {
 		display: flex;
@@ -24,11 +31,7 @@
 		color: black;
 		background-color: #784e2f;
 	}
-	#menu_arriba{
-		background-color: #503522;
-		width: 100%;
-		z-index: 1;
-	}
+	
 	#menu_arriba a {
 		width: 17rem;
 		text-decoration: none;
@@ -67,7 +70,6 @@
 
 <?php function izquierda() { ?>
 
-
 <nav id="menu_izq" class="sidenav">
 	<div></div>
 	<a href="nueva_cata.php"><p>Nueva Cata</p></a>
@@ -78,20 +80,17 @@
 </nav>
 
 <?php } ?>
-
 <?php function arriba() { ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menu_arriba">
 	<div class="navbar-brand" style="width: 200px;"></div>
 	<a href="user.php" class="navbar-brand"><p>Inicio</p></a>
-	<a href="top.php" class="navbar-brand"><p>Top 10</p></a>
 	<a href="instrucciones.php" class="navbar-brand"><p>Instrucciones</p></a>
 	<a href="contacto.php" class="navbar-brand"><p>Contacto</p></a>
 	<a href="faq.php" class="navbar-brand"><p>FaQ</p></a>
-	<div class="navbar-brand" style="width: 300px;"></div>
+	<div class="navbar-brand" style="width: 450px;"></div>
 	<a href="ajax/logout.php" class="navbar-brand"><p><i class="fas fa-sign-out-alt"></i> Salir</p></a>
 </nav>
-
 
 <?php } ?>
 
