@@ -6,4 +6,5 @@
     <color name="background_color">#ffc65a</color>
     <color name="background_btn_color">#FC8C03</color>
     <color name="input_color">#ffe4b0</color>
+    <color name="background_table_color">#fdfd96</color>
 </resources>

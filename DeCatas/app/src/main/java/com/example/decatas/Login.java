@@ -46,6 +46,9 @@ public class Login extends AppCompatActivity {
 
         inputUser.setBackgroundResource(R.drawable.input_normal);
         inputPassword.setBackgroundResource(R.drawable.input_normal);
+
+        inputUser.setText("");
+        inputPassword.setText("");
     }
 
      public void btnLogin(View view) throws MalformedURLException {
@@ -88,4 +91,11 @@ public class Login extends AppCompatActivity {
          Intent intent = new Intent(getApplicationContext(),Instrucciones.class);
          startActivity(intent);
      }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 }

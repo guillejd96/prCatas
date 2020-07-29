@@ -1,14 +1,17 @@
 package com.example.decatas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +68,25 @@ public class User extends AppCompatActivity {
     }
 
     public void goToMisCervezas(View v){
-        Intent intent = new Intent(getApplicationContext(),MisCervezas.class);
+        Intent intent = new Intent(getApplicationContext(),Mis_Cervezas.class);
+        intent.putExtra("id", idUsuario);
+        startActivity(intent);
+    }
+
+    public void goToNuevaCata(View v){
+        Intent intent = new Intent(getApplicationContext(),Nueva_Cata.class);
+        intent.putExtra("id", idUsuario);
+        startActivity(intent);
+    }
+
+    public void goToUnirseACata(View v){
+        Intent intent = new Intent(getApplicationContext(),Buscar_Cata.class);
+        intent.putExtra("id", idUsuario);
+        startActivity(intent);
+    }
+
+    public void goToMisCatas(View v){
+        Intent intent = new Intent(getApplicationContext(),Mis_Catas.class);
         intent.putExtra("id", idUsuario);
         startActivity(intent);
     }
@@ -75,5 +96,24 @@ public class User extends AppCompatActivity {
         super.onRestart();
         finish();
         startActivity(getIntent());
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+        b.setIcon(android.R.drawable.ic_dialog_alert);
+        b.setTitle("Salir...");
+        b.setCancelable(false);
+        b.setMessage("¿Está seguro que quiere salir de DeCatas?");
+        b.setPositiveButton("Sí", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+        });
+        b.setNegativeButton("No", null);
+        AlertDialog alert = b.create();
+        alert.show();
     }
 }

@@ -20,9 +20,25 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MisCervezas"
-            android:label="@string/title_activity_mis_cervezas"
+            android:name=".Mis_Catas"
+            android:label="@string/title_activity_mis__catas"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Buscar_Cata"
+            android:label="@string/title_activity_buscar__cata"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Cata"
+            android:label="@string/title_activity_cata"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Nueva_Cata"
+            android:label="@string/title_activity_nueva__cata"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Mis_Cervezas"
+            android:label="@string/title_activity_mis_cervezas"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Nueva_Cerveza"
             android:label="@string/title_activity_nueva__cerveza"

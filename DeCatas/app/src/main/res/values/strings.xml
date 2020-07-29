@@ -47,5 +47,22 @@
     <string name="cuerpo">Cuerpo</string>
     <string name="botellin">Botellin</string>
     <string name="save">Guardar</string>
-    <string name="title_activity_mis_cervezas">MisCervezas</string>
+    <string name="title_activity_mis_cervezas" translatable="false">MisCervezas</string>
+    <string name="title_activity_nueva__cata" translatable="false">Nueva_Cata</string>
+    <string name="create_beer_tasting">Crear cata</string>
+    <string name="new_beer_tasting">Nueva cata</string>
+    <string name="title_activity_cata" translatable="false">Cata</string>
+    <string name="participants">Participantes</string>
+    <string name="beers">Cervezas</string>
+    <string name="no_beers">No hay cervezas registradas</string>
+    <string name="join_beer_tasting">Unirse a cata</string>
+    <string name="title_activity_buscar__cata" translatable="false">Buscar_Cata</string>
+    <string name="search">Buscar</string>
+    <string name="my_beer_tastings">Mis catas</string>
+    <string name="title_activity_mis__catas" translatable="false">Mis_Catas</string>
+    <string name="date">Fecha</string>
+    <string name="en_curso">En Curso</string>
+    <string name="admin">Admin</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
 </resources>

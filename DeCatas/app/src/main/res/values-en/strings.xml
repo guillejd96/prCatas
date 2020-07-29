@@ -37,4 +37,16 @@
     <string name="cuerpo">Body</string>
     <string name="botellin">Bottle</string>
     <string name="save">Save</string>
+    <string name="create_beer_tasting">Create beer tasting</string>
+    <string name="new_beer_tasting">New beer tasting</string>
+    <string name="participants">Participants</string>
+    <string name="beers">Beers</string>
+    <string name="no_beers">No beers registered</string>
+    <string name="join_beer_tasting">Join beer tasting</string>
+    <string name="search">Search</string>
+    <string name="my_beer_tastings">My beer tastings</string>
+    <string name="admin">Admin</string>
+    <string name="date">Date</string>
+    <string name="en_curso">In Progress</string>
+    <string name="no">No</string>
 </resources>
