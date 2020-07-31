@@ -66,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="30dp"
+        android:background="@drawable/buttons"
         android:onClick="createCata"
         android:text="@string/create_beer_tasting"
         app:layout_constraintEnd_toEndOf="parent"

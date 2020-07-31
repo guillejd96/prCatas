@@ -1,5 +1,6 @@
 package com.example.decatas;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -101,7 +103,7 @@ public class Mis_Catas extends AppCompatActivity {
 
                 for(String cata : aux){
                     String[] aux2 = cata.split(",");
-                    String idCata = aux2[0];
+                    final String idCata = aux2[0];
                     String nombreCata = aux2[1];
                     String fechaCata = aux2[2];
                     String en_cursoCata = aux2[3];
@@ -118,7 +120,8 @@ public class Mis_Catas extends AppCompatActivity {
 
                     TextView[] rowTextView2 = new TextView[6];
 
-                    String en_curso = en_cursoCata=="1" ? "Sí" : "No";
+                    Log.v("Mis catas",en_cursoCata);
+                    String en_curso = en_cursoCata.equals("1") ? "Sí" : "No";
 
                     Map<String,String> params2 = new LinkedHashMap<>();
                     params2.put("id",idCata);
@@ -161,6 +164,18 @@ public class Mis_Catas extends AppCompatActivity {
                         tv.setText(labelS[j]);
                         j++;
                         trTD.addView(tv);
+                    }
+
+                    if(en_cursoCata.equals("1")){
+                        trTD.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getApplicationContext(),Cata.class);
+                                intent.putExtra("idUsuario",idUsuario);
+                                intent.putExtra("idCata",idCata);
+                                startActivity(intent);
+                            }
+                        });
                     }
                     table.addView(trTD);
                 }

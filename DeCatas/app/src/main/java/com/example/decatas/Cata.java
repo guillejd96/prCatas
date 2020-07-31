@@ -1,6 +1,7 @@
 package com.example.decatas;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -27,7 +28,7 @@ import java.util.Map;
 
 public class Cata extends AppCompatActivity {
 
-    private String idUsuario,idCata,nombreCata,idAdmin;
+    private String idUsuario,idCata,nombreCata,idAdmin,nCervezas;
     public TextView title;
     public EditText editNuevaCerveza;
     public Button btn;
@@ -47,18 +48,30 @@ public class Cata extends AppCompatActivity {
         this.btn = (Button)findViewById(R.id.add);
         this.table1 = (TableLayout)findViewById(R.id.table1);
 
+        Map<String,String> p = new LinkedHashMap<>();
+        p.put("id",idCata);
+        Connection con = null;
+        try {
+            con = new Connection(this,"getNCervezas.php",p);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        while(con.getRes()==null);
+        this.nCervezas = con.getRes();
+
         Map<String,String> params = new LinkedHashMap<>();
         params.put("id",idCata);
 
         try {
-            Connection con = new Connection(this,"getCata.php",params);
-            while(con.getRes()==null);
-            String result = con.getRes();
+            Connection conn = new Connection(this,"getCata.php",params);
+            while(conn.getRes()==null);
+            String result = conn.getRes();
             if(result.equals("0")){
                 Toast.makeText(this,"No se pudo cargar la cata",Toast.LENGTH_LONG).show();
             }else {
                 String[] res = result.split("/");
                 String aux = res[0];
+                Log.v("Cata",aux);
                 String[] infoCata = aux.split(",");
                 this.nombreCata = infoCata[0];
                 this.idAdmin = infoCata[1];
@@ -110,6 +123,7 @@ public class Cata extends AppCompatActivity {
 
                     String nombre = infoPersona[0];
                     String usuario = infoPersona[1];
+                    String nC = infoPersona[2];
 
                     TableRow trTD = new TableRow(this);
 
@@ -132,7 +146,8 @@ public class Cata extends AppCompatActivity {
                     tv1.setPadding(10,10,10,10);
                     tv1.setTextSize(15);
                     tv1.setVisibility(View.VISIBLE);
-                    tv1.setText(nombre+"("+usuario+")");
+                    String text = nombre+"("+usuario+"): "+nC+"/"+nCervezas+" valoraciones";
+                    tv1.setText(text);
                     trTD.addView(tv1);
 
                     table1.addView(trTD);
@@ -166,10 +181,15 @@ public class Cata extends AppCompatActivity {
 
                 if(res.length>2){
                     aux = res[2];
-                    String[] infoCervezas = aux.split(",");
+                    String[] infoCervezas = aux.split(";");
 
                     for(int i=0;i<infoCervezas.length;i++){
-                        String nombre = infoCervezas[i];
+                        String cad = infoCervezas[i];
+
+                        String cerveza[] = cad.split(",");
+
+                        final String idCerveza = cerveza[0];
+                        String nombre = cerveza[1];
 
                         TableRow trTD = new TableRow(this);
 
@@ -193,6 +213,18 @@ public class Cata extends AppCompatActivity {
                         tv1.setTextSize(15);
                         tv1.setVisibility(View.VISIBLE);
                         tv1.setText(nombre);
+
+                        tv1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getApplicationContext(),Valorar_Cerveza.class);
+                                intent.putExtra("id", idUsuario);
+                                intent.putExtra("c",idCerveza);
+                                intent.putExtra("ca",idCata);
+                                startActivity(intent);
+                            }
+                        });
+
                         trTD.addView(tv1);
 
                         table1.addView(trTD);
@@ -267,26 +299,16 @@ public class Cata extends AppCompatActivity {
         b.setIcon(android.R.drawable.ic_dialog_alert);
         b.setTitle("Salir...");
         b.setCancelable(false);
-        if(idAdmin.equals(idUsuario)){
-            b.setMessage("¿Está seguro que quiere salir de la cata? Se dará la cata por terminada");
-            b.setPositiveButton("Sí", new DialogInterface.OnClickListener(){
+        b.setMessage("¿Está seguro que quiere salir de la cata? Puedes volver en cualquier momento si sigue en curso");
+        b.setPositiveButton("Sí", new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    finish();
+                    Intent intent = new Intent(getApplicationContext(),User.class);
+                    intent.putExtra("id",idUsuario);
+                    startActivity(intent);
                 }
             });
-        } else {
-            b.setMessage("¿Está seguro que quiere salir de la cata? ");
-            b.setPositiveButton("Sí", new DialogInterface.OnClickListener(){
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    finish();
-                }
-            });
-        }
-
         b.setNegativeButton("No", null);
         AlertDialog alert = b.create();
         alert.show();

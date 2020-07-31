@@ -109,7 +109,8 @@ public class User extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(),Login.class);
+                        startActivity(intent);
                     }
         });
         b.setNegativeButton("No", null);

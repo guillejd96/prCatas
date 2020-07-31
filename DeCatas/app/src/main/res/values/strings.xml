@@ -22,7 +22,7 @@
     <string name="empty_pass">Escribe una contraseña</string>
     <string name="password_not_secure">La contraseña no es segura</string>
     <string name="different_pass">Las contraseñas no coinciden</string>
-    <string name="title_activity_instrucciones" translatable="false">Instrucciones</string>
+    <string name="title_activity_instrucciones">Instrucciones</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label" translatable="false">First Fragment</string>
     <string name="second_fragment_label" translatable="false">Second Fragment</string>
@@ -39,7 +39,7 @@
     <string name="labelCervezas">Cervezas:</string>
     <string name="labelAmigos">Amigos:</string>
     <string name="new_beer">Nueva cerveza</string>
-    <string name="title_activity_nueva__cerveza" translatable="false">Nueva_Cerveza</string>
+    <string name="title_activity_nueva__cerveza" translatable="false">Nueva Cerveza</string>
     <string name="beer_name">Nombre de la cerveza</string>
     <string name="aroma">Aroma</string>
     <string name="sabor">Sabor</string>
@@ -47,11 +47,11 @@
     <string name="cuerpo">Cuerpo</string>
     <string name="botellin">Botellin</string>
     <string name="save">Guardar</string>
-    <string name="title_activity_mis_cervezas" translatable="false">MisCervezas</string>
-    <string name="title_activity_nueva__cata" translatable="false">Nueva_Cata</string>
+    <string name="title_activity_mis_cervezas">Mis Cervezas</string>
+    <string name="title_activity_nueva__cata">Nueva Cata</string>
     <string name="create_beer_tasting">Crear cata</string>
     <string name="new_beer_tasting">Nueva cata</string>
-    <string name="title_activity_cata" translatable="false">Cata</string>
+    <string name="title_activity_cata">Cata</string>
     <string name="participants">Participantes</string>
     <string name="beers">Cervezas</string>
     <string name="no_beers">No hay cervezas registradas</string>
@@ -59,10 +59,20 @@
     <string name="title_activity_buscar__cata" translatable="false">Buscar_Cata</string>
     <string name="search">Buscar</string>
     <string name="my_beer_tastings">Mis catas</string>
-    <string name="title_activity_mis__catas" translatable="false">Mis_Catas</string>
+    <string name="title_activity_mis__catas">Mis Catas</string>
     <string name="date">Fecha</string>
     <string name="en_curso">En Curso</string>
     <string name="admin">Admin</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="title_activity_valorar__cerveza">Valorar Cerveza</string>
+    <string name="valorar_cerveza">Valorar cerveza</string>
+    <string name="my_beers">Mis cervezas</string>
+    <string name="join">Unirse</string>
+    <string name="enter_beer_tasting_password">Introduce la contraseña de la cata</string>
+    <string name="cancel">Cancelar</string>
+    <string name="error_join_beer_tasting">No se ha podido unir a la cata</string>
+    <string name="ok">OK</string>
+    <string name="no_beer_tasting_found">No se han encontrado coincidencias</string>
+    <string name="enter_beer_tasting_name">Introduce un nombre de cata</string>
 </resources>

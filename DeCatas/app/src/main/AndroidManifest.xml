@@ -20,9 +20,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Valorar_Cerveza"
+            android:label="@string/title_activity_valorar__cerveza"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".Mis_Catas"
             android:label="@string/title_activity_mis__catas"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Buscar_Cata"
             android:label="@string/title_activity_buscar__cata"

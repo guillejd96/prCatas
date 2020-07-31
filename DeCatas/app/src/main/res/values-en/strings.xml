@@ -49,4 +49,17 @@
     <string name="date">Date</string>
     <string name="en_curso">In Progress</string>
     <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="valorar_cerveza">Value beer</string>
+    <string name="my_beers">My beers</string>
+    <string name="join">Join</string>
+    <string name="enter_beer_tasting_password">Enter beer\'s tasting password</string>
+    <string name="title_activity_mis_cervezas">My Beers</string>
+    <string name="title_activity_nueva__cata">New Beer Tasting</string>
+    <string name="title_activity_cata">Beer Tasting</string>
+    <string name="title_activity_mis__catas">My Beer Tastings</string>
+    <string name="title_activity_valorar__cerveza">Value beer</string>
+    <string name="title_activity_nueva__cerveza" translatable="false">New Beer</string>
+    <string name="title_activity_instrucciones">Instructions</string>
+    <string name="ok">OK</string>
 </resources>
