@@ -29,7 +29,7 @@ public class Connection extends AsyncTask<String,String,String> {
 
     public Connection(Context c, String url, Map<String,String> params) throws MalformedURLException {
         pdLoading = new ProgressDialog(c);
-        urlString = "http://192.168.1.11:8080/decatas/"+url;
+        urlString = "http://192.168.0.13:8080/decatas/"+url;
         this.params = params;
         this.execute();
 
