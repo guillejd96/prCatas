@@ -6,7 +6,7 @@ $nombre = $_GET['c'];
 $idPersona = $_GET['p'];
 $fecha = date("Y-m-d",strtotime($_GET['f']));
 
-$sql = "INSERT INTO cata (nombre,fecha) VALUES ('".$nombre."',CAST('".$fecha."' AS DATE));";
+$sql = "INSERT INTO cata (nombre,fecha,en_curso,admin) VALUES ('".$nombre."',CAST('".$fecha."' AS DATE),1,$idPersona);";
 if(mysqli_query($conexion,$sql)){
 	$sql = "SELECT id FROM cata WHERE nombre='".$nombre."' AND fecha=CAST('".$fecha."' AS DATE);";
 	$id = mysqli_query($conexion,$sql)->fetch_row()[0];
