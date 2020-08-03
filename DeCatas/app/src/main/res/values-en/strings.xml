@@ -62,4 +62,10 @@
     <string name="title_activity_nueva__cerveza" translatable="false">New Beer</string>
     <string name="title_activity_instrucciones">Instructions</string>
     <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_">Delete...</string>
+    <string name="enter_beer_tasting_name">Enter beer tasting\'s name</string>
+    <string name="no_beer_tasting_found">No coincidence found</string>
+    <string name="error_join_beer_tasting">Error joining beer tasting</string>
+    <string name="question_delete_cata">Are you sure to delete this beer tasting?</string>
 </resources>

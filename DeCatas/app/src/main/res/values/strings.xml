@@ -6,7 +6,7 @@
     <string name="action_sign_in">Iniciar sesión o registrarse</string>
     <string name="action_sign_in_short">Iniciar sesión</string>
     <string name="welcome">Bienvenido!</string>
-    <string name="invalid_username">E usuario no es correcto</string>
+    <string name="invalid_username">El usuario no es correcto</string>
     <string name="invalid_password">La contraseña no es correcta</string>
     <string name="login_failed">Usuario o contraseña están equivocados</string>
     <string name="user">Usuario</string>
@@ -39,7 +39,7 @@
     <string name="labelCervezas">Cervezas:</string>
     <string name="labelAmigos">Amigos:</string>
     <string name="new_beer">Nueva cerveza</string>
-    <string name="title_activity_nueva__cerveza" translatable="false">Nueva Cerveza</string>
+    <string name="title_activity_nueva__cerveza">Nueva Cerveza</string>
     <string name="beer_name">Nombre de la cerveza</string>
     <string name="aroma">Aroma</string>
     <string name="sabor">Sabor</string>
@@ -75,4 +75,8 @@
     <string name="ok">OK</string>
     <string name="no_beer_tasting_found">No se han encontrado coincidencias</string>
     <string name="enter_beer_tasting_name">Introduce un nombre de cata</string>
+    <string name="question_delete_cata">¿Está seguro que quiere borrar la cata?</string>
+    <string name="delete_">Borrar...</string>
+    <string name="question_exit_user">¿Está seguro que quiere salir de DeCatas?</string>
+    <string name="question_exit_beer_tasting">¿Está seguro que quiere salir de la cata? Puedes volver en cualquier momento si sigue en curso</string>
 </resources>
