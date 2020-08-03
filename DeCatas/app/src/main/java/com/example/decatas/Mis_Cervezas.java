@@ -60,6 +60,8 @@ public class Mis_Cervezas extends AppCompatActivity {
                             TableRow.LayoutParams.WRAP_CONTENT));
 
                     trTH.setVisibility(View.VISIBLE);
+                    trTH.setBackgroundResource(R.drawable.border);
+                    trTH.setPadding(10,10,10,10);
 
                     int[] labels = {R.string.name,R.string.aroma,R.string.apariencia,R.string.sabor,R.string.cuerpo,R.string.botellin};
                     int i=0;
@@ -75,7 +77,7 @@ public class Mis_Cervezas extends AppCompatActivity {
                         tv.setGravity(Gravity.CENTER);
                         tv.setVisibility(View.VISIBLE);
                         tv.setPadding(10,10,10,10);
-                        tv.setTextSize(15);
+                        tv.setTextSize(17);
                         tv.setText(labels[i]);
                         i++;
                         trTH.addView(tv);
@@ -101,6 +103,7 @@ public class Mis_Cervezas extends AppCompatActivity {
                                     TableRow.LayoutParams.WRAP_CONTENT));
 
                             trTD.setVisibility(View.VISIBLE);
+                            trTD.setBackgroundResource(R.drawable.border);
 
                             TextView[] rowTextView2 = new TextView[6];
 
@@ -113,10 +116,9 @@ public class Mis_Cervezas extends AppCompatActivity {
                                         TableRow.LayoutParams.FILL_PARENT,
                                         TableRow.LayoutParams.WRAP_CONTENT
                                 ));
-                                tv.setTypeface(null, Typeface.BOLD);
                                 tv.setGravity(Gravity.CENTER);
                                 tv.setPadding(10,10,10,10);
-                                tv.setTextSize(15);
+                                tv.setTextSize(17);
                                 tv.setVisibility(View.VISIBLE);
                                 tv.setText(labelS[j]);
                                 j++;
