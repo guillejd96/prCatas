@@ -71,6 +71,35 @@ public class Valorar_Cerveza extends AppCompatActivity {
         String txt = (String) title.getText();
         txt+=" "+nombre;
         title.setText(txt);
+
+        params = new LinkedHashMap<>();
+        params.put("id",idUsuario);
+        String idPersona="";
+        try {
+            con = new Connection(getApplicationContext(),"getIDPersona.php",params);
+            while(con.getRes()==null);
+             idPersona = con.getRes().toString();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        params.put("p",idPersona);
+        try {
+            con = new Connection(getApplicationContext(),"getOpiniones.php",params);
+            while(con.getRes()==null);
+            String result = con.getRes();
+            if(!result.equals("")){
+                Log.v("Valorar",result);
+                String[] c = result.split(",");
+                inputAroma.setText(c[0]);
+                inputApariencia.setText(c[1]);
+                inputSabor.setText(c[2]);
+                inputCuerpo.setText(c[3]);
+                inputBotellin.setText(c[4]);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void saveBeer(View v) throws MalformedURLException {
