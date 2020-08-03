@@ -1,5 +1,7 @@
 package com.example.decatas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,13 +12,16 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.MalformedURLException;
 import java.util.LinkedHashMap;
@@ -50,6 +55,8 @@ public class Mis_Catas extends AppCompatActivity {
                 TableRow trTH = new TableRow(this);
 
                 trTH.setGravity(Gravity.CENTER);
+                trTH.setBackgroundResource(R.drawable.border);
+                trTH.setPadding(10,10,10,10);
 
                 trTH.setLayoutParams(new TableRow.LayoutParams(
                         TableRow.LayoutParams.FILL_PARENT,
@@ -57,10 +64,10 @@ public class Mis_Catas extends AppCompatActivity {
 
                 trTH.setVisibility(View.VISIBLE);
 
-                int[] labels = {R.string.name,R.string.date, R.string.en_curso,R.string.admin};
+                int[] labels = {R.string.name,R.string.date, R.string.admin};
                 int i=0;
 
-                TextView[] rowTextView1 = new TextView[4];
+                TextView[] rowTextView1 = new TextView[3];
                 for(TextView tv : rowTextView1){
                     tv = new TextView(this);
                     tv.setLayoutParams(new TableRow.LayoutParams(
@@ -71,7 +78,7 @@ public class Mis_Catas extends AppCompatActivity {
                     tv.setGravity(Gravity.CENTER);
                     tv.setVisibility(View.VISIBLE);
                     tv.setPadding(10,10,10,10);
-                    tv.setTextSize(15);
+                    tv.setTextSize(17);
                     tv.setText(labels[i]);
                     i++;
                     trTH.addView(tv);
@@ -99,9 +106,21 @@ public class Mis_Catas extends AppCompatActivity {
                 icon2.setVisibility(View.VISIBLE);
                 trTH.addView(icon2);
 
+                TextView tr = new TextView(this);
+                    tr.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.FILL_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT
+                    ));
+                    tr.setGravity(Gravity.CENTER);
+                    tr.setVisibility(View.VISIBLE);
+                    tr.setPadding(10,10,10,10);
+                    tr.setTextSize(17);
+                    trTH.addView(tr);
+
                 table.addView(trTH);
 
                 for(String cata : aux){
+                    Log.v("Mis catas",cata);
                     String[] aux2 = cata.split(",");
                     final String idCata = aux2[0];
                     String nombreCata = aux2[1];
@@ -117,8 +136,9 @@ public class Mis_Catas extends AppCompatActivity {
                             TableRow.LayoutParams.WRAP_CONTENT));
 
                     trTD.setVisibility(View.VISIBLE);
+                    trTD.setBackgroundResource(R.drawable.border);
 
-                    TextView[] rowTextView2 = new TextView[6];
+                    TextView[] rowTextView2 = new TextView[5];
 
                     Log.v("Mis catas",en_cursoCata);
                     String en_curso = en_cursoCata.equals("1") ? "Sí" : "No";
@@ -136,19 +156,20 @@ public class Mis_Catas extends AppCompatActivity {
                     String nCervezas = conn2.getRes();
 
                     String admin;
+                    boolean isAdmin=false;
 
                     if(idUsuario.equals(idAdminCata)){
                         admin = "Tú";
+                        isAdmin=true;
                     }else {
                         Map<String,String> params4 = new LinkedHashMap<>();
                         params4.put("id",idAdminCata);
                         Connection conn3 = new Connection(this,"getAdmin.php",params4);
                         while (conn3.getRes()==null);
-                        String[] result2 = conn.getRes().split(",");
-                        admin=result2[0]+"("+result2[1]+")";
+                        admin = conn3.getRes();
                     }
 
-                    String[] labelS = {nombreCata,fechaCata,en_curso,admin,nPersonas,nCervezas};
+                    String[] labelS = {nombreCata,fechaCata,admin,nPersonas,nCervezas};
                     int j=0;
 
                     for(TextView tv : rowTextView2){
@@ -159,14 +180,27 @@ public class Mis_Catas extends AppCompatActivity {
                         ));
                         tv.setGravity(Gravity.CENTER);
                         tv.setPadding(10,10,10,10);
-                        tv.setTextSize(15);
+                        tv.setTextSize(17);
                         tv.setVisibility(View.VISIBLE);
                         tv.setText(labelS[j]);
                         j++;
                         trTD.addView(tv);
                     }
 
-                    if(en_cursoCata.equals("1")){
+                    if(isAdmin){
+                        ImageView icon3 = new ImageView(this);
+                        icon3.setBackgroundResource(R.drawable.ic_delete_foreground);
+                        icon3.setLayoutParams(new TableRow.LayoutParams(
+                                TableRow.LayoutParams.FILL_PARENT,
+                                TableRow.LayoutParams.WRAP_CONTENT
+                        ));
+                        icon3.getLayoutParams().height=100;
+                        icon3.getLayoutParams().width=100;
+                        icon3.setVisibility(View.VISIBLE);
+                        icon3.setOnClickListener(new Delete(idCata));
+                        trTD.addView(icon3);
+                    }
+
                         trTD.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -176,7 +210,7 @@ public class Mis_Catas extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
-                    }
+
                     table.addView(trTD);
                 }
             } else {
@@ -189,6 +223,7 @@ public class Mis_Catas extends AppCompatActivity {
                         TableRow.LayoutParams.WRAP_CONTENT));
 
                 trTH.setVisibility(View.VISIBLE);
+                trTH.setBackgroundResource(R.drawable.border);
 
                 TextView tv = new TextView(this);
                     tv.setLayoutParams(new TableRow.LayoutParams(
@@ -198,13 +233,47 @@ public class Mis_Catas extends AppCompatActivity {
                     tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
                     tv.setGravity(Gravity.CENTER);
                     tv.setVisibility(View.VISIBLE);
-                    tv.setTextSize(20);
+                    tv.setTextSize(17);
                     tv.setText("No te has unido a ninguna cata");
                     trTH.addView(tv);
                 table.addView(trTH);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private class Delete implements View.OnClickListener {
+
+        public String idCata;
+
+        public Delete(String s){
+            this.idCata=s;
+        }
+
+        @Override
+        public void onClick(View v) {
+            android.app.AlertDialog.Builder builder = new AlertDialog.Builder(Mis_Catas.this);
+            builder.setCancelable(true);
+            builder.setMessage(getResources().getString(R.string.question_delete_cata));
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Map<String,String> params = new LinkedHashMap<>();
+                    params.put("id",idCata);
+                    try {
+                        Connection con = new Connection(Mis_Catas.this,"deleteCata.php",params);
+                        while(con.getRes()==null);
+                        Intent intent = new Intent(Mis_Catas.this,Mis_Catas.class);
+                        intent.putExtra("idUsuario",idUsuario);
+                        startActivity(intent);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            builder.setNegativeButton(R.string.cancel, null);
+            builder.show();
         }
     }
 }
