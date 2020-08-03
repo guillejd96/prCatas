@@ -100,21 +100,18 @@ public class User extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setIcon(android.R.drawable.ic_dialog_alert);
-        b.setTitle("Salir...");
-        b.setCancelable(false);
-        b.setMessage("¿Está seguro que quiere salir de DeCatas?");
-        b.setPositiveButton("Sí", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        Intent intent = new Intent(getApplicationContext(),Login.class);
-                        startActivity(intent);
-                    }
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(User.this);
+        builder.setCancelable(true);
+        builder.setMessage(getResources().getString(R.string.question_exit_user));
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(getApplicationContext(),Login.class);
+                startActivity(intent);
+            }
         });
-        b.setNegativeButton("No", null);
-        AlertDialog alert = b.create();
-        alert.show();
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.show();
     }
 }
