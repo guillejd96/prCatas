@@ -82,6 +82,8 @@ public class Buscar_Cata extends AppCompatActivity {
                     TableRow.LayoutParams.FILL_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             trTH.setVisibility(View.VISIBLE);
+            trTH.setPadding(10,10,10,10);
+            trTH.setBackgroundResource(R.drawable.border);
             TextView tv = new TextView(this);
             tv.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.FILL_PARENT,
@@ -91,7 +93,7 @@ public class Buscar_Cata extends AppCompatActivity {
             tv.setGravity(Gravity.CENTER);
             tv.setVisibility(View.VISIBLE);
             tv.setPadding(10,10,10,10);
-            tv.setTextSize(23);
+            tv.setTextSize(17);
             tv.setText(R.string.name);
             trTH.addView(tv);
 
@@ -126,7 +128,7 @@ public class Buscar_Cata extends AppCompatActivity {
             tv.setGravity(Gravity.CENTER);
             tv.setVisibility(View.VISIBLE);
             tv.setPadding(10,10,10,10);
-            tv.setTextSize(23);
+            tv.setTextSize(17);
             tv.setText(R.string.join);
 
             trTH.addView(tv);
@@ -145,16 +147,16 @@ public class Buscar_Cata extends AppCompatActivity {
                         TableRow.LayoutParams.FILL_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
                 trTD.setVisibility(View.VISIBLE);
+                trTD.setBackgroundResource(R.drawable.border);
                 tv = new TextView(this);
                 tv.setLayoutParams(new TableRow.LayoutParams(
                         TableRow.LayoutParams.FILL_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT
                 ));
-                tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
                 tv.setGravity(Gravity.CENTER);
                 tv.setVisibility(View.VISIBLE);
                 tv.setPadding(10,10,10,10);
-                tv.setTextSize(23);
+                tv.setTextSize(17);
                 tv.setText(nombreCata);
 
                 trTD.addView(tv);
@@ -164,11 +166,10 @@ public class Buscar_Cata extends AppCompatActivity {
                         TableRow.LayoutParams.FILL_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT
                 ));
-                tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
                 tv.setGravity(Gravity.CENTER);
                 tv.setVisibility(View.VISIBLE);
                 tv.setPadding(10,10,10,10);
-                tv.setTextSize(23);
+                tv.setTextSize(17);
                 tv.setText(nPersonas);
 
                 trTD.addView(tv);
@@ -178,11 +179,10 @@ public class Buscar_Cata extends AppCompatActivity {
                         TableRow.LayoutParams.FILL_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT
                 ));
-                tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
                 tv.setGravity(Gravity.CENTER);
                 tv.setVisibility(View.VISIBLE);
                 tv.setPadding(10,10,10,10);
-                tv.setTextSize(23);
+                tv.setTextSize(17);
                 tv.setText(nCervezas);
 
                 trTD.addView(tv);
