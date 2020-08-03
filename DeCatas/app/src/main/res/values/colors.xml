@@ -7,4 +7,6 @@
     <color name="background_btn_color">#ffbc40</color>
     <color name="input_color">#ffe4b0</color>
     <color name="background_table_color">#fdfd96</color>
+    <color name="red">#A60000</color>
+    <color name="green">#1C5C00</color>
 </resources>
