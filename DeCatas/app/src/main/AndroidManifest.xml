@@ -20,9 +20,25 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Resultados"
+            android:label="@string/title_activity_resultados"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Solicitudes"
+            android:label="@string/title_activity_solicitudes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Anyadir_Amigo"
+            android:label="@string/title_activity_anyadir__amigo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Mis_Amigos"
+            android:label="@string/title_activity_mis__amigos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Valorar_Cerveza"
             android:label="@string/title_activity_valorar__cerveza"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Mis_Catas"
             android:label="@string/title_activity_mis__catas"
@@ -72,7 +88,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="com.example.decatas.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
