@@ -54,7 +54,6 @@
  	<?php if($resIDCatas->num_rows>0){
  		echo "<table>";
  		echo "<tr>";
- 		echo "<th><p>ID</p></th>";
  		echo "<th><p>Nombre</p></th>";
  		echo "<th><p>Fecha</p></th>";
  		echo "<th><p>Personas</p></th>";
@@ -69,8 +68,7 @@
 			$resPersonas = mysqli_query($conexion,"SELECT COUNT(*) FROM persona_cata WHERE idCata = ".$idCata[0]);
 			$nPersonas = $resPersonas->fetch_row()[0];
 			echo "<tr>";
-			echo "<td><p><a href='info_cata.php?id=".$idCata[0]."'>".$idCata[0]."</a></p>";
-			echo "<td><p>".$cata[1]."</p></td>";
+			echo "<td><p><a href='info_cata.php?id=".$idCata[0]."'>".$cata[1]."</a></p>";
 			echo "<td><p>".$cata[2]."</p></td>";
 			echo "<td><p>".$nCervezas."</p></td>";
 			echo "<td><p>".$nPersonas."</p></td>";
