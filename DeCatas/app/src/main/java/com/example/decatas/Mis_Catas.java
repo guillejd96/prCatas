@@ -42,6 +42,11 @@ public class Mis_Catas extends AppCompatActivity {
 
         table = (TableLayout)findViewById(R.id.table);
 
+        this.update();
+    }
+
+    public void update(){
+        table.removeAllViews();
         Map<String,String> params = new LinkedHashMap<>();
         params.put("u",idUsuario);
         Connection con = null;
@@ -107,15 +112,15 @@ public class Mis_Catas extends AppCompatActivity {
                 trTH.addView(icon2);
 
                 TextView tr = new TextView(this);
-                    tr.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.FILL_PARENT,
-                            TableRow.LayoutParams.WRAP_CONTENT
-                    ));
-                    tr.setGravity(Gravity.CENTER);
-                    tr.setVisibility(View.VISIBLE);
-                    tr.setPadding(10,10,10,10);
-                    tr.setTextSize(17);
-                    trTH.addView(tr);
+                tr.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.FILL_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT
+                ));
+                tr.setGravity(Gravity.CENTER);
+                tr.setVisibility(View.VISIBLE);
+                tr.setPadding(10,10,10,10);
+                tr.setTextSize(17);
+                trTH.addView(tr);
 
                 table.addView(trTH);
 
@@ -201,15 +206,15 @@ public class Mis_Catas extends AppCompatActivity {
                         trTD.addView(icon3);
                     }
 
-                        trTD.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(getApplicationContext(),Cata.class);
-                                intent.putExtra("idUsuario",idUsuario);
-                                intent.putExtra("idCata",idCata);
-                                startActivity(intent);
-                            }
-                        });
+                    trTD.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(),Cata.class);
+                            intent.putExtra("idUsuario",idUsuario);
+                            intent.putExtra("idCata",idCata);
+                            startActivity(intent);
+                        }
+                    });
 
                     table.addView(trTD);
                 }
@@ -223,19 +228,17 @@ public class Mis_Catas extends AppCompatActivity {
                         TableRow.LayoutParams.WRAP_CONTENT));
 
                 trTH.setVisibility(View.VISIBLE);
-                trTH.setBackgroundResource(R.drawable.border);
 
                 TextView tv = new TextView(this);
-                    tv.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.FILL_PARENT,
-                            TableRow.LayoutParams.WRAP_CONTENT
-                    ));
-                    tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-                    tv.setGravity(Gravity.CENTER);
-                    tv.setVisibility(View.VISIBLE);
-                    tv.setTextSize(17);
-                    tv.setText("No te has unido a ninguna cata");
-                    trTH.addView(tv);
+                tv.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.FILL_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT
+                ));
+                tv.setGravity(Gravity.CENTER);
+                tv.setVisibility(View.VISIBLE);
+                tv.setTextSize(20);
+                tv.setText(R.string.empty_beer_tasting);
+                trTH.addView(tv);
                 table.addView(trTH);
             }
         } catch (MalformedURLException e) {
@@ -264,9 +267,7 @@ public class Mis_Catas extends AppCompatActivity {
                     try {
                         Connection con = new Connection(Mis_Catas.this,"deleteCata.php",params);
                         while(con.getRes()==null);
-                        Intent intent = new Intent(Mis_Catas.this,Mis_Catas.class);
-                        intent.putExtra("idUsuario",idUsuario);
-                        startActivity(intent);
+                        update();
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
