@@ -185,4 +185,84 @@
             android:id="@+id/action_Second9Fragment_to_First9Fragment"
             app:destination="@id/First9Fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/First10Fragment"
+        android:name="com.example.decatas.First10Fragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first10">
+
+        <action
+            android:id="@+id/action_First10Fragment_to_Second10Fragment"
+            app:destination="@id/Second10Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/Second10Fragment"
+        android:name="com.example.decatas.Second10Fragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second10">
+
+        <action
+            android:id="@+id/action_Second10Fragment_to_First10Fragment"
+            app:destination="@id/First10Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/First11Fragment"
+        android:name="com.example.decatas.First11Fragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first11">
+
+        <action
+            android:id="@+id/action_First11Fragment_to_Second11Fragment"
+            app:destination="@id/Second11Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/Second11Fragment"
+        android:name="com.example.decatas.Second11Fragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second11">
+
+        <action
+            android:id="@+id/action_Second11Fragment_to_First11Fragment"
+            app:destination="@id/First11Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/First12Fragment"
+        android:name="com.example.decatas.First12Fragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first12">
+
+        <action
+            android:id="@+id/action_First12Fragment_to_Second12Fragment"
+            app:destination="@id/Second12Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/Second12Fragment"
+        android:name="com.example.decatas.Second12Fragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second12">
+
+        <action
+            android:id="@+id/action_Second12Fragment_to_First12Fragment"
+            app:destination="@id/First12Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/First13Fragment"
+        android:name="com.example.decatas.First13Fragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first13">
+
+        <action
+            android:id="@+id/action_First13Fragment_to_Second13Fragment"
+            app:destination="@id/Second13Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/Second13Fragment"
+        android:name="com.example.decatas.Second13Fragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second13">
+
+        <action
+            android:id="@+id/action_Second13Fragment_to_First13Fragment"
+            app:destination="@id/First13Fragment" />
+    </fragment>
 </navigation>
