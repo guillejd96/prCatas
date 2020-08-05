@@ -12,7 +12,7 @@
     <string name="user">Usuario</string>
     <string name="ask_new_user">¿No tienes usuario?</string>
     <string name="empty_login_input">El usuario o la contraseña están vacío</string>
-    <string name="title_activity_new_user">Nuevo Usuario</string>
+    <string name="title_activity_new_user" translatable="false">Nuevo Usuario</string>
     <string name="name">Nombre</string>
     <string name="repeat_password">Repita su contraseña</string>
     <string name="create_user">Crear usuario</string>
@@ -22,7 +22,7 @@
     <string name="empty_pass">Escribe una contraseña</string>
     <string name="password_not_secure">La contraseña no es segura</string>
     <string name="different_pass">Las contraseñas no coinciden</string>
-    <string name="title_activity_instrucciones">Instrucciones</string>
+    <string name="title_activity_instrucciones" translatable="false">Instrucciones</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label" translatable="false">First Fragment</string>
     <string name="second_fragment_label" translatable="false">Second Fragment</string>
@@ -39,7 +39,7 @@
     <string name="labelCervezas">Cervezas:</string>
     <string name="labelAmigos">Amigos:</string>
     <string name="new_beer">Nueva cerveza</string>
-    <string name="title_activity_nueva__cerveza">Nueva Cerveza</string>
+    <string name="title_activity_nueva__cerveza" translatable="false">Nueva Cerveza</string>
     <string name="beer_name">Nombre de la cerveza</string>
     <string name="aroma">Aroma</string>
     <string name="sabor">Sabor</string>
@@ -47,11 +47,11 @@
     <string name="cuerpo">Cuerpo</string>
     <string name="botellin">Botellin</string>
     <string name="save">Guardar</string>
-    <string name="title_activity_mis_cervezas">Mis Cervezas</string>
-    <string name="title_activity_nueva__cata">Nueva Cata</string>
+    <string name="title_activity_mis_cervezas" translatable="false">Mis Cervezas</string>
+    <string name="title_activity_nueva__cata" translatable="false">Nueva Cata</string>
     <string name="create_beer_tasting">Crear cata</string>
     <string name="new_beer_tasting">Nueva cata</string>
-    <string name="title_activity_cata">Cata</string>
+    <string name="title_activity_cata" translatable="false">Cata</string>
     <string name="participants">Participantes</string>
     <string name="beers">Cervezas</string>
     <string name="no_beers">No hay cervezas registradas</string>
@@ -59,13 +59,13 @@
     <string name="title_activity_buscar__cata" translatable="false">Buscar_Cata</string>
     <string name="search">Buscar</string>
     <string name="my_beer_tastings">Mis catas</string>
-    <string name="title_activity_mis__catas">Mis Catas</string>
+    <string name="title_activity_mis__catas" translatable="false">Mis Catas</string>
     <string name="date">Fecha</string>
     <string name="en_curso">En Curso</string>
     <string name="admin">Admin</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
-    <string name="title_activity_valorar__cerveza">Valorar Cerveza</string>
+    <string name="title_activity_valorar__cerveza" translatable="false">Valorar Cerveza</string>
     <string name="valorar_cerveza">Valorar cerveza</string>
     <string name="my_beers">Mis cervezas</string>
     <string name="join">Unirse</string>
@@ -79,4 +79,33 @@
     <string name="delete_">Borrar...</string>
     <string name="question_exit_user">¿Está seguro que quiere salir de DeCatas?</string>
     <string name="question_exit_beer_tasting">¿Está seguro que quiere salir de la cata? Puedes volver en cualquier momento si sigue en curso</string>
+    <string name="title_activity_mis__amigos" translatable="false">Mis_Amigos</string>
+    <string name="my_friends">Mis Amigos</string>
+    <string name="add_friend">Añadir amigo</string>
+    <string name="title_activity_anyadir__amigo" translatable="false">Anyadir_Amigo</string>
+    <string name="no_friends">No has agregado ningún amigo</string>
+    <string name="no_users_found">No se han encontrado usuarios</string>
+    <string name="friend_request_sent">Solicitud enviada con éxito</string>
+    <string name="error_sending_friend_request">No se pudo envia la solicitud</string>
+    <string name="request_repeated">La solicitud está a la espera de confirmación</string>
+    <string name="add">Añadir</string>
+    <string name="exist_request">Tienes solicitudes de amistad pendientes!</string>
+    <string name="title_activity_solicitudes">Solicitudes</string>
+    <string name="request_accept">La solicitud se aceptó con éxito</string>
+    <string name="request_accept_error">No se pudo aceptar la solicitud</string>
+    <string name="request_decline">La solicitud se rechazó con éxito</string>
+    <string name="decline_request_error">No se pudo rechazar la solicitud</string>
+    <string name="empty_beer_tasting">No te has unido a ninguna cata</string>
+    <string name="no_beers_found">No has valorado ninguna cerveza</string>
+    <string name="delete_beer_from_beer_tasting">¿Está seguro que quiere borrar esta cerveza de la cata?</string>
+    <string name="end_beer_tasting">Terminar cata</string>
+    <string name="beer_tasting_finished">La cata ya ha finalizado</string>
+    <string name="question_end_beer_tasting">¿Estás seguro que quieres finalizar la cata de cerveza?</string>
+    <string name="error_ending_beer_tasting">No se pudo finalizar la cata</string>
+    <string name="beer_tasting_ended_successfully">La cata se finalizó con éxito</string>
+    <string name="beer_tasting_is_finished">Esta cata está terminada</string>
+    <string name="title_activity_resultados">Resultados</string>
+    <string name="best_beers">Mejores cervezas de media</string>
+    <string name="no_values_found">No existen valoraciones todavía</string>
+    <string name="no_beers_in_beer_tasting">No se han añadido cervezas a la cata</string>
 </resources>
