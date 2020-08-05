@@ -2,6 +2,7 @@ package com.example.decatas;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -59,6 +61,8 @@ public class Buscar_Cata extends AppCompatActivity {
         table.removeAllViews();
         inputName.setBackgroundResource(R.drawable.input_normal);
 
+        closeKeyboard();
+
         String name = inputName.getText().toString();
 
         if(name.equals("")){
@@ -69,6 +73,7 @@ public class Buscar_Cata extends AppCompatActivity {
 
         Map<String,String> params = new LinkedHashMap<>();
         params.put("n",name);
+        params.put("id",idUsuario);
         Connection con = new Connection(this,"getCatasByName.php",params);
         while (con.getRes()==null);
         String result = con.getRes();
@@ -220,7 +225,7 @@ public class Buscar_Cata extends AppCompatActivity {
 
     private void join(final String id) throws MalformedURLException {
         final String[] aux = new String[1];
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
 
         final EditText input = new EditText(this);
@@ -230,7 +235,6 @@ public class Buscar_Cata extends AppCompatActivity {
         ));
         input.getLayoutParams().width=400;
         input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        input.setBackgroundResource(R.drawable.backgroud);
         input.setPadding(10,0,0,0);
         input.setHeight(150);
         input.setHint(getResources().getString(R.string.prompt_password));
@@ -272,8 +276,13 @@ public class Buscar_Cata extends AppCompatActivity {
         });
 
         builder.show();
+    }
 
-
-
+    private void closeKeyboard(){
+        View v = this.getCurrentFocus();
+        if(v!=null){
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+        }
     }
 }
