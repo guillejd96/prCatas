@@ -1,7 +1,9 @@
 package com.example.decatas;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,10 +19,12 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -39,11 +43,14 @@ import java.util.Objects;
 public class Cata extends AppCompatActivity {
 
     private String idUsuario, idPersona, idCata, nombreCata, idAdmin, nCervezas, nPersonas;
-    public TextView title,admin;
+    private boolean en_curso;
+    public TextView title,admin,finished;
     public EditText editNuevaCerveza;
-    public Button btn;
+    public Button end;
+    public ImageButton btn;
     public TableLayout table1;
     public TableRow[] personas;
+    public ImageView update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +63,18 @@ public class Cata extends AppCompatActivity {
 
         this.title = (TextView) findViewById(R.id.title);
         this.editNuevaCerveza = (EditText) findViewById(R.id.editTextTextBeerName);
-        this.btn = (Button) findViewById(R.id.add);
+        this.btn = (ImageButton) findViewById(R.id.add);
+        this.end = (Button) findViewById(R.id.end);
         this.table1 = (TableLayout) findViewById(R.id.table1);
         this.admin = (TextView) findViewById(R.id.admin);
+        this.finished = (TextView) findViewById(R.id.finished);
+        this.update = (ImageView)findViewById(R.id.update);
+
+        finished.setTextSize(20);
+        finished.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        finished.setTextColor(Color.RED);
+
+        end.setVisibility(View.INVISIBLE);
 
         Map<String,String> params = new LinkedHashMap<>();
         params.put("id",idUsuario);
@@ -92,35 +108,64 @@ public class Cata extends AppCompatActivity {
         while (con.getRes() == null) ;
         this.nCervezas = con.getRes();
 
-        this.update(null);
+
+        con = null;
+        try {
+            con = new Connection(this, "getEnCurso.php", p);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        while (con.getRes() == null) ;
+        this.en_curso = con.getRes().equals("1");
+        if(this.en_curso){
+            admin.setTextSize(20);
+            admin.setText(getResources().getString(R.string.beer_tasting_is_finished));
+            admin.setVisibility(View.VISIBLE);
+            finished.setVisibility(View.INVISIBLE);
+        } else {
+            update.setVisibility(View.INVISIBLE);
+            end.setVisibility(View.INVISIBLE);
+        }
+
+        try {
+            this.update(null);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void add(View v) throws MalformedURLException {
-        editNuevaCerveza.setBackgroundResource(R.drawable.input_normal);
+        if(this.en_curso){
+            editNuevaCerveza.setBackgroundResource(R.drawable.input_normal);
 
-        String beerName = editNuevaCerveza.getText().toString();
+            String beerName = editNuevaCerveza.getText().toString();
 
-        if (!beerName.equals("")) {
-            Map<String, String> params = new LinkedHashMap<>();
-            params.put("n", beerName);
-            params.put("id", idCata);
-            Connection con = new Connection(this, "createCerveza.php", params);
-            while (con.getRes() == null) ;
-            String result = con.getRes();
-            if (result.equals("1")) {
-                update(v);
+            editNuevaCerveza.setText("");
+
+            closeKeyboard();
+
+            if (!beerName.equals("")) {
+                Map<String, String> params = new LinkedHashMap<>();
+                params.put("n", beerName);
+                params.put("id", idCata);
+                Connection con = new Connection(this, "createCerveza.php", params);
+                while (con.getRes() == null) ;
+                String result = con.getRes();
+                if (result.equals("1")) {
+                    update(v);
+                } else {
+                    Toast.makeText(this, "No se ha podido añadir la cerveza", Toast.LENGTH_LONG).show();
+                }
             } else {
-                Toast.makeText(this, "No se ha podido añadir la cerveza", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Introduce el nombre de una cerveza", Toast.LENGTH_LONG).show();
+                editNuevaCerveza.setBackgroundResource(R.drawable.input_error);
             }
         } else {
-            Toast.makeText(this, "Introduce el nombre de una cerveza", Toast.LENGTH_LONG).show();
-            editNuevaCerveza.setBackgroundResource(R.drawable.input_error);
+            Toast.makeText(this, R.string.beer_tasting_finished, Toast.LENGTH_LONG).show();
         }
-
-
     }
 
-    public void update(View view) {
+    public void update(View view) throws MalformedURLException {
         table1.removeAllViews();
         Map<String, String> p = new LinkedHashMap<>();
         p.put("id", idCata);
@@ -152,9 +197,24 @@ public class Cata extends AppCompatActivity {
                 title.setText(nombreCata);
 
                 if (idUsuario.equals(idAdmin)) {
-                    editNuevaCerveza.setVisibility(View.VISIBLE);
-                    btn.setVisibility(View.VISIBLE);
-                    admin.setVisibility(View.INVISIBLE);
+                    if(this.en_curso){
+                        editNuevaCerveza.setVisibility(View.VISIBLE);
+                        btn.setVisibility(View.VISIBLE);
+                        admin.setVisibility(View.INVISIBLE);
+                    }else {
+                        editNuevaCerveza.setVisibility(View.INVISIBLE);
+                        btn.setVisibility(View.INVISIBLE);
+
+                        Map<String,String> pa = new LinkedHashMap<>();
+                        pa.put("id",idAdmin);
+                        Connection c = new Connection(this,"getAdmin.php",pa);
+                        while(c.getRes()==null);
+                        String usuarioAdmin = c.getRes();
+                        finished.setText(getResources().getString(R.string.beer_tasting_is_finished));
+                        admin.setText("Admin: "+usuarioAdmin);
+                        admin.setTextSize(20);
+                        admin.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     editNuevaCerveza.setVisibility(View.INVISIBLE);
                     btn.setVisibility(View.INVISIBLE);
@@ -163,10 +223,21 @@ public class Cata extends AppCompatActivity {
                     pa.put("id",idAdmin);
                     Connection c = new Connection(this,"getAdmin.php",pa);
                     while(c.getRes()==null);
-                    String usuarioAdmin = c.getRes().toString();
-                    admin.setText("Admin: "+usuarioAdmin);
-                    admin.setTextSize(20);
-                    admin.setVisibility(View.VISIBLE);
+                    String usuarioAdmin = c.getRes();
+                    if(this.en_curso){
+                        admin.setText("Admin: "+usuarioAdmin);
+                        admin.setTextSize(20);
+                        admin.setVisibility(View.VISIBLE);
+                    }else {
+                        finished.setText(getResources().getString(R.string.beer_tasting_is_finished));
+                        admin.setText("Admin: "+usuarioAdmin);
+                        admin.setTextSize(20);
+                        admin.setVisibility(View.VISIBLE);
+                    }
+
+
+
+
                 }
 
                 table1.removeAllViews();
@@ -313,17 +384,26 @@ public class Cata extends AppCompatActivity {
                         tv1.setTextSize(20);
                         tv1.setVisibility(View.VISIBLE);
                         tv1.setText(nombre);
-
-                        tv1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(getApplicationContext(), Valorar_Cerveza.class);
-                                intent.putExtra("id", idUsuario);
-                                intent.putExtra("c", idCerveza);
-                                intent.putExtra("ca", idCata);
-                                startActivity(intent);
-                            }
-                        });
+                        if(this.en_curso){
+                            tv1.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getApplicationContext(), Valorar_Cerveza.class);
+                                    intent.putExtra("id", idUsuario);
+                                    intent.putExtra("admin", idAdmin);
+                                    intent.putExtra("c", idCerveza);
+                                    intent.putExtra("ca", idCata);
+                                    startActivity(intent);
+                                }
+                            });
+                        } else {
+                            tv1.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Toast.makeText(Cata.this, R.string.beer_tasting_finished, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
 
                         params = new LinkedHashMap<>();
                         params.put("p", idPersona);
@@ -341,9 +421,38 @@ public class Cata extends AppCompatActivity {
 
                         trTD.addView(tv1);
 
-
                         table1.addView(trTD);
                     }
+
+                    TableRow trTD = new TableRow(this);
+
+                    trTD.setGravity(Gravity.CENTER);
+
+                    trTD.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.FILL_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT));
+
+                    trTD.setVisibility(View.VISIBLE);
+
+                    Button resultados = new Button(this);
+                    resultados.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.FILL_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT));
+                    resultados.setText("Resultados");
+                    resultados.setBackgroundResource(R.drawable.buttons);
+                    resultados.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), Resultados.class);
+                            intent.putExtra("id", idCata);
+                            intent.putExtra("n", nCervezas);
+                            startActivity(intent);
+                        }
+                    });
+
+                    trTD.addView(resultados);
+
+                    table1.addView(trTD);
                 } else {
                     TableRow trTD = new TableRow(this);
 
@@ -375,6 +484,16 @@ public class Cata extends AppCompatActivity {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        if(this.en_curso){
+            p = new LinkedHashMap<>();
+            p.put("id",this.idCata);
+            Connection c = new Connection(this,"isFinishable.php",p);
+            while(c.getRes()==null);
+            if(c.getRes().equals("1")){
+                end.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -389,6 +508,37 @@ public class Cata extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), User.class);
                 intent.putExtra("id", idUsuario);
                 startActivity(intent);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.show();
+    }
+
+    public void end(View v){
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setMessage(getResources().getString(R.string.question_end_beer_tasting));
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Map<String,String> p = new LinkedHashMap<>();
+                p.put("id",idCata);
+                try {
+                    Connection c = new Connection(getApplicationContext(),"finishCata.php",p);
+                    while(c.getRes()==null);
+                    if(c.getRes().equals("1")){
+                        Toast.makeText(Cata.this, R.string.beer_tasting_ended_successfully, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(),Cata.class);
+                        intent.putExtra("idUsuario",idUsuario);
+                        intent.putExtra("idCata",idCata);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(Cata.this, R.string.error_ending_beer_tasting, Toast.LENGTH_LONG).show();
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             }
         });
         builder.setNegativeButton(R.string.cancel, null);
@@ -487,8 +637,6 @@ public class Cata extends AppCompatActivity {
 
     }
 
-    ;
-
     private class Listener2 implements View.OnClickListener {
 
         int i;
@@ -511,9 +659,11 @@ public class Cata extends AppCompatActivity {
                 TableRow aux = (TableRow) table1.getChildAt(j);
                 TextView t = (TextView) aux.getChildAt(0);
 
-                if(aux.getTag().toString().equals(idP+"_desplegable")){
-                    table1.removeView(aux);
-                    j--;
+                if(Integer.parseInt(nCervezas)>0){
+                    if(aux.getTag().toString().equals(idP+"_desplegable")){
+                        table1.removeView(aux);
+                        j--;
+                    }
                 }
             }
         }
@@ -556,5 +706,12 @@ public class Cata extends AppCompatActivity {
             }
         }
     }
-}
 
+    private void closeKeyboard(){
+        View v = this.getCurrentFocus();
+        if(v!=null){
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+        }
+    }
+}
