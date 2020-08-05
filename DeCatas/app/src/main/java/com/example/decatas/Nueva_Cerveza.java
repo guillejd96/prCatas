@@ -1,5 +1,6 @@
 package com.example.decatas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,7 +20,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +43,7 @@ public class Nueva_Cerveza extends AppCompatActivity {
     String name,aroma,apariencia,sabor,botellin,cuerpo;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
+    public Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,11 @@ public class Nueva_Cerveza extends AppCompatActivity {
         inputSabor = (EditText)findViewById(R.id.inputName4);
         inputCuerpo = (EditText)findViewById(R.id.inputName5);
         inputBotellin = (EditText)findViewById(R.id.inputName6);
+
+        btn = (Button)findViewById(R.id.button2);
+
+        btnTakePhotoClicker b = new btnTakePhotoClicker();
+        btn.setOnClickListener(b);
 
         inputName.setBackgroundResource(R.drawable.input_normal);
         inputAroma.setBackgroundResource(R.drawable.input_normal);
@@ -180,35 +191,68 @@ public class Nueva_Cerveza extends AppCompatActivity {
         }
 ;    }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void dispatchTakePictureIntent(View v) throws IOException {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
-            photoFile = createImageFile();
-            if (photoFile != null) {
-                    Uri photoURI = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                            BuildConfig.APPLICATION_ID + ".fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoURI);
-            }
+    private static final int CAN_REQUEST = 1313;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==CAN_REQUEST){
+            final Bitmap bm = (Bitmap) data.getExtras().get("data");
+
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            builder.setCancelable(true);
+            builder.setMessage("¿Quieres guardar esta foto?");
+
+            ImageView img = new ImageView(this);
+            img.setLayoutParams(new TableRow.LayoutParams(
+                    TableRow.LayoutParams.FILL_PARENT,
+                    TableRow.LayoutParams.FILL_PARENT));
+            img.setImageBitmap(bm);
+            img.getLayoutParams().height=100;
+            img.getLayoutParams().width=500;
+
+            builder.setView(img);
+
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+
+                    //ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    //bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    //byte[] imagen = stream.toByteArray();
+                    //String encodedImage = Base64.encodeToString(imagen,Base64.DEFAULT);
+
+                    //Map<String,String> p = new LinkedHashMap<>();
+                    //p.put("img",encodedImage);
+                    ///p.put("idU",idUsuario);
+                    //p.put("idC",idCerveza);
+
+                    //try {
+                    //   Connection c = new Connection(getApplicationContext(),"uploadImg.php",p);
+                    //   while(c.getRes()==null);
+                    //   if(c.getRes().equals("1")){
+                    //       Toast.makeText(Valorar_Cerveza.this, "La imagen se pudo guardar", Toast.LENGTH_SHORT).show();
+                    //   }else {
+                    //       Toast.makeText(Valorar_Cerveza.this, "Error al guardar la imagen", Toast.LENGTH_SHORT).show();
+                    //    }
+                    //} catch (MalformedURLException e) {
+                    //    e.printStackTrace();
+                    //}
+
+                }
+            });
+            builder.setNegativeButton(R.string.cancel, null);
+            builder.show();
         }
     }
 
-    String currentPhotoPath;
+    private class btnTakePhotoClicker implements View.OnClickListener{
 
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent,CAN_REQUEST);
+        }
     }
 }
