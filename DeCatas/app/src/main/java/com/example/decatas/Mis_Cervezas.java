@@ -77,7 +77,7 @@ public class Mis_Cervezas extends AppCompatActivity {
                         tv.setGravity(Gravity.CENTER);
                         tv.setVisibility(View.VISIBLE);
                         tv.setPadding(10,10,10,10);
-                        tv.setTextSize(17);
+                        tv.setTextSize(20);
                         tv.setText(labels[i]);
                         i++;
                         trTH.addView(tv);
@@ -103,7 +103,7 @@ public class Mis_Cervezas extends AppCompatActivity {
                                     TableRow.LayoutParams.WRAP_CONTENT));
 
                             trTD.setVisibility(View.VISIBLE);
-                            trTD.setBackgroundResource(R.drawable.border);
+                            trTD.setBackgroundResource(R.drawable.tables);
 
                             TextView[] rowTextView2 = new TextView[6];
 
@@ -118,7 +118,7 @@ public class Mis_Cervezas extends AppCompatActivity {
                                 ));
                                 tv.setGravity(Gravity.CENTER);
                                 tv.setPadding(10,10,10,10);
-                                tv.setTextSize(17);
+                                tv.setTextSize(20);
                                 tv.setVisibility(View.VISIBLE);
                                 tv.setText(labelS[j]);
                                 j++;
@@ -127,11 +127,31 @@ public class Mis_Cervezas extends AppCompatActivity {
                             table.addView(trTD);
                         }
                     }
-                }else {
-
                 }
             }else{
+                TableRow trTH = new TableRow(this);
 
+                trTH.setGravity(Gravity.CENTER);
+
+                trTH.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.FILL_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+
+                trTH.setVisibility(View.VISIBLE);
+                trTH.setPadding(10,10,10,10);
+
+                TextView tv = new TextView(this);
+                tv.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.FILL_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT
+                ));
+                tv.setGravity(Gravity.CENTER);
+                tv.setVisibility(View.VISIBLE);
+                tv.setPadding(10,10,10,10);
+                tv.setTextSize(20);
+                tv.setText(R.string.no_beers_found);
+                trTH.addView(tv);
+                table.addView(trTH);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
