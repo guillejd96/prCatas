@@ -43,9 +43,23 @@
         android:layout_marginTop="20dp"
         android:onClick="instructions"
         android:text="@string/instructions"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ask_new_user" />
+
+    <TextView
+        android:id="@+id/contacto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="goToContacto"
+        android:text="@string/contacto"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inst" />
 
     <EditText
         android:id="@+id/password"
@@ -68,6 +82,7 @@
         android:layout_marginTop="20dp"
         android:onClick="newUser"
         android:text="@string/ask_new_user"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
