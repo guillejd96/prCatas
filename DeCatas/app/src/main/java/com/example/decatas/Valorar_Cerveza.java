@@ -104,6 +104,8 @@ public class Valorar_Cerveza extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        params = new LinkedHashMap<>();
+        params.put("id",idCerveza);
         params.put("p",idPersona);
         try {
             con = new Connection(getApplicationContext(),"getOpiniones.php",params);
@@ -151,76 +153,83 @@ public class Valorar_Cerveza extends AppCompatActivity {
         cuerpo = inputCuerpo.getText().toString();
         botellin = inputBotellin.getText().toString();
 
-        if(aroma.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para el aroma",Toast.LENGTH_LONG).show();
-            inputAroma.setBackgroundResource(R.drawable.input_error);
-            return;
-        }
-        if(Integer.parseInt(aroma)<0 || Integer.parseInt(aroma)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
-            inputAroma.setBackgroundResource(R.drawable.input_error);
-            return;
-        }
-        if(apariencia.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para la apariencia",Toast.LENGTH_LONG).show();
-            inputApariencia.setBackgroundResource(R.drawable.input_error);
-            return;
-        }
-        if(Integer.parseInt(apariencia)<0 || Integer.parseInt(apariencia)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
-            inputApariencia.setBackgroundResource(R.drawable.input_error);
-            return;
-        }
-        if(sabor.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para el sabor",Toast.LENGTH_LONG).show();
-            inputSabor.setBackgroundResource(R.drawable.input_error);
-            return;
-        }
-        if(Integer.parseInt(sabor)<0 || Integer.parseInt(sabor)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
-            inputSabor.setBackgroundResource(R.drawable.input_error);
-            return;
-        }
-        if(cuerpo.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para el cuerpo",Toast.LENGTH_LONG).show();
-            inputCuerpo.setBackgroundResource(R.drawable.input_error);
-            return;
-        }
-        if(Integer.parseInt(cuerpo)<0 || Integer.parseInt(cuerpo)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
-            inputCuerpo.setBackgroundResource(R.drawable.input_error);
-            return;
-        }
-        if(botellin.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para el botellín",Toast.LENGTH_LONG).show();
-            inputBotellin.setBackgroundResource(R.drawable.input_error);
-            return;
-        }
-        if(Integer.parseInt(botellin)<0 || Integer.parseInt(botellin)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
-            inputBotellin.setBackgroundResource(R.drawable.input_error);
+        try{
+            if(aroma.equals("")){
+                Toast.makeText(getApplicationContext(), R.string.empty_smell,Toast.LENGTH_LONG).show();
+                inputAroma.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+            if(Integer.parseInt(aroma)<0 || Integer.parseInt(aroma)>10){
+                Toast.makeText(getApplicationContext(),R.string.error_number_in_between,Toast.LENGTH_LONG).show();
+                inputAroma.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+            if(apariencia.equals("")){
+                Toast.makeText(getApplicationContext(), R.string.empty_appearance,Toast.LENGTH_LONG).show();
+                inputApariencia.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+            if(Integer.parseInt(apariencia)<0 || Integer.parseInt(apariencia)>10){
+                Toast.makeText(getApplicationContext(),R.string.error_number_in_between,Toast.LENGTH_LONG).show();
+                inputApariencia.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+            if(sabor.equals("")){
+                Toast.makeText(getApplicationContext(), R.string.empty_taste,Toast.LENGTH_LONG).show();
+                inputSabor.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+            if(Integer.parseInt(sabor)<0 || Integer.parseInt(sabor)>10){
+                Toast.makeText(getApplicationContext(),R.string.error_number_in_between,Toast.LENGTH_LONG).show();
+                inputSabor.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+            if(cuerpo.equals("")){
+                Toast.makeText(getApplicationContext(), R.string.empty_body,Toast.LENGTH_LONG).show();
+                inputCuerpo.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+            if(Integer.parseInt(cuerpo)<0 || Integer.parseInt(cuerpo)>10){
+                Toast.makeText(getApplicationContext(),R.string.error_number_in_between,Toast.LENGTH_LONG).show();
+                inputCuerpo.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+            if(botellin.equals("")){
+                Toast.makeText(getApplicationContext(), R.string.empty_bottle,Toast.LENGTH_LONG).show();
+                inputBotellin.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+            if(Integer.parseInt(botellin)<0 || Integer.parseInt(botellin)>10){
+                Toast.makeText(getApplicationContext(), R.string.error_number_in_between,Toast.LENGTH_LONG).show();
+                inputBotellin.setBackgroundResource(R.drawable.input_error);
+                return;
+            }
+
+            Map<String,String> params = new LinkedHashMap<>();
+            params.put("idU",idUsuario);
+            params.put("idC",idCerveza);
+            params.put("ar",aroma);
+            params.put("ap",apariencia);
+            params.put("s",sabor);
+            params.put("c",cuerpo);
+            params.put("b",botellin);
+            Connection con = new Connection(getApplicationContext(),"createValoracion.php",params);
+            while(con.getRes()==null);
+            String res = con.getRes();
+            if(res.equals("1")){
+                Intent intent = new Intent(getApplicationContext(),Cata.class);
+                intent.putExtra("idUsuario",idUsuario);
+                intent.putExtra("idCata",idCata);
+                startActivity(intent);
+            }else {
+                Toast.makeText(this, R.string.error_inserting_beer, Toast.LENGTH_LONG).show();
+            }
+        }catch (NumberFormatException e){
+            Toast.makeText(this, R.string.error_numeric_value, Toast.LENGTH_LONG).show();
             return;
         }
 
-        Map<String,String> params = new LinkedHashMap<>();
-        params.put("idU",idUsuario);
-        params.put("idC",idCerveza);
-        params.put("ar",aroma);
-        params.put("ap",apariencia);
-        params.put("s",sabor);
-        params.put("c",cuerpo);
-        params.put("b",botellin);
-        Connection con = new Connection(getApplicationContext(),"createValoracion.php",params);
-        while(con.getRes()==null);
-        String res = con.getRes();
-        if(res.equals("1")){
-            Intent intent = new Intent(getApplicationContext(),Cata.class);
-            intent.putExtra("idUsuario",idUsuario);
-            intent.putExtra("idCata",idCata);
-            startActivity(intent);
-        }else {
-            Toast.makeText(this, "No se ha podido valorar la cerveza", Toast.LENGTH_LONG).show();
-        }
+
     }
 
     private static final int CAN_REQUEST = 1313;
@@ -233,7 +242,7 @@ public class Valorar_Cerveza extends AppCompatActivity {
 
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
             builder.setCancelable(true);
-            builder.setMessage("¿Quieres guardar esta foto?");
+            builder.setMessage(R.string.question_save_pic);
 
             ImageView img = new ImageView(this);
             img.setLayoutParams(new TableRow.LayoutParams(
