@@ -4,29 +4,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.MalformedURLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class User extends AppCompatActivity {
 
@@ -42,12 +31,12 @@ public class User extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         idUsuario = bundle.getString("id");
 
-        textUsuario = (TextView)findViewById(R.id.textUsuario);
-        textNombre = (TextView)findViewById(R.id.textNombre);
-        textCatas = (TextView)findViewById(R.id.textCatas);
-        textCervezas = (TextView)findViewById(R.id.textCervezas);
-        textAmigos = (TextView)findViewById(R.id.textAmigos);
-        requests = (TextView) findViewById(R.id.requests);
+        textUsuario = findViewById(R.id.textUsuario);
+        textNombre = findViewById(R.id.textNombre);
+        textCatas = findViewById(R.id.textCatas);
+        textCervezas = findViewById(R.id.textCervezas);
+        textAmigos = findViewById(R.id.textAmigos);
+        requests = findViewById(R.id.requests);
 
         Map<String,String> params = new LinkedHashMap<>();
         params.put("id",idUsuario);
@@ -65,7 +54,7 @@ public class User extends AppCompatActivity {
                 textCervezas.setText(resArray[3]);
                 textAmigos.setText(resArray[4]);
             } else {
-                Toast.makeText(getApplicationContext(),R.string.login_failed,Toast.LENGTH_LONG);
+                Toast.makeText(getApplicationContext(),R.string.login_failed,Toast.LENGTH_LONG).show();
             }
 
             con = new Connection(getApplicationContext(),"checkSolicitudes.php",params);
