@@ -83,7 +83,7 @@ public class Login extends AppCompatActivity {
      }
 
      public void newUser(View view){
-         Intent intent = new Intent(getApplicationContext(),NewUser.class);
+         Intent intent = new Intent(getApplicationContext(),Nuevo_Usuario.class);
          startActivity(intent);
      }
 
@@ -91,6 +91,11 @@ public class Login extends AppCompatActivity {
          Intent intent = new Intent(getApplicationContext(),Instrucciones.class);
          startActivity(intent);
      }
+
+    public void goToContacto(View v){
+        Intent intent = new Intent(getApplicationContext(),Contacto.class);
+        startActivity(intent);
+    }
 
     @Override
     public void onRestart() {
