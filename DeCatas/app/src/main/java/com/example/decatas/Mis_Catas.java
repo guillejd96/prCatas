@@ -137,16 +137,13 @@ public class Mis_Catas extends AppCompatActivity {
 
                     trTD.setGravity(Gravity.CENTER);
                     trTD.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.FILL_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT,
                             TableRow.LayoutParams.WRAP_CONTENT));
 
                     trTD.setVisibility(View.VISIBLE);
                     trTD.setBackgroundResource(R.drawable.border);
 
                     TextView[] rowTextView2 = new TextView[5];
-
-                    Log.v("Mis catas",en_cursoCata);
-                    String en_curso = en_cursoCata.equals("1") ? "Sí" : "No";
 
                     Map<String,String> params2 = new LinkedHashMap<>();
                     params2.put("id",idCata);
@@ -164,7 +161,7 @@ public class Mis_Catas extends AppCompatActivity {
                     boolean isAdmin=false;
 
                     if(idUsuario.equals(idAdminCata)){
-                        admin = "Tú";
+                        admin = getResources().getString(R.string.you);
                         isAdmin=true;
                     }else {
                         Map<String,String> params4 = new LinkedHashMap<>();
@@ -180,7 +177,7 @@ public class Mis_Catas extends AppCompatActivity {
                     for(TextView tv : rowTextView2){
                         tv = new TextView(this);
                         tv.setLayoutParams(new TableRow.LayoutParams(
-                                TableRow.LayoutParams.FILL_PARENT,
+                                TableRow.LayoutParams.WRAP_CONTENT,
                                 TableRow.LayoutParams.WRAP_CONTENT
                         ));
                         tv.setGravity(Gravity.CENTER);
