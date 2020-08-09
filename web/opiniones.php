@@ -231,15 +231,15 @@
      			echo "</tr>";
      			while($cerveza = mysqli_fetch_array($resCervezas)){
                     echo "<tr>";
-                    echo "<td class='idCervezas' data-id='".$cerveza[0]."'><p>".$cerveza[1]."</p></td>";
+                    echo "<td class='idCervezas' data-id='".$cerveza[0]."'><p>".$cerveza[2]."</p></td>";
                     $resOpinion = mysqli_query($conexion,"SELECT * FROM opinion WHERE idPersona=".$persona[0]." AND idCerveza=".$cerveza[0]);
                     if(mysqli_num_rows($resOpinion)>0){
                         $row = $resOpinion->fetch_row();
-                        echo "<td><input type='number' class='apariencia form-control col-xs-1' size='1' min='0' max='10' value='".$row[1]."'></td>";
-                        echo "<td><input type='number' class='aroma form-control col-xs-1' size='1' min='0' max='10'  value='".$row[2]."'></td>";
-                        echo "<td><input type='number' class='sabor form-control col-xs-1' size='1' min='0' max='10'  value='".$row[3]."'></td>";
-                        echo "<td><input type='number' class='cuerpo form-control col-xs-1' size='1' min='0' max='10'  value='".$row[4]."'></td>";
-                        echo "<td><input type='number' class='botellin form-control col-xs-1' size='1' min='0' max='10'  value='".$row[5]."'></td>";
+                        echo "<td><input type='number' class='aroma form-control col-xs-1' size='1' min='0' max='10' value='".$row[3]."'></td>";
+                        echo "<td><input type='number' class='apariencia form-control col-xs-1' size='1' min='0' max='10'  value='".$row[4]."'></td>";
+                        echo "<td><input type='number' class='sabor form-control col-xs-1' size='1' min='0' max='10'  value='".$row[5]."'></td>";
+                        echo "<td><input type='number' class='cuerpo form-control col-xs-1' size='1' min='0' max='10'  value='".$row[6]."'></td>";
+                        echo "<td><input type='number' class='botellin form-control col-xs-1' size='1' min='0' max='10'  value='".$row[7]."'></td>";
                     }else {
                         echo "<td><input type='number' class='apariencia form-control col-xs-1' size='1' min='0' max='10'></td>";
                         echo "<td><input type='number' class='aroma form-control col-xs-1' size='1' min='0' max='10'></td>";
