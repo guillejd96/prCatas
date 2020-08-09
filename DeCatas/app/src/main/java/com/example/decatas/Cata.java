@@ -77,11 +77,11 @@ public class Cata extends AppCompatActivity {
         end.setVisibility(View.INVISIBLE);
 
         Map<String,String> params = new LinkedHashMap<>();
-        params.put("id",idUsuario);
+        params.put("id",this.idUsuario);
         try {
             Connection pe = new Connection(this,"getIDPersona.php",params);
             while(pe.getRes()==null);
-            this.idPersona=pe.getRes().toString();
+            this.idPersona=pe.getRes();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -306,7 +306,7 @@ public class Cata extends AppCompatActivity {
                     tv1.setPadding(10, 10, 10, 10);
                     tv1.setTextSize(20);
                     tv1.setVisibility(View.VISIBLE);
-                    String text = nombre + "(" + usuario + "): " + nC + "/" + nCervezas + " valoraciones";
+                    String text = nombre + "(" + usuario + "): " + nC + "/" + nCervezas +" "+getResources().getString(R.string.beers_lower);
                     tv1.setText(text);
                     tv1.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_arrow_rigth_foreground), null, null, null);
 
@@ -406,7 +406,7 @@ public class Cata extends AppCompatActivity {
                         }
 
                         params = new LinkedHashMap<>();
-                        params.put("p", idPersona);
+                        params.put("p", this.idPersona);
                         params.put("id", idCerveza);
                         try {
                             con = new Connection(getApplicationContext(), "getOpiniones.php", params);
@@ -434,11 +434,14 @@ public class Cata extends AppCompatActivity {
 
                     trTD.setVisibility(View.VISIBLE);
 
+                    trTD.setTag("res");
+
                     Button resultados = new Button(this);
                     resultados.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.FILL_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT,
                             TableRow.LayoutParams.WRAP_CONTENT));
-                    resultados.setText("Resultados");
+
+                    resultados.setText(R.string.results);
                     resultados.setBackgroundResource(R.drawable.buttons);
                     resultados.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -451,6 +454,64 @@ public class Cata extends AppCompatActivity {
                     });
 
                     trTD.addView(resultados);
+
+                    table1.addView(trTD);
+
+                    trTD = new TableRow(this);
+
+                    trTD.setGravity(Gravity.CENTER);
+
+                    trTD.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.FILL_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT));
+
+                    trTD.setVisibility(View.VISIBLE);
+
+                    trTD.setTag("space");
+
+                    TextView tv1 = new TextView(this);
+
+                    tv1.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.FILL_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT
+                    ));
+
+                    tv1.setGravity(Gravity.CENTER);
+                    tv1.setPadding(10, 10, 10, 10);
+                    tv1.setTextSize(20);
+                    tv1.setVisibility(View.VISIBLE);
+                    tv1.setText("");
+
+                    trTD.addView(tv1);
+
+                    table1.addView(trTD);
+
+                    trTD = new TableRow(this);
+
+                    trTD.setGravity(Gravity.CENTER);
+
+                    trTD.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.FILL_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT));
+
+                    trTD.setVisibility(View.VISIBLE);
+
+                    trTD.setTag("space");
+
+                    tv1 = new TextView(this);
+
+                    tv1.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.FILL_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT
+                    ));
+
+                    tv1.setGravity(Gravity.CENTER);
+                    tv1.setPadding(10, 10, 10, 10);
+                    tv1.setTextSize(20);
+                    tv1.setVisibility(View.VISIBLE);
+                    tv1.setText("");
+
+                    trTD.addView(tv1);
 
                     table1.addView(trTD);
                 } else {
@@ -485,13 +546,15 @@ public class Cata extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if(this.en_curso){
-            p = new LinkedHashMap<>();
-            p.put("id",this.idCata);
-            Connection c = new Connection(this,"isFinishable.php",p);
-            while(c.getRes()==null);
-            if(c.getRes().equals("1")){
-                end.setVisibility(View.VISIBLE);
+        if(this.idUsuario.equals(this.idAdmin)){
+            if(this.en_curso){
+                p = new LinkedHashMap<>();
+                p.put("id",this.idCata);
+                Connection c = new Connection(this,"isFinishable.php",p);
+                while(c.getRes()==null);
+                if(c.getRes().equals("1")){
+                    end.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -660,6 +723,7 @@ public class Cata extends AppCompatActivity {
                 TextView t = (TextView) aux.getChildAt(0);
 
                 if(Integer.parseInt(nCervezas)>0){
+                    Log.v("Cata",t.getText().toString());
                     if(aux.getTag().toString().equals(idP+"_desplegable")){
                         table1.removeView(aux);
                         j--;
