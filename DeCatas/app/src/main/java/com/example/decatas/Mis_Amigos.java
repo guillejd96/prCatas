@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -66,7 +67,6 @@ public class Mis_Amigos extends AppCompatActivity {
                         TableRow.LayoutParams.FILL_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT
                 ));
-                tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
                 tv.setGravity(Gravity.CENTER);
                 tv.setVisibility(View.VISIBLE);
                 tv.setPadding(10,10,10,10);
@@ -146,11 +146,12 @@ public class Mis_Amigos extends AppCompatActivity {
             String[] friends = result.split(";");
             for (String f : friends){
                 String[] infoFriend = f.split(",");
-                String usuario = infoFriend[0];
-                String nombre = infoFriend[1];
-                String nCatas = infoFriend[2];
-                String nCervezas = infoFriend[3];
-                String nAmigos = infoFriend[4];
+                String idAmigo = infoFriend[0];
+                String usuario = infoFriend[1];
+                String nombre = infoFriend[2];
+                String nCatas = infoFriend[3];
+                String nCervezas = infoFriend[4];
+                String nAmigos = infoFriend[5];
 
                 TableRow tr = new TableRow(this);
 
@@ -163,6 +164,9 @@ public class Mis_Amigos extends AppCompatActivity {
                         TableRow.LayoutParams.WRAP_CONTENT));
 
                 tr.setVisibility(View.VISIBLE);
+
+                Listener l = new Listener(idAmigo);
+                tr.setOnClickListener(l);
 
                 String[] labels2 = {nombre,usuario,nCatas,nCervezas,nAmigos};
                 i=0;
@@ -192,5 +196,22 @@ public class Mis_Amigos extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(),Anyadir_Amigo.class);
         intent.putExtra("id", idUsuario);
         startActivity(intent);
+    }
+
+    private class Listener implements View.OnClickListener{
+
+        String idA;
+
+        Listener(String id){
+            this.idA=id;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(),Ver_Amigos.class);
+            intent.putExtra("idU", idUsuario);
+            intent.putExtra("idA", idA);
+            startActivity(intent);
+        }
     }
 }
