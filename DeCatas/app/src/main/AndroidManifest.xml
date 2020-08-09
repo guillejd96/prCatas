@@ -20,9 +20,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Contacto"
+            android:label="@string/title_activity_contacto"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Ver_Amigos"
+            android:label="@string/title_activity_ver__amigos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Resultados"
             android:label="@string/title_activity_resultados"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Solicitudes"
             android:label="@string/title_activity_solicitudes"
@@ -72,7 +80,7 @@
             android:label="@string/title_activity_instrucciones"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".NewUser"
+            android:name=".Nuevo_Usuario"
             android:label="@string/title_activity_new_user"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
