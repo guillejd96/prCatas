@@ -20,9 +20,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Faq"
+            android:label="@string/title_activity_faq"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".Contacto"
             android:label="@string/title_activity_contacto"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Ver_Amigos"
             android:label="@string/title_activity_ver__amigos"
