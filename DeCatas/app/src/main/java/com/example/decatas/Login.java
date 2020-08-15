@@ -97,6 +97,11 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToFaq(View v){
+        Intent intent = new Intent(getApplicationContext(),Faq.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onRestart() {
         super.onRestart();
