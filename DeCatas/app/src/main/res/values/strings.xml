@@ -163,4 +163,17 @@
     <string name="contacto_2">Grado en Ingeniería del Software</string>
     <string name="my_name" translatable="false">Guillermo Jimena Domínguez</string>
     <string name="my_email" translatable="false">guillejd96@gmail.com</string>
+    <string name="title_activity_faq" translatable="false">Faq</string>
+    <string name="faq">Preguntas frecuentes</string>
+    <string name="q_1">¿Cómo creo una cata nueva?</string>
+    <string name="q_2">¿Cómo registro las valoraciones de una cerveza?</string>
+    <string name="q_3">¿Qué es la media de una cerveza?</string>
+    <string name="q_4">¿Cómo se calculan los resultados de una cata?</string>
+    <string name="a_1">Para crear una cata hay que ir a Nueva Cata desde la página principal del usuario. A continuación se pide darle un nombre a la cata y una contraseña. Esta contraseña será utilizada por los demás usuarios para entrar a la cata. El administrador de la cata podrá ir añadiendo los nombres de las cervezas a valorar.</string>
+    <string name="a_2">Para valorar una cerveza individualmente hay que ir a Nueva Cerveza desde la página principal del usuario. De esta forma se pueden añadir valoraciones sin necesidad de crear una cata específica.</string>
+    <string name="a_4_1">Para el cálculo de la mejor cerveza de media se calcula la nota media de cada cerveza por cada persona de la cata. Si se calcula la nota media de estas medias anteriores se obtiene la nota media general de la cerveza. La tabla \"Mejores cervezas de media\" muestra estas medias ordenadas de mayor a menor.</string>
+    <string name="a_4_2">Para el cálculo de la mejor cerveza según el atributo se calcula la media de valoración de todas las personas para ese atributo. La tabla \"Mejores cervezas por aroma/apariencia/etc.\" muestra estas medias ordenadas de mayor a menor</string>
+    <string name="a_4_3">Para el cálculo del mejor juez de media se resta, para cada persona y cada cerveza, la media general de la cerveza a la media individual valorada por la persona. Esta diferencia se va acumulando. El mejor juez de media es la persona que tenga menos diferencia acumulada.</string>
+    <string name="a_4_4">Para el cálculo del mejor juez por atributo se resta, para cada persona y cada cerveza, la media general de la cerveza para ese atributo a la valoracion de la persona para ese atributo. Esta diferencia se va acumulando. El mejor juez según el atributo es la persona que tenga menos diferencia acumulada.</string>
+    <string name="a_3">La media de una cerveza es calculada a partir de sus diferentes valoraciones de sus atributos. Cada atributo cuenta igual para la media así que se usa una media aritmética.</string>
 </resources>
