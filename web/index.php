@@ -44,7 +44,7 @@
 	</script>
 </head>
 <body>
-	<h1>DeCatas</h1>
+	<img src="images/DE-CATAS-ORIGINAL-PNG.png" alt="DeCatas">
 	<table>
 		<tr>
 			<td><p align="right">Usuario:</p></td>
