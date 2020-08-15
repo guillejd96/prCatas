@@ -142,4 +142,16 @@
     <string name="contacto_1">Final Degree Project for the Higher Technical School of Computer Engineering 2019/2020</string>
     <string name="title_activity_contacto">Contact</string>
     <string name="contacto_2">Degree in Software Engineering</string>
+    <string name="faq">Frecuent asked questions</string>
+    <string name="q_1">How do I create a new beer tasting?</string>
+    <string name="q_2">How do I register beer ratings?</string>
+    <string name="q_3">What is the average of a beer?</string>
+    <string name="q_4">How are the results of a beer tasting calculated?</string>
+    <string name="a_1">To create a beer tasting you have to go to New Beer Tasting from the user\'s home page. Next, you are asked to give the beer tasting a name and a password. This password will be used by other users to enter the tasting. The administrator of the beer tasting will be adding the names of the beers to value.</string>
+    <string name="a_2">To rate a beer individually you have to go to Nueva Cerveza from the user\'s home page. In this way, you can add ratings without creating a specific beer tasting.</string>
+    <string name="a_3">The average of a beer is calculated from its different evaluations of its attributes. Each attribute counts the same for the mean so an arithmetic mean is used.</string>
+    <string name="a_4_1">To calculate the best average beer, the average mark of each beer is calculated for each person in the tasting. If the average mark of these previous scoes is calculated, the general average mark of the beer is obtained. The \"Best Average Beers\" table shows these averages ordered from highest to lowest.</string>
+    <string name="a_4_2">To calculate the best beer according to the attribute, the average rating of all the people for that attribute is calculated. The table \"Best beers by smell / appearance / etc.\" shows these means ordered from highest to lowest</string>
+    <string name="a_4_3">For the calculation of the best judge of average, the general average of the beer is subtracted for each person and each beer from the individual average valued by the person. This difference accumulates. The best judge on average is the person with the least accumulated difference.</string>
+    <string name="a_4_4">To calculate the best judge by attribute, the general average of the beer for that attribute is subtracted for each person and each beer from the person\'s assessment for that attribute. This difference accumulates. The best judge according to the attribute is the person with the least accumulated difference.</string>
 </resources>
