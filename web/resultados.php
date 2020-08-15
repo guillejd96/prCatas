@@ -42,6 +42,156 @@
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script>
+	var idCata = <?php echo $idCata; ?>;
+
+	$(document).ready(function() {
+		$.post('ajax/getMejoresJuecesMedia.php', {id: idCata}, function(data, textStatus, xhr) {
+			var res = data.split(";");
+			var dict = {};
+			for(var i=0;i<res.length;i++){
+				var r = res[i];
+				var aux = r.split(",");
+				var nombre = aux[0];
+				var value = aux[1];
+				dict[nombre]=value;
+			}
+			var items = Object.keys(dict).map(function(key) {
+  				return [key, dict[key]];
+			});
+			items.sort(function(first, second) {
+  				return first[1] - second[1];
+			});
+			for(var i=0;i<items.length;i++){
+				var aux = items[i]+"";
+				var j = aux.split(",");
+				var nombre = j[0];
+				var value = j[1];
+				$("#Jmedia").append('<tr><td><p>'+(i+1)+'º</p></td><td><p>'+nombre+'</p></td><td><p>'+value+'</p></td></tr>');
+			}
+		});
+	 	$.post('ajax/getMejoresJuecesAroma.php', {id: idCata}, function(data, textStatus, xhr) {
+	 		var res = data.split(";");
+			var dict = {};
+			for(var i=0;i<res.length;i++){
+				var r = res[i];
+				var aux = r.split(",");
+				var nombre = aux[0];
+				var value = aux[1];
+				dict[nombre]=value;
+			}
+			var items = Object.keys(dict).map(function(key) {
+  				return [key, dict[key]];
+			});
+			items.sort(function(first, second) {
+  				return first[1] - second[1];
+			});
+			for(var i=0;i<items.length;i++){
+				var aux = items[i]+"";
+				var j = aux.split(",");
+				var nombre = j[0];
+				var value = j[1];
+				$("#Jaroma").append('<tr><td><p>'+(i+1)+'º</p></td><td><p>'+nombre+'</p></td><td><p>'+value+'</p></td></tr>');
+			}
+		});
+		$.post('ajax/getMejoresJuecesApariencia.php', {id: idCata}, function(data, textStatus, xhr) {
+			var res = data.split(";");
+			var dict = {};
+			for(var i=0;i<res.length;i++){
+				var r = res[i];
+				var aux = r.split(",");
+				var nombre = aux[0];
+				var value = aux[1];
+				dict[nombre]=value;
+			}
+			var items = Object.keys(dict).map(function(key) {
+  				return [key, dict[key]];
+			});
+			items.sort(function(first, second) {
+  				return first[1] - second[1];
+			});
+			for(var i=0;i<items.length;i++){
+				var aux = items[i]+"";
+				var j = aux.split(",");
+				var nombre = j[0];
+				var value = j[1];
+				$("#Japariencia").append('<tr><td><p>'+(i+1)+'º</p></td><td><p>'+nombre+'</p></td><td><p>'+value+'</p></td></tr>');
+			}
+		});
+		$.post('ajax/getMejoresJuecesSabor.php', {id: idCata}, function(data, textStatus, xhr) {
+			var res = data.split(";");
+			var dict = {};
+			for(var i=0;i<res.length;i++){
+				var r = res[i];
+				var aux = r.split(",");
+				var nombre = aux[0];
+				var value = aux[1];
+				dict[nombre]=value;
+			}
+			var items = Object.keys(dict).map(function(key) {
+  				return [key, dict[key]];
+			});
+			items.sort(function(first, second) {
+  				return first[1] - second[1];
+			});
+			for(var i=0;i<items.length;i++){
+				var aux = items[i]+"";
+				var j = aux.split(",");
+				var nombre = j[0];
+				var value = j[1];
+				$("#Jsabor").append('<tr><td><p>'+(i+1)+'º</p></td><td><p>'+nombre+'</p></td><td><p>'+value+'</p></td></tr>');
+			}
+		});
+		$.post('ajax/getMejoresJuecesCuerpo.php', {id: idCata}, function(data, textStatus, xhr) {
+			var res = data.split(";");
+			var dict = {};
+			for(var i=0;i<res.length;i++){
+				var r = res[i];
+				var aux = r.split(",");
+				var nombre = aux[0];
+				var value = aux[1];
+				dict[nombre]=value;
+			}
+			var items = Object.keys(dict).map(function(key) {
+  				return [key, dict[key]];
+			});
+			items.sort(function(first, second) {
+  				return first[1] - second[1];
+			});
+			for(var i=0;i<items.length;i++){
+				var aux = items[i]+"";
+				var j = aux.split(",");
+				var nombre = j[0];
+				var value = j[1];
+				$("#Jcuerpo").append('<tr><td><p>'+(i+1)+'º</p></td><td><p>'+nombre+'</p></td><td><p>'+value+'</p></td></tr>');
+			}
+		});
+		$.post('ajax/getMejoresJuecesBotellin.php', {id: idCata}, function(data, textStatus, xhr) {
+			var res = data.split(";");
+			var dict = {};
+			for(var i=0;i<res.length;i++){
+				var r = res[i];
+				var aux = r.split(",");
+				var nombre = aux[0];
+				var value = aux[1];
+				dict[nombre]=value;
+			}
+			var items = Object.keys(dict).map(function(key) {
+  				return [key, dict[key]];
+			});
+			items.sort(function(first, second) {
+  				return first[1] - second[1];
+			});
+			for(var i=0;i<items.length;i++){
+				var aux = items[i]+"";
+				var j = aux.split(",");
+				var nombre = j[0];
+				var value = j[1];
+				$("#Jbotellin").append('<tr><td><p>'+(i+1)+'º</p></td><td><p>'+nombre+'</p></td><td><p>'+value+'</p></td></tr>');
+			}
+		});
+	});
+	</script>
 </head>
 <body>
 	<?php echo banner(); ?>
@@ -170,6 +320,76 @@
 							}
 						 ?>
 					</table>
+				</td>
+			</tr>
+		</table>
+		<table class="simple">
+			<tr>
+				<td colspan="2">
+					<table id="Jmedia">
+						<tr>
+							<th colspan="3">
+								<p>Mejores jueces de media</p>
+							</th>
+						</tr>
+					</table>
+					<br>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table id="Jaroma">
+						<tr>
+							<th colspan="3">
+								<p>Mejores jueces por aroma</p>
+							</th>
+						</tr>
+					</table>
+					<br>
+				</td>
+				<td>
+					<table id="Japariencia">
+						<tr>
+							<th colspan="3">
+								<p>Mejores jueces por apariencia</p>
+							</th>
+						</tr>
+					</table>
+					<br>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table id="Jsabor">
+						<tr>
+							<th colspan="3">
+								<p>Mejores jueces por sabor</p>
+							</th>
+						</tr>
+					</table>
+					<br>
+				</td>
+				<td>
+					<table id="Jcuerpo">
+						<tr>
+							<th colspan="3">
+								<p>Mejores jueces por cuerpo</p>
+							</th>
+						</tr>
+					</table>
+					<br>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table id="Jbotellin">
+						<tr>
+							<th colspan="3">
+								<p>Mejores jueces por botellín</p>
+							</th>
+						</tr>
+					</table>
+					<br>
 				</td>
 			</tr>
 		</table>
