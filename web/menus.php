@@ -96,8 +96,8 @@
 
 <?php function banner() { ?>
 
-<nav id="banner" style="height: 200; background-image: url(images/untitled.png); background-size:cover">
-	<p>DeCatas</p>
+<nav id="banner" style="height: 200; background-color: #ffbc40; background-size:cover">
+	<img src="images/DE-CATAS-ORIGINAL-PNG.png" alt="DeCatas">
 </nav>
 
 <?php } ?>
