@@ -70,8 +70,8 @@
 			echo "<tr>";
 			echo "<td><p><a href='info_cata.php?id=".$idCata[0]."'>".$cata[1]."</a></p>";
 			echo "<td><p>".$cata[2]."</p></td>";
-			echo "<td><p>".$nCervezas."</p></td>";
 			echo "<td><p>".$nPersonas."</p></td>";
+			echo "<td><p>".$nCervezas."</p></td>";
 			echo "<td><p><button class='btn btn-link' onclick='javascript:borrar($idCata[0])'><i class='far fa-trash-alt' style='font-size: 25px'></i></button> <button class='btn btn-link' onclick='javascript:editar($idCata[0])'><i class='far fa-edit' style='font-size: 25px'></i></button></p></td>";
 			echo "</tr>";
 		}
