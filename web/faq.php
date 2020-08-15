@@ -37,7 +37,11 @@
 		<p>Para el cálculo de la mejor cerveza de media se calcula la nota media de cada cerveza por cada persona de la cata. Si se calcula la nota media de estas medias anteriores se obtiene la nota media general de la cerveza. La tabla "Mejores cervezas de media" muestra estas medias ordenadas de mayor a menor.</p>
 		<p class="ec">$$MejorCervezaDeMedia = max(\frac{&sum; mediaCerveza_{i}}{nPersonas})\text{  &forall;i&isin;[1,nCervezas]}$$</p>
 		<p>Para el cálculo de la mejor cerveza según el atributo se calcula la media de valoración de todas las personas para ese atributo. La tabla "Mejores cervezas por aroma/apariencia/etc." muestra estas medias ordenadas de mayor a menor.</p>
-		<p class="ec">$$MejorCervezaPorAtributo = max(\frac{&sum; atributo_{i}}{nPersonas})\text{  &forall;i&isin;[1,nCervezas]}$$</p><hr>
+		<p class="ec">$$MejorCervezaPorAtributo = max(\frac{&sum; atributo_{i}}{nPersonas})\text{  &forall;i&isin;[1,nCervezas]}$$</p>
+		<p>Para el cálculo del mejor juez de media se resta, para cada persona y cada cerveza, la media general de la cerveza a la media individual valorada por la persona. Esta diferencia se va acumulando. El mejor juez de media es la persona que tenga menos diferencia acumulada.</p>
+		<p class="ec">$$MejorJuezDeMedia = min(&sum; |mediaTotal_{i}-mediaIndividual_{i}|)\text{  &forall;i&isin;[1,nCervezas]}$$</p>
+		<p>Para el cálculo del mejor juez por atributo se resta, para cada persona y cada cerveza, la media general de la cerveza para ese atributo a la valoracion de la persona para ese atributo. Esta diferencia se va acumulando. El mejor juez según el atributo es la persona que tenga menos diferencia acumulada.</p>
+		<p class="ec">$$MejorJuezPorAtributo = min(&sum; |mediaAtributoTotal_{i}-atributoIndividual_{i}|)\text{  &forall;i&isin;[1,nCervezas]}$$</p><hr>
 	</div>
 </body>
 </html>
