@@ -87,4 +87,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pass2" />
 
+    <ImageButton
+        android:id="@+id/infoName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="245dp"
+        android:background="@color/material_on_background_disabled"
+        android:onClick="infoName"
+        app:layout_constraintStart_toEndOf="@+id/user"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_help_foreground" />
+
+    <ImageButton
+        android:id="@+id/infoPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="90dp"
+        android:background="@color/material_on_background_disabled"
+        android:onClick="infoPass"
+        app:layout_constraintStart_toEndOf="@+id/pass1"
+        app:layout_constraintTop_toBottomOf="@+id/infoName"
+        app:srcCompat="@drawable/ic_help_foreground" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
