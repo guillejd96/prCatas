@@ -154,4 +154,6 @@
     <string name="a_4_2">To calculate the best beer according to the attribute, the average rating of all the people for that attribute is calculated. The table \"Best beers by smell / appearance / etc.\" shows these means ordered from highest to lowest</string>
     <string name="a_4_3">For the calculation of the best judge of average, the general average of the beer is subtracted for each person and each beer from the individual average valued by the person. This difference accumulates. The best judge on average is the person with the least accumulated difference.</string>
     <string name="a_4_4">To calculate the best judge by attribute, the general average of the beer for that attribute is subtracted for each person and each beer from the person\'s assessment for that attribute. This difference accumulates. The best judge according to the attribute is the person with the least accumulated difference.</string>
+    <string name="info_name">Username has to be 8 characters maximum</string>
+    <string name="info_pass"><![CDATA[Password must: <br/><br/> &#8226; Have between 6 and 20 character<br/><br/> &#8226; Have at least one number<br/><br/> &#8226; Have at least one lowercase letter<br/><br/> &#8226; Have at least one capital letter<br/>]]></string>
 </resources>
