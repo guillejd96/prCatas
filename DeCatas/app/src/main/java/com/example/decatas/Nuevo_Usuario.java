@@ -1,10 +1,14 @@
 package com.example.decatas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -144,5 +148,27 @@ public class Nuevo_Usuario extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), R.string.error_inserting,Toast.LENGTH_LONG);
             }
         }
+    }
+
+    private Spanned getSpannedText(String text) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT);
+        } else {
+            return Html.fromHtml(text);
+        }
+    }
+
+    public void infoName(View v){
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Nuevo_Usuario.this);
+        builder.setCancelable(true);
+        builder.setMessage(getResources().getString(R.string.info_name));
+        builder.show();
+    }
+
+    public void infoPass(View v){
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Nuevo_Usuario.this);
+        builder.setCancelable(true);
+        builder.setMessage(getSpannedText(getResources().getString(R.string.info_pass)));
+        builder.show();
     }
 }
