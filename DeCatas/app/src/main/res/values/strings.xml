@@ -176,4 +176,6 @@
     <string name="a_4_3">Para el cálculo del mejor juez de media se resta, para cada persona y cada cerveza, la media general de la cerveza a la media individual valorada por la persona. Esta diferencia se va acumulando. El mejor juez de media es la persona que tenga menos diferencia acumulada.</string>
     <string name="a_4_4">Para el cálculo del mejor juez por atributo se resta, para cada persona y cada cerveza, la media general de la cerveza para ese atributo a la valoracion de la persona para ese atributo. Esta diferencia se va acumulando. El mejor juez según el atributo es la persona que tenga menos diferencia acumulada.</string>
     <string name="a_3">La media de una cerveza es calculada a partir de sus diferentes valoraciones de sus atributos. Cada atributo cuenta igual para la media así que se usa una media aritmética.</string>
+    <string name="info_name">El usuario debe tener un máximo de 8 caracteres</string>
+    <string name="info_pass"><![CDATA[La contraseña debe: <br/><br/> &#8226; Tener entre 6 y 20 caracteres<br/><br/> &#8226; Tener mínimo un número<br/><br/> &#8226; Tener mínimo una letra minúscula<br/><br/> &#8226; Tener mínimo una letra mayúscula<br/>]]></string>
 </resources>
