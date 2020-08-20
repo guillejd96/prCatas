@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 23-07-2020 a las 09:35:11
+-- Tiempo de generación: 20-08-2020 a las 15:19:25
 -- Versión del servidor: 10.4.10-MariaDB
 -- Versión de PHP: 7.3.12
 
@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS `amigos` (
   PRIMARY KEY (`id`),
   KEY `idUsuario1` (`idUsuario1`),
   KEY `idUsuario2` (`idUsuario2`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -48,12 +49,16 @@ CREATE TABLE IF NOT EXISTS `amigos` (
 DROP TABLE IF EXISTS `cata`;
 CREATE TABLE IF NOT EXISTS `cata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `en_curso` bit(1) NOT NULL DEFAULT b'1',
+  `password` varchar(64) COLLATE utf8_spanish_ci DEFAULT NULL,
   `fecha` date NOT NULL,
-  KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `admin` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `admin` (`admin`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- --------------------------------------------------------
+ --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `cerveza`
@@ -62,11 +67,12 @@ CREATE TABLE IF NOT EXISTS `cata` (
 DROP TABLE IF EXISTS `cerveza`;
 CREATE TABLE IF NOT EXISTS `cerveza` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `idCata` int(11) DEFAULT NULL,
+  `nombre` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idCata` (`idCata`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -89,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `medias` (
   KEY `idCerveza` (`idCerveza`),
   KEY `idCerveza_2` (`idCerveza`),
   KEY `idCata` (`idCata`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -100,18 +106,19 @@ CREATE TABLE IF NOT EXISTS `medias` (
 DROP TABLE IF EXISTS `opinion`;
 CREATE TABLE IF NOT EXISTS `opinion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `apariencia` int(11) DEFAULT NULL,
-  `aroma` int(11) DEFAULT NULL,
-  `sabor` int(11) DEFAULT NULL,
-  `cuerpo` int(11) DEFAULT NULL,
-  `botellin` int(11) DEFAULT NULL,
-  `foto` int(11) DEFAULT NULL,
   `idPersona` int(11) NOT NULL,
   `idCerveza` int(11) NOT NULL,
+  `aroma` int(11) NOT NULL,
+  `apariencia` int(11) NOT NULL,
+  `sabor` int(11) NOT NULL,
+  `cuerpo` int(11) NOT NULL,
+  `botellin` int(11) NOT NULL,
+  `foto` blob DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idPersona` (`idPersona`),
   KEY `idCerveza` (`idCerveza`)
-) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=121 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -126,7 +133,8 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `idUsuario` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idUsuario` (`idUsuario`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -140,9 +148,10 @@ CREATE TABLE IF NOT EXISTS `persona_cata` (
   `idPersona` int(11) NOT NULL,
   `idCata` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `idCata` (`idCata`),
-  KEY `idPersona` (`idPersona`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  KEY `idPersona` (`idPersona`),
+  KEY `idCata` (`idCata`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -157,8 +166,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `password` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
   UNIQUE KEY `usuario` (`usuario`),
   KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-COMMIT;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
