@@ -576,7 +576,7 @@
 						<div id="cerveza-botellin" style="height: 360px; width: 400px"></div>
 						<script>
 							var datos = [];
-							$("#table6").find(".nombreCervezas").each(function(index, el) {
+							$("#table6").find(".nombreCerveza").each(function(index, el) {
 								var nombre = el.innerText;
 								var value = $("#table6").find(".value").get(index).innerText;
 								datos.push({label: nombre,y: parseFloat(value)});
