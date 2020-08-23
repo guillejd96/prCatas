@@ -178,4 +178,15 @@
     <string name="a_3">La media de una cerveza es calculada a partir de sus diferentes valoraciones de sus atributos. Cada atributo cuenta igual para la media así que se usa una media aritmética.</string>
     <string name="info_name">El usuario debe tener un máximo de 8 caracteres</string>
     <string name="info_pass"><![CDATA[La contraseña debe: <br/><br/> &#8226; Tener entre 6 y 20 caracteres<br/><br/> &#8226; Tener mínimo un número<br/><br/> &#8226; Tener mínimo una letra minúscula<br/><br/> &#8226; Tener mínimo una letra mayúscula<br/>]]></string>
+    <string name="remember_me">Recuérdame</string>
+    <string name="empty_beer_name">Escribe el nombre de la cerveza</string>
+    <string name="empty_smell_beer">Escribe una valoración para el aroma</string>
+    <string name="empty_appearance_beer">Escribe una valoración para la apariencia</string>
+    <string name="empty_taste_beer">Escribe una valoración para el sabor</string>
+    <string name="empty_body_beer">Escribe una valoración para el cuerpo</string>
+    <string name="empty_bottle_beer">Escrie una valoración para el botellín</string>
+    <string name="beer_saved_successfully">La cerveza se guardó correctamente</string>
+    <string name="question_save_photo">¿Quieres guardar esta foto?</string>
+    <string name="error_connecting">No se pudo conectar con el servidor</string>
+    <string name="insert_requests_successfully">Se han añadido datos pendientes</string>
 </resources>
