@@ -66,6 +66,8 @@ public class Connection extends AsyncTask<String,String,String> {
             return e.toString();
         } catch (IOException e) {
             e.printStackTrace();
+            this.res = "IOException";
+            return e.toString();
         }
 
         try {
@@ -80,13 +82,14 @@ public class Connection extends AsyncTask<String,String,String> {
                     result.append(line);
                 }
                 res = result.toString();
-                Log.v("Connection result",res);
-                return result.toString();
+                //Log.v("Connection result",res);
+                return res;
             }else {
                 return String.valueOf(responseCode);
             }
         } catch (IOException e) {
             e.printStackTrace();
+            this.res = "IOException";
             return e.toString();
         } finally {
             conn.disconnect();
