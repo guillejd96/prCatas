@@ -1,5 +1,6 @@
 package com.example.decatas;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,9 +29,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -64,13 +68,6 @@ public class Nueva_Cerveza extends AppCompatActivity {
 
         btnTakePhotoClicker b = new btnTakePhotoClicker();
         btn.setOnClickListener(b);
-
-        inputName.setBackgroundResource(R.drawable.input_normal);
-        inputAroma.setBackgroundResource(R.drawable.input_normal);
-        inputSabor.setBackgroundResource(R.drawable.input_normal);
-        inputCuerpo.setBackgroundResource(R.drawable.input_normal);
-        inputApariencia.setBackgroundResource(R.drawable.input_normal);
-        inputBotellin.setBackgroundResource(R.drawable.input_normal);
     }
 
     public void goToUser(View v){
@@ -78,8 +75,7 @@ public class Nueva_Cerveza extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void saveBeer(View v) throws MalformedURLException {
-        Log.v("Nueva_Cerveza","SaveBeer");
+    public void saveBeer(View v) throws IOException {
         inputName.setBackgroundResource(R.drawable.input_normal);
         inputAroma.setBackgroundResource(R.drawable.input_normal);
         inputSabor.setBackgroundResource(R.drawable.input_normal);
@@ -94,77 +90,59 @@ public class Nueva_Cerveza extends AppCompatActivity {
         cuerpo = inputCuerpo.getText().toString();
         botellin = inputBotellin.getText().toString();
 
-        Log.v("Nueva_Cerveza",name);
-        Log.v("Nueva_Cerveza",aroma);
-        Log.v("Nueva_Cerveza",apariencia);
-        Log.v("Nueva_Cerveza",sabor);
-        Log.v("Nueva_Cerveza",cuerpo);
-        Log.v("Nueva_Cerveza",botellin);
-
         if(name.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe un nombre",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.empty_beer_name,Toast.LENGTH_LONG).show();
             inputName.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","name es null");
             return;
         }
         if(aroma.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para el aroma",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.empty_smell_beer,Toast.LENGTH_LONG).show();
             inputAroma.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","aroma es null");
             return;
         }
         if(Integer.parseInt(aroma)<0 || Integer.parseInt(aroma)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_number_in_between),Toast.LENGTH_LONG).show();
             inputAroma.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","aroma outofbounds");
             return;
         }
         if(apariencia.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para la apariencia",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.empty_appearance_beer,Toast.LENGTH_LONG).show();
             inputApariencia.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","apariencia es null");
             return;
         }
         if(Integer.parseInt(apariencia)<0 || Integer.parseInt(apariencia)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_number_in_between),Toast.LENGTH_LONG).show();
             inputApariencia.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","apariencia outofbounds");
             return;
         }
         if(sabor.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para el sabor",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.empty_taste_beer,Toast.LENGTH_LONG).show();
             inputSabor.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","sabor es null");
             return;
         }
         if(Integer.parseInt(sabor)<0 || Integer.parseInt(sabor)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_number_in_between),Toast.LENGTH_LONG).show();
             inputSabor.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","sabor outofbounds");
             return;
         }
         if(cuerpo.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para el cuerpo",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.empty_body_beer,Toast.LENGTH_LONG).show();
             inputCuerpo.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","cuerpo es null");
             return;
         }
         if(Integer.parseInt(cuerpo)<0 || Integer.parseInt(cuerpo)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_number_in_between),Toast.LENGTH_LONG).show();
             inputCuerpo.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","cuerpo outofbounds");
             return;
         }
         if(botellin.equals("")){
-            Toast.makeText(getApplicationContext(),"Escribe una valoración para el botellín",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.empty_bottle_beer,Toast.LENGTH_LONG).show();
             inputBotellin.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","botellin es null");
             return;
         }
         if(Integer.parseInt(botellin)<0 || Integer.parseInt(botellin)>10){
-            Toast.makeText(getApplicationContext(),"Introduce un valor de 0 a 10",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_number_in_between),Toast.LENGTH_LONG).show();
             inputBotellin.setBackgroundResource(R.drawable.input_error);
-            Log.v("Nueva_Cerveza","botellin outofbounds");
             return;
         }
         Map<String,String> params = new LinkedHashMap<>();
@@ -178,16 +156,24 @@ public class Nueva_Cerveza extends AppCompatActivity {
         Connection con = new Connection(getApplicationContext(),"nuevaCervezaIndividual.php",params);
         while(con.getRes()==null);
         String res = con.getRes();
-        if(!res.equals("1")){
-            Toast.makeText(getApplicationContext(),res,Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getApplicationContext(),"La cerveza se guardó correctamente",Toast.LENGTH_LONG).show();
+        if(res.equals("IOException")){ // GUARDAR PETICION EN FICHERO
+            if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                new File(getFilesDir(), "requests.txt");
+            }
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write("nuevaCervezaIndividual.php;"+name+","+aroma+","+apariencia+","+sabor+","+cuerpo+","+botellin+"/");
+            outputStreamWriter.close();
+            Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+        } else if(res.equals("1")){
+            Toast.makeText(getApplicationContext(), R.string.beer_saved_successfully,Toast.LENGTH_LONG).show();
             inputName.setText("", TextView.BufferType.EDITABLE);
             inputAroma.setText("", TextView.BufferType.EDITABLE);
             inputApariencia.setText("", TextView.BufferType.EDITABLE);
             inputSabor.setText("", TextView.BufferType.EDITABLE);
             inputCuerpo.setText("", TextView.BufferType.EDITABLE);
             inputBotellin.setText("", TextView.BufferType.EDITABLE);
+        } else {
+            Toast.makeText(getApplicationContext(),res,Toast.LENGTH_LONG).show();
         }
 ;    }
 
@@ -201,7 +187,7 @@ public class Nueva_Cerveza extends AppCompatActivity {
 
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
             builder.setCancelable(true);
-            builder.setMessage("¿Quieres guardar esta foto?");
+            builder.setMessage(R.string.question_save_photo);
 
             ImageView img = new ImageView(this);
             img.setLayoutParams(new TableRow.LayoutParams(
