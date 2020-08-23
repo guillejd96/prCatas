@@ -156,4 +156,14 @@
     <string name="a_4_4">To calculate the best judge by attribute, the general average of the beer for that attribute is subtracted for each person and each beer from the person\'s assessment for that attribute. This difference accumulates. The best judge according to the attribute is the person with the least accumulated difference.</string>
     <string name="info_name">Username has to be 8 characters maximum</string>
     <string name="info_pass"><![CDATA[Password must: <br/><br/> &#8226; Have between 6 and 20 character<br/><br/> &#8226; Have at least one number<br/><br/> &#8226; Have at least one lowercase letter<br/><br/> &#8226; Have at least one capital letter<br/>]]></string>
+    <string name="remember_me">Remember me</string>
+    <string name="empty_beer_name">Write beer\'s name</string>
+    <string name="empty_smell_beer">Write smell\'s valoration</string>
+    <string name="empty_appearance_beer">Write appearance\'s valoration</string>
+    <string name="empty_taste_beer">Write taste\'s valoration</string>
+    <string name="empty_body_beer">Write body\'s valoration</string>
+    <string name="empty_bottle_beer">Write bottle\'s valoration</string>
+    <string name="beer_saved_successfully">Beer was saved successfully</string>
+    <string name="question_save_photo">Do you want to save this photo?</string>
+    <string name="error_connecting">Couldn\'t connect to server</string>
 </resources>
