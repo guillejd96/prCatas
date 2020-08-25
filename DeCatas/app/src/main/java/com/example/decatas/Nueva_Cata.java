@@ -1,5 +1,6 @@
 package com.example.decatas;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,7 +15,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -35,7 +42,7 @@ public class Nueva_Cata extends AppCompatActivity {
         editPass = (EditText)findViewById(R.id.editTextTextCataPassword);
     }
 
-    public void createCata(View v) throws MalformedURLException {
+    public void createCata(View v) throws IOException {
         editName.setBackgroundResource(R.drawable.input_normal);
         editPass.setBackgroundResource(R.drawable.input_normal);
 
@@ -60,6 +67,23 @@ public class Nueva_Cata extends AppCompatActivity {
         Connection con = new Connection(getApplication(),"createCata.php",params);
         while(con.getRes()==null);
         String result = con.getRes();
+        if(result.equals("IOException")){ // GUARDAR PETICION EN FICHERO
+            OutputStreamWriter outputStreamWriter = null;
+            if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                new File(getFilesDir(), "requests.txt");
+                outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+            }else {
+                outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+            }
+            outputStreamWriter.write("createCata.php;"+cataName+","+cataPass+"/");
+            outputStreamWriter.close();
+
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Nueva_Cata.this);
+            builder.setCancelable(true);
+            builder.setTitle(R.string.error_connecting);
+            builder.setMessage(R.string.ioexception_message);
+            builder.show();
+        }
         if(!result.equals("0")){
             String idCata = result;
             Intent intent = new Intent(getApplicationContext(),Cata.class);
