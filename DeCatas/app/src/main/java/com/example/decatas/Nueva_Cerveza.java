@@ -157,13 +157,24 @@ public class Nueva_Cerveza extends AppCompatActivity {
         while(con.getRes()==null);
         String res = con.getRes();
         if(res.equals("IOException")){ // GUARDAR PETICION EN FICHERO
+            OutputStreamWriter outputStreamWriter = null;
             if(!Arrays.asList(fileList()).contains("requests.txt")) {
                 new File(getFilesDir(), "requests.txt");
+                outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+            }else {
+                outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
             }
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+
             outputStreamWriter.write("nuevaCervezaIndividual.php;"+name+","+aroma+","+apariencia+","+sabor+","+cuerpo+","+botellin+"/");
             outputStreamWriter.close();
-            Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Nueva_Cerveza.this);
+            builder.setCancelable(true);
+            builder.setTitle(R.string.error_connecting);
+            builder.setMessage(R.string.ioexception_message);
+            builder.show();
+
+
         } else if(res.equals("1")){
             Toast.makeText(getApplicationContext(), R.string.beer_saved_successfully,Toast.LENGTH_LONG).show();
             inputName.setText("", TextView.BufferType.EDITABLE);
