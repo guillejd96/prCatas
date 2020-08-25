@@ -1,6 +1,7 @@
 package com.example.decatas;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -23,7 +24,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -264,8 +270,28 @@ public class Mis_Catas extends AppCompatActivity {
                     try {
                         Connection con = new Connection(Mis_Catas.this,"deleteCata.php",params);
                         while(con.getRes()==null);
-                        update();
+                        if(con.getRes().equals("IOException")){
+                            OutputStreamWriter outputStreamWriter = null;
+                            if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                                new File(getFilesDir(), "requests.txt");
+                                outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+                            }else {
+                                outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+                            }
+                            outputStreamWriter.write("deleteCata.php;"+idCata+"/");
+                            outputStreamWriter.close();
+
+                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Mis_Catas.this);
+                            builder.setCancelable(true);
+                            builder.setTitle(R.string.error_connecting);
+                            builder.setMessage(R.string.ioexception_message);
+                            builder.show();
+                        }else update();
                     } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
