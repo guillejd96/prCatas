@@ -10,14 +10,12 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -99,6 +97,7 @@ public class User extends AppCompatActivity {
         if (checked) {
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(User.this);
             builder.setCancelable(true);
+            builder.setTitle(R.string.requests_processed);
             builder.setMessage(R.string.insert_requests_successfully);
             builder.show();
         }
@@ -194,12 +193,20 @@ public class User extends AppCompatActivity {
                     params.put("s",data[3]);
                     params.put("c",data[4]);
                     params.put("b",data[5]);
+                }else if(file.equals("createCata.php")){
+                    params.put("id",idUsuario);
+                    params.put("n",data[0]);
+                    params.put("p",data[1]);
+                } else if(file.equals("deleteCata.php")){
+                    params.put("id",data[0]);
+                } else if(file.equals("deleteCervezaCata")){
+                    params.put("id",data[0]);
                 }
 
                 Connection con = new Connection(this,file,params);
                 while(con.getRes()==null);
                 String res = con.getRes();
-                if(res.equals("IOException") || !res.equals("1")){
+                if(res.equals("IOException") || res.equals("0")){
                     b=false;
                 } else {
                     deleteRequestFromFile(requests,re);
