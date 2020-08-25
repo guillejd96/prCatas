@@ -166,4 +166,10 @@
     <string name="beer_saved_successfully">Beer was saved successfully</string>
     <string name="question_save_photo">Do you want to save this photo?</string>
     <string name="error_connecting">Couldn\'t connect to server</string>
+    <string name="ioexception_message">The request will be processed the next time you open DeCatas and there is connection to the server</string>
+    <string name="insert_requests_successfully">Pending data has been added</string>
+    <string name="requests_processed">Requests processed successfully</string>
+    <string name="question_delete_beer">Are you sure you want to delete this beer?</string>
+    <string name="cant_delete_beer">This beer can\'t be deleted because it\'s from a beer tasting</string>
+    <string name="label_delete_beer">To delete a beer, you must click on the name</string>
 </resources>
