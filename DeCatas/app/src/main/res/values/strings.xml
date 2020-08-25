@@ -189,4 +189,9 @@
     <string name="question_save_photo">¿Quieres guardar esta foto?</string>
     <string name="error_connecting">No se pudo conectar con el servidor</string>
     <string name="insert_requests_successfully">Se han añadido datos pendientes</string>
+    <string name="ioexception_message">La solicitud se procesará la próxima vez que se abra DeCatas y haya conexión con el servidor</string>
+    <string name="requests_processed">Solicitudes procesadas con éxito</string>
+    <string name="question_delete_beer">¿Estás seguro de querer borrar esta cerveza?</string>
+    <string name="cant_delete_beer">Esta cerveza no se puede borrar al pertenecer a una cata</string>
+    <string name="label_delete_beer">Para borrar una cerveza se debe pulsar en el nombre</string>
 </resources>
