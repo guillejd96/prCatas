@@ -22,7 +22,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -65,6 +70,9 @@ public class Anyadir_Amigo extends AppCompatActivity {
             Connection c = new Connection(this,"getUsers.php",params);
             while(c.getRes()==null);
             String result = c.getRes();
+            if(result.equals("IOException")){
+                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+            }
             if(result.equals("")){
                 Toast.makeText(this, R.string.no_users_found, Toast.LENGTH_LONG).show();
             } else {
@@ -114,10 +122,8 @@ public class Anyadir_Amigo extends AppCompatActivity {
 
                 table.addView(trTH);
 
-                Log.v("Añadir amigo","result: "+result);
                 String[] amigos = result.split(";");
                 for(String a : amigos){
-                    Log.v("Añadir amigo","a: "+a);
                     String[] infoAmigo = a.split(",");
                     String idU = infoAmigo[0];
                     String usuario = infoAmigo[1];
@@ -188,12 +194,27 @@ public class Anyadir_Amigo extends AppCompatActivity {
             Map<String,String> params = new LinkedHashMap<>();
             params.put("idUsuario1",idUsuario);
             params.put("idUsuario2",this.id);
-
             try {
                 Connection c = new Connection(getApplicationContext(),"addFriend.php",params);
                 while(c.getRes()==null);
                 String result = c.getRes();
-                if(result.equals("1")){
+                if(result.equals("IOException")){
+                    OutputStreamWriter outputStreamWriter = null;
+                    if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                        new File(getFilesDir(), "requests.txt");
+                        outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+                    }else {
+                        outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+                    }
+                    outputStreamWriter.write("addFriend.php;"+this.id+"/");
+                    outputStreamWriter.close();
+
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Anyadir_Amigo.this);
+                    builder.setCancelable(true);
+                    builder.setTitle(R.string.error_connecting);
+                    builder.setMessage(R.string.ioexception_message);
+                    builder.show();
+                } else if(result.equals("1")){
                     Toast.makeText(Anyadir_Amigo.this, R.string.friend_request_sent, Toast.LENGTH_LONG).show();
                 }else if(result.equals("0")) {
                     Toast.makeText(Anyadir_Amigo.this, R.string.error_sending_friend_request, Toast.LENGTH_LONG).show();
@@ -201,6 +222,10 @@ public class Anyadir_Amigo extends AppCompatActivity {
                     Toast.makeText(Anyadir_Amigo.this, R.string.request_repeated, Toast.LENGTH_LONG).show();
                 }
             } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
