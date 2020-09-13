@@ -9,11 +9,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,7 +65,9 @@ public class Mis_Cervezas extends AppCompatActivity {
             Connection con = new Connection(getApplicationContext(),"getCervezas.php",params);
             while(con.getRes()==null);
             String result = con.getRes();
-            if(!result.equals("")){
+            if(result.equals("IOException")){
+                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+            }else if(!result.equals("")){
 
                 String[] cervezas = result.split(";");
 
@@ -72,6 +76,7 @@ public class Mis_Cervezas extends AppCompatActivity {
                         String[] atribs = c.split(",");
                         if(atribs.length>1){
                             final String idCerveza = atribs[0];
+                            Log.v("ID DE CERVEZA ",idCerveza);
                             String nombre = atribs[1];
                             String aroma = atribs[2];
                             String apariencia = atribs[3];
@@ -96,7 +101,9 @@ public class Mis_Cervezas extends AppCompatActivity {
                             Connection conn = new Connection(this,"getCataDesdeCerveza.php",p);
                             while(conn.getRes()==null);
                             String res = conn.getRes();
-                            if(res.equals("")){
+                            if(res.equals("IOException")){
+                                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+                            }else if(res.equals("")){
                                 Delete d = new Delete(idCerveza);
                                 tv.setOnClickListener(d);
                             }else {
@@ -224,7 +231,7 @@ public class Mis_Cervezas extends AppCompatActivity {
                     Map<String,String> params = new LinkedHashMap<>();
                     params.put("id",idCerveza);
                     try {
-                        Connection con = new Connection(Mis_Cervezas.this,"deleteCervezaCata.php",params);
+                        Connection con = new Connection(Mis_Cervezas.this,"deleteCerveza.php",params);
                         while(con.getRes()==null);
                         String result = con.getRes();
                         if(result.equals("IOException")){
@@ -235,7 +242,7 @@ public class Mis_Cervezas extends AppCompatActivity {
                             }else {
                                 outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
                             }
-                            outputStreamWriter.write("deleteCata.php;"+idCerveza+"/");
+                            outputStreamWriter.write("deleteCerveza.php;"+idCerveza+"/");
                             outputStreamWriter.close();
 
                             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Mis_Cervezas.this);
