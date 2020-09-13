@@ -52,8 +52,9 @@ public class Solicitudes extends AppCompatActivity {
             Connection c = new Connection(getApplicationContext(),"getSolicitudes.php",params);
             while (c.getRes()==null);
             String result = c.getRes();
-            Log.v("Solicitudes",result);
-            if(!result.equals("")){
+            if(result.equals("IOException")){
+                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+            } else if(!result.equals("")){
                 String[] requests = result.split(";");
                 for(String r : requests){
                     String[] infoRequest = r.split(",");
@@ -145,7 +146,9 @@ public class Solicitudes extends AppCompatActivity {
                 Connection c = new Connection(getApplicationContext(),"aceptar.php",params);
                 while (c.getRes()==null);
                 String result = c.getRes();
-                if(result.equals("1")){
+                if(result.equals("IOException")){
+                    Toast.makeText(Solicitudes.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+                } if(result.equals("1")){
                     Toast.makeText(Solicitudes.this, R.string.request_accept, Toast.LENGTH_LONG).show();
                     update();
                 }else {
@@ -176,7 +179,9 @@ public class Solicitudes extends AppCompatActivity {
                 Connection c = new Connection(getApplicationContext(),"rechazar.php",params);
                 while (c.getRes()==null);
                 String result = c.getRes();
-                if(result.equals("1")){
+                if(result.equals("IOException")){
+                    Toast.makeText(Solicitudes.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+                } else if(result.equals("1")){
                     Toast.makeText(Solicitudes.this, R.string.request_decline, Toast.LENGTH_LONG).show();
                     update();
                 }else {
