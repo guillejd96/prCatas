@@ -1,6 +1,5 @@
 package com.example.decatas;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import java.util.regex.Pattern;
 
 public class Nuevo_Usuario extends AppCompatActivity {
 
-    ImageView logo;
     EditText inputUser, inputName, inputPass1, inputPass2;
     Button btnCreateUser;
 
@@ -81,15 +79,18 @@ public class Nuevo_Usuario extends AppCompatActivity {
         Connection con = new Connection(getApplicationContext(),"existeUsuario.php",params);
         while(con.getRes()==null);
         String res = con.getRes();
-        return res.equals("0");
+        if(res.equals("IOException")){
+            Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+            return true;
+        }else return res.equals("0");
     }
 
     private static boolean checkSecurityPassword(String s){
-        return isValidPassword(s,"^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$");
+        return isValidPassword(s);
     }
 
-    private  static boolean isValidPassword(String password,String regex){
-        Pattern pattern = Pattern.compile(regex);
+    private  static boolean isValidPassword(String password){
+        Pattern pattern = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$");
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
@@ -141,11 +142,13 @@ public class Nuevo_Usuario extends AppCompatActivity {
             Connection con = new Connection(getApplicationContext(),"nuevoUsuario.php",params);
             while(con.getRes()==null);
             String res = con.getRes();
-            if(res.equals("1")){
+            if(res.equals("IOException")){
+                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+            }else if(res.equals("1")){
                 Intent intent = new Intent(getApplicationContext(),Login.class);
                 startActivity(intent);
             }else {
-                Toast.makeText(getApplicationContext(), R.string.error_inserting,Toast.LENGTH_LONG);
+                Toast.makeText(getApplicationContext(), R.string.error_inserting,Toast.LENGTH_LONG).show();
             }
         }
     }
