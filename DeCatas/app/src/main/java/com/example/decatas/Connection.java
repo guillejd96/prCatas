@@ -24,7 +24,7 @@ public class Connection extends AsyncTask<String,String,String> {
     String urlString,res;
     URL url = null;
     Map<String,String> params;
-    public static final int CONNECTION_TIMEOUT = 10000;
+    public static final int CONNECTION_TIMEOUT = 5000;
     public static final int READ_TIMEOUT = 15000;
 
     public Connection(Context c, String url, Map<String,String> params) throws MalformedURLException {
