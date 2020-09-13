@@ -6,26 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.InputType;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -33,7 +20,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -49,6 +44,7 @@ public class Buscar_Cata extends AppCompatActivity {
         setContentView(R.layout.activity_buscar__cata);
 
         Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
         idUsuario = bundle.getString("id");
 
         inputName = (EditText)findViewById(R.id.editTextNombreCata);
@@ -77,7 +73,9 @@ public class Buscar_Cata extends AppCompatActivity {
         Connection con = new Connection(this,"getCatasByName.php",params);
         while (con.getRes()==null);
         String result = con.getRes();
-        if(result.equals("")){
+        if(result.equals("IOException")){
+            Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+        } else if(result.equals("")){
             Toast.makeText(this, R.string.no_beer_tasting_found, Toast.LENGTH_LONG).show();
         }else {
             String[] aux = result.split(";");
@@ -257,7 +255,35 @@ public class Buscar_Cata extends AppCompatActivity {
                 }
                 while (con.getRes()==null);
                 String result = con.getRes();
-                if(result.equals("1")){
+                if(result.equals("IOException")){
+                    OutputStreamWriter outputStreamWriter = null;
+                    if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                        new File(getFilesDir(), "requests.txt");
+                        try {
+                            outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        try {
+                            outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    try {
+                        outputStreamWriter.write("joinCata.php;"+id+","+aux[0]+"/");
+                        outputStreamWriter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Buscar_Cata.this);
+                    builder.setCancelable(true);
+                    builder.setTitle(R.string.error_connecting);
+                    builder.setMessage(R.string.ioexception_message);
+                    builder.show();
+                }else if(result.equals("1")){
                     Intent intent = new Intent(getApplicationContext(),Cata.class);
                     intent.putExtra("idUsuario",idUsuario);
                     intent.putExtra("idCata",id);
