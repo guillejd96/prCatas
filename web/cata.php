@@ -63,6 +63,7 @@
 		while ($idCata = mysqli_fetch_array($resIDCatas)) {
 			$sqlCata = "SELECT * FROM cata WHERE id=".$idCata[0];
 			$cata = mysqli_query($conexion,$sqlCata)->fetch_row();
+			$idAdmin = $cata[5];
 			$resCervezas = mysqli_query($conexion,"SELECT COUNT(*) FROM cerveza WHERE idCata = ".$idCata[0]);
 			$nCervezas = $resCervezas->fetch_row()[0];
 			$resPersonas = mysqli_query($conexion,"SELECT COUNT(*) FROM persona_cata WHERE idCata = ".$idCata[0]);
@@ -72,7 +73,11 @@
 			echo "<td><p>".$cata[2]."</p></td>";
 			echo "<td><p>".$nPersonas."</p></td>";
 			echo "<td><p>".$nCervezas."</p></td>";
-			echo "<td><p><button class='btn btn-link' onclick='javascript:borrar($idCata[0])'><i class='far fa-trash-alt' style='font-size: 25px'></i></button> <button class='btn btn-link' onclick='javascript:editar($idCata[0])'><i class='far fa-edit' style='font-size: 25px'></i></button></p></td>";
+			if($idPersona==$idAdmin){
+				echo "<td><p><button class='btn btn-link' onclick='javascript:borrar($idCata[0])'><i class='far fa-trash-alt' style='font-size: 25px'></i></button> <button class='btn btn-link' onclick='javascript:editar($idCata[0])'><i class='far fa-edit' style='font-size: 25px'></i></button></p></td>";
+			}else {
+				echo "<td><p><button class='btn btn-link' onclick='javascript:editar($idCata[0])'><i class='far fa-edit' style='font-size: 25px'></i></button></p></td>";
+			}
 			echo "</tr>";
 		}
 		echo "</table>";
