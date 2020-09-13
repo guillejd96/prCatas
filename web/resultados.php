@@ -6,6 +6,140 @@
 		header('Location: index.php');
 	}
 
+	function getAromaList($s){
+		$array = [];
+		$aux = explode("/",$s);
+
+		for($i=0;$i<count($aux);$i++){
+			$cerveza = $aux[$i];
+
+			$aux2 = explode(";",$cerveza);
+
+			$idCerveza = $aux2[0];
+			$values = $aux2[1];
+
+			$aux3 = explode(",",$values);
+
+			$aroma = $aux3[0];
+
+			$array[$idCerveza]=$aroma;
+		}
+
+		arsort($array);
+
+		return $array;
+	}
+
+	function getAparienciaList($s){
+		$array = [];
+		$aux = explode("/",$s);
+		for($i=0;$i<count($aux);$i++){
+			$cerveza = $aux[$i];
+			$aux2 = explode(";",$cerveza);
+
+			$idCerveza = $aux2[0];
+			$values = $aux2[1];
+
+			$aux3 = explode(",",$values);
+
+			$apariencia = $aux3[1];
+
+			$array[$idCerveza]=$apariencia;
+		}
+
+		arsort($array);
+
+		return $array;
+	}
+
+	function getSaborList($s){
+		$array = [];
+		$aux = explode("/",$s);
+		for($i=0;$i<count($aux);$i++){
+			$cerveza = $aux[$i];
+			$aux2 = explode(";",$cerveza);
+
+			$idCerveza = $aux2[0];
+			$values = $aux2[1];
+
+			$aux3 = explode(",",$values);
+
+			$sabor = $aux3[2];
+
+			$array[$idCerveza]=$sabor;
+		}
+
+		arsort($array);
+
+		return $array;
+	}
+
+	function getCuerpoList($s){
+		$array = [];
+		$aux = explode("/",$s);
+		for($i=0;$i<count($aux);$i++){
+			$cerveza = $aux[$i];
+			$aux2 = explode(";",$cerveza);
+
+			$idCerveza = $aux2[0];
+			$values = $aux2[1];
+
+			$aux3 = explode(",",$values);
+
+			$cuerpo = $aux3[3];
+
+			$array[$idCerveza]=$cuerpo;
+		}
+
+		arsort($array);
+
+		return $array;
+	}
+
+	function getBotellinList($s){
+		$array = [];
+		$aux = explode("/",$s);
+		for($i=0;$i<count($aux);$i++){
+			$cerveza = $aux[$i];
+			$aux2 = explode(";",$cerveza);
+
+			$idCerveza = $aux2[0];
+			$values = $aux2[1];
+
+			$aux3 = explode(",",$values);
+
+			$aroma = $aux3[4];
+
+			$array[$idCerveza]=$aroma;
+		}
+
+		arsort($array);
+
+		return $array;
+	}
+
+	function getMediaList($s){
+		$array = [];
+		$aux = explode("/",$s);
+		for($i=0;$i<count($aux);$i++){
+			$cerveza = $aux[$i];
+			$aux2 = explode(";",$cerveza);
+
+			$idCerveza = $aux2[0];
+			$values = $aux2[1];
+
+			$aux3 = explode(",",$values);
+
+			$media = $aux3[5];
+
+			$array[$idCerveza]=$media;
+		}
+
+		arsort($array);
+
+		return $array;
+	}
+
 	$idUsuario = $_SESSION["idUsuario"];
 
 	$idPersona = mysqli_query($conexion,"SELECT id FROM persona WHERE idUsuario=".$idUsuario)->fetch_row()[0];
@@ -19,18 +153,34 @@
 
 	$nombreCata = mysqli_query($conexion, "SELECT nombre FROM cata WHERE id=".$idCata)->fetch_row()[0];
 
-	$resMedia = mysqli_query($conexion,"SELECT idCerveza,media FROM medias WHERE idCata=".$idCata." ORDER BY media DESC");
+	$resCervezas = mysqli_query($conexion,"SELECT id FROM cerveza WHERE idCata=".$idCata);
 
-	$resAroma = mysqli_query($conexion,"SELECT idCerveza,aroma FROM medias WHERE idCata=".$idCata." ORDER BY aroma DESC");
+	$s="";
 
-	$resApariencia = mysqli_query($conexion,"SELECT idCerveza,apariencia FROM medias WHERE idCata=".$idCata." ORDER BY apariencia DESC");
+	while($cerveza = mysqli_fetch_array($resCervezas)){
+		$idCerveza = $cerveza[0];
+		$resMedia = mysqli_query($conexion,"SELECT AVG(aroma),AVG(apariencia),AVG(sabor),AVG(cuerpo),AVG(botellin) FROM opinion WHERE idCerveza=".$idCerveza);
+		$row = $resMedia->fetch_row();
 
-	$resSabor = mysqli_query($conexion,"SELECT idCerveza,sabor FROM medias WHERE idCata=".$idCata." ORDER BY sabor DESC");
+		$mediaAroma = round($row[0],2);
+		$mediaApariencia = round($row[1],2);
+		$mediaSabor = round($row[2],2);
+		$mediaCuerpo = round($row[3],2);
+		$mediaBotellin = round($row[4],2);
+		$media = round(($mediaAroma+$mediaApariencia+$mediaSabor+$mediaCuerpo+$mediaBotellin)/5,2);
 
-	$resCuerpo = mysqli_query($conexion,"SELECT idCerveza,cuerpo FROM medias WHERE idCata=".$idCata." ORDER BY cuerpo DESC");
+		$s = $s.$idCerveza.";".$mediaAroma.",".$mediaApariencia.",".$mediaSabor.",".$mediaCuerpo.",".$mediaBotellin.",".$media."/";
+	}
 
-	$resBotellin = mysqli_query($conexion,"SELECT idCerveza,botellin FROM medias WHERE idCata=".$idCata." ORDER BY botellin DESC");
-	
+	$s=substr($s,0,-1);
+
+	$aromaList = getAromaList($s);
+	$aparienciaList = getAparienciaList($s);
+	$saborList = getSaborList($s);
+	$cuerpoList = getCuerpoList($s);
+	$botellinList = getBotellinList($s);
+	$mediaList = getMediaList($s);
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -263,15 +413,21 @@
 				<th colspan="3"><p>Mejores cervezas de media <a title='Ver gráfico' data-toggle="modal" data-target="#modalCervezaMedia"><i class="far fa-chart-bar"></i></a></p></th>
 			</tr>
 			<?php 
-				$i=1;
-				while($row = mysqli_fetch_array($resMedia)){
-					$idCerveza = $row[0];
-					$media = $row[1];
+				$keys = array_keys($mediaList);
+				$values = array_values($mediaList);
+				for($i=0;$i<count($mediaList);$i++){
+					echo "<tr>";
+					echo "<td><p>".($i+1)."º</p></td>";
+
+					$idCerveza = $keys[$i];
+					$value = $values[$i];
 
 					$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-					echo "<tr><td><p>".$i."º</p></td><td><p class='nombreCerveza'>".$nombre."</p></td><td><p class='value'>".round($media,2)."</p></td><tr>";
-					$i++;
+					echo "<td><p class='nombreCerveza'>".$nombre."</p></td>";
+					echo "<td><p class='value'>".$value."</p></td>";
+
+					echo "</tr>";
 				}
 			 ?>
 		</table>
@@ -283,15 +439,21 @@
 							<th colspan="3"><p>Mejores cervezas por aroma <a title='Ver gráfico' data-toggle="modal" data-target="#modalCervezaAroma"><i class="far fa-chart-bar"/></a></p></th>
 						</tr>
 						<?php 
-							$i=1;
-							while($row = mysqli_fetch_array($resAroma)){
-								$idCerveza = $row[0];
-								$aroma = $row[1];
+							$keys = array_keys($aromaList);
+							$values = array_values($aromaList);
+							for($i=0;$i<count($aromaList);$i++){
+								echo "<tr>";
+								echo "<td><p>".($i+1)."º</p></td>";
+
+								$idCerveza = $keys[$i];
+								$value = $values[$i];
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>".$i."º</p></td><td><p class='nombreCerveza'>".$nombre."</p></td><td><p class='value'>".round($aroma,2)."</p></td><tr>";
-								$i++;
+								echo "<td><p class='nombreCerveza'>".$nombre."</p></td>";
+								echo "<td><p class='value'>".$value."</p></td>";
+
+								echo "</tr>";
 							}
 						 ?>
 					</table>
@@ -303,15 +465,21 @@
 							<th colspan="3"><p>Mejores cervezas por apariencia <a title='Ver gráfico' data-toggle="modal" data-target="#modalCervezaApariencia"><i class="far fa-chart-bar"/></a></p></th>
 						</tr>
 						<?php 
-							$i=1;
-							while($row = mysqli_fetch_array($resApariencia)){
-								$idCerveza = $row[0];
-								$apariencia = $row[1];
+							$keys = array_keys($aparienciaList);
+							$values = array_values($aparienciaList);
+							for($i=0;$i<count($aparienciaList);$i++){
+								echo "<tr>";
+								echo "<td><p>".($i+1)."º</p></td>";
+
+								$idCerveza = $keys[$i];
+								$value = $values[$i];
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>".$i."º</p></td><td><p class='nombreCerveza'>".$nombre."</p></td><td><p class='value'>".round($apariencia,2)."</p></td><tr>";
-								$i++;
+								echo "<td><p class='nombreCerveza'>".$nombre."</p></td>";
+								echo "<td><p class='value'>".$value."</p></td>";
+
+								echo "</tr>";
 							}
 						 ?>
 					</table>
@@ -325,15 +493,21 @@
 							<th colspan="3"><p>Mejores cervezas por sabor <a title='Ver gráfico' data-toggle="modal" data-target="#modalCervezaSabor"><i class="far fa-chart-bar"/></a></p></th>
 						</tr>
 						<?php 
-							$i=1;
-							while($row = mysqli_fetch_array($resSabor)){
-								$idCerveza = $row[0];
-								$sabor = $row[1];
+							$keys = array_keys($saborList);
+							$values = array_values($saborList);
+							for($i=0;$i<count($saborList);$i++){
+								echo "<tr>";
+								echo "<td><p>".($i+1)."º</p></td>";
+
+								$idCerveza = $keys[$i];
+								$value = $values[$i];
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>".$i."º</p></td><td><p class='nombreCerveza'>".$nombre."</p></td><td><p class='value'>".round($sabor,2)."</p></td><tr>";
-								$i++;
+								echo "<td><p class='nombreCerveza'>".$nombre."</p></td>";
+								echo "<td><p class='value'>".$value."</p></td>";
+
+								echo "</tr>";
 							}
 						 ?>
 					</table>
@@ -345,15 +519,21 @@
 							<th colspan="3"><p>Mejores cervezas por cuerpo <a title='Ver gráfico' data-toggle="modal" data-target="#modalCervezaCuerpo"><i class="far fa-chart-bar"/></a></p></th>
 						</tr>
 						<?php 
-							$i=1;
-							while($row = mysqli_fetch_array($resCuerpo)){
-								$idCerveza = $row[0];
-								$cuerpo = $row[1];
+							$keys = array_keys($cuerpoList);
+							$values = array_values($cuerpoList);
+							for($i=0;$i<count($cuerpoList);$i++){
+								echo "<tr>";
+								echo "<td><p>".($i+1)."º</p></td>";
+
+								$idCerveza = $keys[$i];
+								$value = $values[$i];
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>".$i."º</p></td><td><p class='nombreCerveza'>".$nombre."</p></td><td><p class='value'>".round($cuerpo,2)."</p></td><tr>";
-								$i++;
+								echo "<td><p class='nombreCerveza'>".$nombre."</p></td>";
+								echo "<td><p class='value'>".$value."</p></td>";
+
+								echo "</tr>";
 							}
 						 ?>
 					</table>
@@ -367,15 +547,21 @@
 							<th colspan="3"><p>Mejores cervezas por botellin <a title='Ver gráfico' data-toggle="modal" data-target="#modalCervezaBotellin"><i class="far fa-chart-bar"/></a></p></th>
 						</tr>
 						<?php 
-							$i=1;
-							while($row = mysqli_fetch_array($resBotellin)){
-								$idCerveza = $row[0];
-								$botellin = $row[1];
+							$keys = array_keys($botellinList);
+							$values = array_values($botellinList);
+							for($i=0;$i<count($botellinList);$i++){
+								echo "<tr>";
+								echo "<td><p>".($i+1)."º</p></td>";
+
+								$idCerveza = $keys[$i];
+								$value = $values[$i];
 
 								$nombre = mysqli_query($conexion,"SELECT nombre FROM cerveza WHERE id=".$idCerveza)->fetch_row()[0];
 
-								echo "<tr><td><p>".$i."º</p></td><td><p class='nombreCerveza'>".$nombre."</p></td><td><p class='value'>".round($botellin,2)."</p></td><tr>";
-								$i++;
+								echo "<td><p class='nombreCerveza'>".$nombre."</p></td>";
+								echo "<td><p class='value'>".$value."</p></td>";
+
+								echo "</tr>";
 							}
 						 ?>
 					</table>
