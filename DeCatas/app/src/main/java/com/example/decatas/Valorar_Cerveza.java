@@ -1,6 +1,7 @@
 package com.example.decatas;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,7 +34,9 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -84,7 +87,11 @@ public class Valorar_Cerveza extends AppCompatActivity {
         try {
             con = new Connection(getApplicationContext(),"getNombreCerveza.php",params);
             while(con.getRes()==null);
-            this.nombre = con.getRes();
+            if(con.getRes().equals("IOException")){
+                Toast.makeText(Valorar_Cerveza.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+            }else {
+                this.nombre = con.getRes();
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -99,7 +106,11 @@ public class Valorar_Cerveza extends AppCompatActivity {
         try {
             con = new Connection(getApplicationContext(),"getIDPersona.php",params);
             while(con.getRes()==null);
-             idPersona = con.getRes().toString();
+            if(con.getRes().equals("IOException")){
+                Toast.makeText(Valorar_Cerveza.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+            }else {
+                idPersona = con.getRes();
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -111,7 +122,9 @@ public class Valorar_Cerveza extends AppCompatActivity {
             con = new Connection(getApplicationContext(),"getOpiniones.php",params);
             while(con.getRes()==null);
             String result = con.getRes();
-            if(!result.equals("")){
+            if(con.getRes().equals("IOException")){
+                Toast.makeText(Valorar_Cerveza.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+            } else if(!result.equals("")){
                 Log.v("Valorar",result);
                 String[] c = result.split(",");
                 inputAroma.setText(c[0]);
@@ -216,7 +229,9 @@ public class Valorar_Cerveza extends AppCompatActivity {
             Connection con = new Connection(getApplicationContext(),"createValoracion.php",params);
             while(con.getRes()==null);
             String res = con.getRes();
-            if(res.equals("1")){
+            if(res.equals("IOException")){
+                Toast.makeText(Valorar_Cerveza.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+            }else if(res.equals("1")){
                 Intent intent = new Intent(getApplicationContext(),Cata.class);
                 intent.putExtra("idUsuario",idUsuario);
                 intent.putExtra("idCata",idCata);
@@ -311,13 +326,35 @@ public class Valorar_Cerveza extends AppCompatActivity {
                     p.put("id",idCerveza);
                     Connection c = null;
                     try {
-                        c = new Connection(getApplicationContext(),"deleteCervezaCata.php",p);
+                        c = new Connection(getApplicationContext(),"deleteCerveza.php",p);
                         while (c.getRes()==null);
-                        Intent intent = new Intent(getApplicationContext(),Cata.class);
-                        intent.putExtra("idUsuario",idUsuario);
-                        intent.putExtra("idCata",idCata);
-                        startActivity(intent);
+                        if(c.getRes().equals("IOException")){
+                            OutputStreamWriter outputStreamWriter = null;
+                            if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                                new File(getFilesDir(), "requests.txt");
+                                outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+                            }else {
+                                outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+                            }
+                            outputStreamWriter.write("deleteCerveza.php;"+idCerveza+"/");
+                            outputStreamWriter.close();
+
+                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Valorar_Cerveza.this);
+                            builder.setCancelable(true);
+                            builder.setTitle(R.string.error_connecting);
+                            builder.setMessage(R.string.ioexception_message);
+                            builder.show();
+                        }else {
+                            Intent intent = new Intent(getApplicationContext(),Cata.class);
+                            intent.putExtra("idUsuario",idUsuario);
+                            intent.putExtra("idCata",idCata);
+                            startActivity(intent);
+                        }
                     } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
