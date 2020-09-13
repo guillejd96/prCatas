@@ -175,9 +175,9 @@
                         var botellin = botellines[k];
 
                         $.post('ajax/nuevaOpinion.php', {idP: idPersona, idC: idCerveza, c: cuerpo, ar: aroma, ap: apariencia, s: sabor, b: botellin}, function(data, textStatus, xhr) {
-                            if(data!="1"){
-                                error = true;
-                            }
+                                if(data!="1"){
+                                    error = true;
+                                }
                         });
                     }
                 }
@@ -189,16 +189,9 @@
                 } else {
                     $("#res").text("Se han introducido los datos correctamente. Redireccionando...");
                     $("#res").css('color', 'green');
-                    $.post('ajax/calcularResultados.php', {id: idCata}, function(data, textStatus, xhr) {
-                        if(data=="0"){
-                            $("#res").text("Error al calcular los resultados");
-                            $("#res").css('color', 'red');
-                        }else {
-                            setTimeout(function () {
-                                window.location.replace("user.php");    
-                            },1000);
-                        }
-                    });
+                    setTimeout(function () {
+                        window.location.replace("user.php");    
+                    },1000);
                 }
             }
  		}
@@ -223,8 +216,8 @@
      			echo "<table id='datos'>";
      			echo "<tr>";
      			echo "<th class='idPersonas' data-id='".$persona[0]."'><p>".$persona[1]."</p></th>";
-     			echo "<th><p>Apariencia</p></th>";
      			echo "<th><p>Aroma</p></th>";
+     			echo "<th><p>Apariencia</p></th>";
      			echo "<th><p>Sabor</p></th>";
      			echo "<th><p>Cuerpo</p></th>";
      			echo "<th><p>Botellín</p></th>";
