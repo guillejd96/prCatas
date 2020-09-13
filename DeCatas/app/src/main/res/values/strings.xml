@@ -194,4 +194,5 @@
     <string name="question_delete_beer">¿Estás seguro de querer borrar esta cerveza?</string>
     <string name="cant_delete_beer">Esta cerveza no se puede borrar al pertenecer a una cata</string>
     <string name="label_delete_beer">Para borrar una cerveza se debe pulsar en el nombre</string>
+    <string name="error_beer_tasting_inserting">No se ha podido añadir la cerveza</string>
 </resources>
