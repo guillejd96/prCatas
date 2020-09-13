@@ -34,7 +34,12 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +47,8 @@ import java.util.Objects;
 
 public class Cata extends AppCompatActivity {
 
-    private String idUsuario, idPersona, idCata, nombreCata, idAdmin, nCervezas, nPersonas;
-    private boolean en_curso;
+    private String idUsuario, idPersona, idCata, nombreCata, idAdmin="0", nCervezas="0", nPersonas="0";
+    private boolean en_curso=true;
     public TextView title,admin,finished;
     public EditText editNuevaCerveza;
     public Button end;
@@ -81,7 +86,11 @@ public class Cata extends AppCompatActivity {
         try {
             Connection pe = new Connection(this,"getIDPersona.php",params);
             while(pe.getRes()==null);
-            this.idPersona=pe.getRes();
+            if(pe.getRes().equals("IOException")){
+                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+            }else {
+                this.idPersona=pe.getRes();
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -94,9 +103,12 @@ public class Cata extends AppCompatActivity {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        while (con.getRes() == null) ;
-        this.nPersonas = con.getRes();
-
+        while (con.getRes() == null);
+        if(con.getRes().equals("IOException")){
+            Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+        }else {
+            this.nPersonas = con.getRes();
+        }
         p = new LinkedHashMap<>();
         p.put("id", idCata);
         con = null;
@@ -106,7 +118,11 @@ public class Cata extends AppCompatActivity {
             e.printStackTrace();
         }
         while (con.getRes() == null) ;
-        this.nCervezas = con.getRes();
+        if(con.getRes().equals("IOException")){
+            Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+        }else {
+            this.nCervezas = con.getRes();
+        }
 
 
         con = null;
@@ -115,8 +131,12 @@ public class Cata extends AppCompatActivity {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        while (con.getRes() == null) ;
-        this.en_curso = con.getRes().equals("1");
+        while (con.getRes() == null);
+        if(con.getRes().equals("IOException")){
+            Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+        }else {
+            this.en_curso = con.getRes().equals("1");
+        }
         if(this.en_curso){
             admin.setTextSize(20);
             admin.setText(getResources().getString(R.string.beer_tasting_is_finished));
@@ -134,7 +154,7 @@ public class Cata extends AppCompatActivity {
         }
     }
 
-    public void add(View v) throws MalformedURLException {
+    public void add(View v) throws IOException {
         if(this.en_curso){
             editNuevaCerveza.setBackgroundResource(R.drawable.input_normal);
 
@@ -151,13 +171,29 @@ public class Cata extends AppCompatActivity {
                 Connection con = new Connection(this, "createCerveza.php", params);
                 while (con.getRes() == null) ;
                 String result = con.getRes();
-                if (result.equals("1")) {
+                if(result.equals("IOException")){
+                    OutputStreamWriter outputStreamWriter = null;
+                    if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                        new File(getFilesDir(), "requests.txt");
+                        outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+                    }else {
+                        outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+                    }
+                    outputStreamWriter.write("createCerveza.php;"+beerName+","+idCata+"/");
+                    outputStreamWriter.close();
+
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Cata.this);
+                    builder.setCancelable(true);
+                    builder.setTitle(R.string.error_connecting);
+                    builder.setMessage(R.string.ioexception_message);
+                    builder.show();
+                }else if (result.equals("1")) {
                     update(v);
                 } else {
-                    Toast.makeText(this, "No se ha podido añadir la cerveza", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.error_beer_tasting_inserting, Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(this, "Introduce el nombre de una cerveza", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.empty_beer_name, Toast.LENGTH_LONG).show();
                 editNuevaCerveza.setBackgroundResource(R.drawable.input_error);
             }
         } else {
@@ -175,8 +211,10 @@ public class Cata extends AppCompatActivity {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        while (con.getRes() == null) ;
-        this.nCervezas = con.getRes();
+        while (con.getRes() == null);
+        if(con.getRes().equals("IOException")){
+            Toast.makeText(Cata.this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+        }else this.nCervezas = con.getRes();
 
         Map<String, String> params = new LinkedHashMap<>();
         params.put("id", idCata);
@@ -185,7 +223,9 @@ public class Cata extends AppCompatActivity {
             Connection conn = new Connection(this, "getCata.php", params);
             while (conn.getRes() == null) ;
             String result = conn.getRes();
-            if (result.equals("0")) {
+            if (result.equals("IOException")) {
+                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+            }else if (result.equals("0")) {
                 Toast.makeText(this, "No se pudo cargar la cata", Toast.LENGTH_LONG).show();
             } else {
                 String[] res = result.split("/");
@@ -208,8 +248,13 @@ public class Cata extends AppCompatActivity {
                         Map<String,String> pa = new LinkedHashMap<>();
                         pa.put("id",idAdmin);
                         Connection c = new Connection(this,"getAdmin.php",pa);
+                        String usuarioAdmin="";
                         while(c.getRes()==null);
-                        String usuarioAdmin = c.getRes();
+                        if(c.getRes().equals("IOException")){
+                            Toast.makeText(Cata.this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+                        }else {
+                            usuarioAdmin = c.getRes();
+                        }
                         finished.setText(getResources().getString(R.string.beer_tasting_is_finished));
                         admin.setText("Admin: "+usuarioAdmin);
                         admin.setTextSize(20);
@@ -222,8 +267,13 @@ public class Cata extends AppCompatActivity {
                     Map<String,String> pa = new LinkedHashMap<>();
                     pa.put("id",idAdmin);
                     Connection c = new Connection(this,"getAdmin.php",pa);
+                    String usuarioAdmin="";
                     while(c.getRes()==null);
-                    String usuarioAdmin = c.getRes();
+                    if(c.getRes().equals("IOException")){
+                        Toast.makeText(Cata.this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+                    }else {
+                        usuarioAdmin = c.getRes();
+                    }
                     if(this.en_curso){
                         admin.setText("Admin: "+usuarioAdmin);
                         admin.setTextSize(20);
@@ -400,7 +450,7 @@ public class Cata extends AppCompatActivity {
                             tv1.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Toast.makeText(Cata.this, R.string.beer_tasting_finished, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Cata.this, R.string.beer_tasting_finished, Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
@@ -412,7 +462,9 @@ public class Cata extends AppCompatActivity {
                             con = new Connection(getApplicationContext(), "getOpiniones.php", params);
                             while (con.getRes() == null) ;
                             result = con.getRes();
-                            if (!result.equals(""))
+                            if(result.equals("IOException")){
+                                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+                            } else if (!result.equals(""))
                                 tv1.setTextColor(getResources().getColor(R.color.green));
                             else tv1.setTextColor(getResources().getColor(R.color.red));
                         } catch (MalformedURLException e) {
@@ -552,7 +604,9 @@ public class Cata extends AppCompatActivity {
                 p.put("id",this.idCata);
                 Connection c = new Connection(this,"isFinishable.php",p);
                 while(c.getRes()==null);
-                if(c.getRes().equals("1")){
+                if(c.getRes().equals("IOException")){
+                    Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+                }else if(c.getRes().equals("1")){
                     end.setVisibility(View.VISIBLE);
                 }
             }
@@ -590,8 +644,24 @@ public class Cata extends AppCompatActivity {
                 try {
                     Connection c = new Connection(getApplicationContext(),"finishCata.php",p);
                     while(c.getRes()==null);
-                    if(c.getRes().equals("1")){
-                        Toast.makeText(Cata.this, R.string.beer_tasting_ended_successfully, Toast.LENGTH_SHORT).show();
+                    if(c.getRes().equals("IOException")){
+                        OutputStreamWriter outputStreamWriter = null;
+                        if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                            new File(getFilesDir(), "requests.txt");
+                            outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+                        }else {
+                            outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+                        }
+                        outputStreamWriter.write("finishCata.php;"+idCata+"/");
+                        outputStreamWriter.close();
+
+                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Cata.this);
+                        builder.setCancelable(true);
+                        builder.setTitle(R.string.error_connecting);
+                        builder.setMessage(R.string.ioexception_message);
+                        builder.show();
+                    }else if(c.getRes().equals("1")){
+                        Toast.makeText(Cata.this, R.string.beer_tasting_ended_successfully, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(),Cata.class);
                         intent.putExtra("idUsuario",idUsuario);
                         intent.putExtra("idCata",idCata);
@@ -600,6 +670,10 @@ public class Cata extends AppCompatActivity {
                         Toast.makeText(Cata.this, R.string.error_ending_beer_tasting, Toast.LENGTH_LONG).show();
                     }
                 } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -632,6 +706,9 @@ public class Cata extends AppCompatActivity {
                 Connection con = new Connection(getApplicationContext(), "getCervezasCata.php", params);
                 while (con.getRes() == null) ;
                 String result = con.getRes();
+                if(result.equals("IOException")){
+                    Toast.makeText(Cata.this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+                }else
                 if (!result.equals("")) {
                     String[] aux = result.split(";");
                     for (String c : aux) {
@@ -672,7 +749,9 @@ public class Cata extends AppCompatActivity {
                             con = new Connection(getApplicationContext(), "getOpiniones.php", params);
                             while (con.getRes() == null) ;
                             result = con.getRes();
-                            if (!result.equals("")){
+                            if(result.equals("IOException")){
+                                Toast.makeText(Cata.this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+                            }else if (!result.equals("")){
                                 tvC.setTextColor(getResources().getColor(R.color.green));
                                 WatchValues wv = new WatchValues(idPersona, idCerveza);
                                 tr.setOnClickListener(wv);
@@ -750,21 +829,25 @@ public class Cata extends AppCompatActivity {
             try {
                 Connection c = new Connection(Cata.this,"getOpiniones.php",params);
                 while(c.getRes()==null);
-                String[] res = c.getRes().split(",");
-                String aroma=res[0];
-                String apariencia=res[1];
-                String sabor=res[2];
-                String cuerpo=res[3];
-                String botellin=res[4];
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Cata.this);
-                builder.setCancelable(true);
-                TextView t = new TextView(getApplicationContext());
-                t.setTextSize(20);
-                t.setText("Aroma: "+aroma+"\nApariencia: "+apariencia+"\nSabor: "+sabor+"\nCuerpo: "+cuerpo+"\nBotellín: "+botellin);
-                t.setPadding(30,30,30,30);
-                t.setVisibility(View.VISIBLE);
-                builder.setView(t);
-                builder.show();
+                if(c.getRes().equals("IOException")){
+                    Toast.makeText(Cata.this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+                }else {
+                    String[] res = c.getRes().split(",");
+                    String aroma=res[0];
+                    String apariencia=res[1];
+                    String sabor=res[2];
+                    String cuerpo=res[3];
+                    String botellin=res[4];
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Cata.this);
+                    builder.setCancelable(true);
+                    TextView t = new TextView(getApplicationContext());
+                    t.setTextSize(20);
+                    t.setText("Aroma: "+aroma+"\nApariencia: "+apariencia+"\nSabor: "+sabor+"\nCuerpo: "+cuerpo+"\nBotellín: "+botellin);
+                    t.setPadding(30,30,30,30);
+                    t.setVisibility(View.VISIBLE);
+                    builder.setView(t);
+                    builder.show();
+                }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
