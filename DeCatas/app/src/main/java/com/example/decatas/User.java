@@ -61,7 +61,12 @@ public class User extends AppCompatActivity {
             con = new Connection(getApplicationContext(),"getUser.php",params);
             while(con.getRes()==null);
             String res = con.getRes();
-            if(!res.equals("0")){
+            if(res.equals("IOException")){
+                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(),Login.class);
+                intent.putExtra("autologin","0");
+                startActivity(intent);
+            }else if(!res.equals("0")){
                 String[] resArray = res.split(";");
                 textUsuario.setText(resArray[0]);
                 textNombre.setText(resArray[1]);
@@ -75,7 +80,9 @@ public class User extends AppCompatActivity {
             con = new Connection(getApplicationContext(),"checkSolicitudes.php",params);
             while(con.getRes()==null);
             res = con.getRes();
-            if(res.equals("1")){
+            if(res.equals("IOException")){
+                Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+            }else if(res.equals("1")){
                 requests.setPadding(10,10,10,10);
                 requests.setTextSize(20);
                 requests.setText(R.string.exist_request);
@@ -201,6 +208,18 @@ public class User extends AppCompatActivity {
                     params.put("id",data[0]);
                 } else if(file.equals("deleteCervezaCata")){
                     params.put("id",data[0]);
+                } else if(file.equals("joinCata.php")){
+                    params.put("u",idUsuario);
+                    params.put("c",data[0]);
+                    params.put("p",data[1]);
+                } else if(file.equals("addFriend.php")){
+                    params.put("idUsuario1",idUsuario);
+                    params.put("idUsuario2",data[0]);
+                } else if(file.equals("finishCata.php")){
+                    params.put("id",data[0]);
+                } else if(file.equals("createCerveza.php")){
+                    params.put("n",data[0]);
+                    params.put("id",data[1]);
                 }
 
                 Connection con = new Connection(this,file,params);
