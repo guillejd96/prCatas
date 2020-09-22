@@ -70,6 +70,7 @@ public class Anyadir_Amigo extends AppCompatActivity {
             Connection c = new Connection(this,"getUsers.php",params);
             while(c.getRes()==null);
             String result = c.getRes();
+            Log.v("Result",result);
             if(result.equals("IOException")){
                 Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
             }
