@@ -47,13 +47,10 @@ import java.util.Objects;
 
 public class Valorar_Cerveza extends AppCompatActivity {
 
-    private static final int REQUEST_TAKE_PHOTO = 1;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private String idUsuario,idCerveza,idCata,nombre,idAdmin;
     public TextView title;
     public EditText inputAroma,inputApariencia,inputSabor,inputCuerpo,inputBotellin;
     public String aroma,apariencia,sabor,cuerpo,botellin;
-    public Button btnPic;
     public LinearLayout layout;
 
     @Override
@@ -75,11 +72,6 @@ public class Valorar_Cerveza extends AppCompatActivity {
         inputCuerpo = (EditText)findViewById(R.id.inputName5);
         inputBotellin = (EditText)findViewById(R.id.inputName6);
         layout = (LinearLayout)findViewById(R.id.layout);
-        btnPic = (Button)findViewById(R.id.button2);
-
-        btnTakePhotoClicker b = new btnTakePhotoClicker();
-        btnPic.setOnClickListener(b);
-
 
         Map<String,String> params = new LinkedHashMap<>();
         params.put("id",idCerveza);
@@ -125,7 +117,6 @@ public class Valorar_Cerveza extends AppCompatActivity {
             if(con.getRes().equals("IOException")){
                 Toast.makeText(Valorar_Cerveza.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
             } else if(!result.equals("")){
-                Log.v("Valorar",result);
                 String[] c = result.split(",");
                 inputAroma.setText(c[0]);
                 inputApariencia.setText(c[1]);
@@ -230,7 +221,21 @@ public class Valorar_Cerveza extends AppCompatActivity {
             while(con.getRes()==null);
             String res = con.getRes();
             if(res.equals("IOException")){
-                Toast.makeText(Valorar_Cerveza.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+                OutputStreamWriter outputStreamWriter = null;
+                if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                    new File(getFilesDir(), "requests.txt");
+                    outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+                }else {
+                    outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+                }
+                outputStreamWriter.write("createValoracion.php;"+idUsuario+","+idCerveza+","+aroma+","+apariencia+","+sabor+","+cuerpo+","+botellin+"/");
+                outputStreamWriter.close();
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Valorar_Cerveza.this);
+                builder.setCancelable(true);
+                builder.setTitle(R.string.error_connecting);
+                builder.setMessage(R.string.ioexception_message);
+                builder.show();
             }else if(res.equals("1")){
                 Intent intent = new Intent(getApplicationContext(),Cata.class);
                 intent.putExtra("idUsuario",idUsuario);
@@ -239,76 +244,11 @@ public class Valorar_Cerveza extends AppCompatActivity {
             }else {
                 Toast.makeText(this, R.string.error_inserting_beer, Toast.LENGTH_LONG).show();
             }
-        }catch (NumberFormatException e){
+        }catch (NumberFormatException | FileNotFoundException e){
             Toast.makeText(this, R.string.error_numeric_value, Toast.LENGTH_LONG).show();
             return;
-        }
-
-
-    }
-
-    private static final int CAN_REQUEST = 1313;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==CAN_REQUEST){
-            final Bitmap bm = (Bitmap) data.getExtras().get("data");
-
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-            builder.setCancelable(true);
-            builder.setMessage(R.string.question_save_pic);
-
-            ImageView img = new ImageView(this);
-            img.setLayoutParams(new TableRow.LayoutParams(
-                    TableRow.LayoutParams.FILL_PARENT,
-                    TableRow.LayoutParams.FILL_PARENT));
-            img.setImageBitmap(bm);
-            img.getLayoutParams().height=500;
-            img.getLayoutParams().width=250;
-
-            builder.setView(img);
-
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-
-                    //ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    //bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                    //byte[] imagen = stream.toByteArray();
-                    //String encodedImage = Base64.encodeToString(imagen,Base64.DEFAULT);
-
-                //Map<String,String> p = new LinkedHashMap<>();
-                //p.put("img",encodedImage);
-                ///p.put("idU",idUsuario);
-                //p.put("idC",idCerveza);
-
-                    //try {
-                     //   Connection c = new Connection(getApplicationContext(),"uploadImg.php",p);
-                     //   while(c.getRes()==null);
-                     //   if(c.getRes().equals("1")){
-                     //       Toast.makeText(Valorar_Cerveza.this, "La imagen se pudo guardar", Toast.LENGTH_SHORT).show();
-                     //   }else {
-                     //       Toast.makeText(Valorar_Cerveza.this, "Error al guardar la imagen", Toast.LENGTH_SHORT).show();
-                    //    }
-                    //} catch (MalformedURLException e) {
-                    //    e.printStackTrace();
-                    //}
-
-                }
-            });
-            builder.setNegativeButton(R.string.cancel, null);
-            builder.show();
-        }
-    }
-
-    private class btnTakePhotoClicker implements View.OnClickListener{
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent,CAN_REQUEST);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
