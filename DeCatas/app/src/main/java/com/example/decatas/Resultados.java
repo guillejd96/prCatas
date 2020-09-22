@@ -819,11 +819,13 @@ public class Resultados extends AppCompatActivity {
 
                 layout.addView(tv);
             }else {
+                Log.v("RESULTADOS",result);
                 String[] cer = result.split(";");
                 Map<String,Float> personasCuerpo = new LinkedHashMap<>();
                 for(String c : cer){
+                    Log.v("RESULTADOS",c);
                     String[] info = c.split(",");
-                    personasCuerpo.put(info[0],Float.valueOf(info[1]));
+                    personasCuerpo.put(info[0],Float.valueOf(info[1])); // ERROOOOOOOOOOOOOR
                 }
 
                 personasCuerpo = sortByComparator(personasCuerpo,true);
