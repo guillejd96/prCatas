@@ -131,7 +131,6 @@ public class Mis_Catas extends AppCompatActivity {
                 table.addView(trTH);
 
                 for(String cata : aux){
-                    Log.v("Mis catas",cata);
                     String[] aux2 = cata.split(",");
                     final String idCata = aux2[0];
                     String nombreCata = aux2[1];
@@ -270,6 +269,7 @@ public class Mis_Catas extends AppCompatActivity {
                     try {
                         Connection con = new Connection(Mis_Catas.this,"deleteCata.php",params);
                         while(con.getRes()==null);
+                        Log.v("Delete",con.getRes());
                         if(con.getRes().equals("IOException")){
                             OutputStreamWriter outputStreamWriter = null;
                             if(!Arrays.asList(fileList()).contains("requests.txt")) {
