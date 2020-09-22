@@ -1,5 +1,6 @@
 package com.example.decatas;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -20,7 +21,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -147,14 +153,30 @@ public class Solicitudes extends AppCompatActivity {
                 while (c.getRes()==null);
                 String result = c.getRes();
                 if(result.equals("IOException")){
-                    Toast.makeText(Solicitudes.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+                    OutputStreamWriter outputStreamWriter = null;
+                    if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                        new File(getFilesDir(), "requests.txt");
+                        outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+                    }else {
+                        outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+                    }
+                    outputStreamWriter.write("aceptar.php;"+idUsuario1+","+idUsuario2+"/");
+                    outputStreamWriter.close();
+
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Solicitudes.this);
+                    builder.setCancelable(true);
+                    builder.setTitle(R.string.error_connecting);
+                    builder.setMessage(R.string.ioexception_message);
+                    builder.show();
                 } if(result.equals("1")){
                     Toast.makeText(Solicitudes.this, R.string.request_accept, Toast.LENGTH_LONG).show();
                     update();
                 }else {
                     Toast.makeText(Solicitudes.this, R.string.request_accept_error, Toast.LENGTH_LONG).show();
                 }
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException | FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -180,7 +202,21 @@ public class Solicitudes extends AppCompatActivity {
                 while (c.getRes()==null);
                 String result = c.getRes();
                 if(result.equals("IOException")){
-                    Toast.makeText(Solicitudes.this, R.string.error_connecting, Toast.LENGTH_SHORT).show();
+                    OutputStreamWriter outputStreamWriter = null;
+                    if(!Arrays.asList(fileList()).contains("requests.txt")) {
+                        new File(getFilesDir(), "requests.txt");
+                        outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_PRIVATE));
+                    }else {
+                        outputStreamWriter = new OutputStreamWriter(openFileOutput("requests.txt", Context.MODE_APPEND));
+                    }
+                    outputStreamWriter.write("rechazar.php;"+idUsuario1+","+idUsuario2+"/");
+                    outputStreamWriter.close();
+
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Solicitudes.this);
+                    builder.setCancelable(true);
+                    builder.setTitle(R.string.error_connecting);
+                    builder.setMessage(R.string.ioexception_message);
+                    builder.show();
                 } else if(result.equals("1")){
                     Toast.makeText(Solicitudes.this, R.string.request_decline, Toast.LENGTH_LONG).show();
                     update();
@@ -188,6 +224,10 @@ public class Solicitudes extends AppCompatActivity {
                     Toast.makeText(Solicitudes.this, R.string.decline_request_error, Toast.LENGTH_LONG).show();
                 }
             } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
