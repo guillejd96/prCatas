@@ -220,6 +220,25 @@ public class User extends AppCompatActivity {
                 } else if(file.equals("createCerveza.php")){
                     params.put("n",data[0]);
                     params.put("id",data[1]);
+                }  else if(file.equals("createValoracion.php")){
+                    params.put("idU",data[0]);
+                    params.put("idC",data[1]);
+                    params.put("ar",data[2]);
+                    params.put("ap",data[3]);
+                    params.put("s",data[4]);
+                    params.put("c",data[5]);
+                    params.put("b",data[6]);
+                } else if(file.equals("aceptar.php")){
+                    params.put("id1",data[0]);
+                    params.put("id2",data[1]);
+                } else if(file.equals("rechazar.php")){
+                    params.put("id1",data[0]);
+                    params.put("id2",data[1]);
+                } else if(file.equals("deleteCerveza.php")){
+                    params.put("id",data[0]);
+                } else if (file.equals("deleteAmigo.php")) {
+                    params.put("id1",data[0]);
+                    params.put("id2",data[1]);
                 }
 
                 Connection con = new Connection(this,file,params);
