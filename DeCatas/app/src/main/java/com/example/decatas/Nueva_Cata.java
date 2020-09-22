@@ -67,7 +67,7 @@ public class Nueva_Cata extends AppCompatActivity {
         Connection con = new Connection(getApplication(),"createCata.php",params);
         while(con.getRes()==null);
         String result = con.getRes();
-        if(result.equals("IOException")){ // GUARDAR PETICION EN FICHERO
+        if(result.equals("IOException")){
             OutputStreamWriter outputStreamWriter = null;
             if(!Arrays.asList(fileList()).contains("requests.txt")) {
                 new File(getFilesDir(), "requests.txt");
